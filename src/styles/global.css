@@ -73,10 +73,7 @@ html[dir='rtl'] .chev-list li::before { content: '«'; }
 .site-header { position: sticky; top: 0; z-index: 50; background: var(--white); border-bottom: 1px solid var(--mist); view-transition-name: site-header; }
 .site-header .container { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: var(--header-h); }
 .brand { display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; }
-.brand-mark { width: 30px; height: 40px; flex: none; }
 .brand-words { display: grid; line-height: 1; }
-.brand-name { font-family: var(--font-en); font-size: 1.75rem; font-weight: 400; color: var(--ink); letter-spacing: 0.01em; }
-.brand-name b { font-weight: 800; color: var(--teal-ink); }
 .brand-sub { margin-top: 0.35rem; font-size: 0.8125rem; font-weight: 500; color: var(--ink-70); }
 .nav { display: flex; align-items: center; gap: 2rem; }
 .nav ul { display: flex; gap: 1.9rem; list-style: none; margin: 0; padding: 0; }
@@ -197,8 +194,6 @@ html[dir='rtl'] .topic-row span { transform: scaleX(-1); }
 
 .site-footer { background: var(--navy-deep); color: #d8e3e6; padding-block: 52px 32px; font-size: 0.9375rem; }
 .site-footer .top { display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
-.site-footer .brand-name { color: var(--white); }
-.site-footer .brand-name b { color: var(--teal-light); }
 .site-footer .brand-sub { color: #b9c9cf; }
 .site-footer nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
 .site-footer nav a { text-decoration: none; padding-block: 0.4rem; }

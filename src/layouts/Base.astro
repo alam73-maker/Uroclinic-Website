@@ -30,7 +30,9 @@ const links = [
     <meta name="robots" content="noindex, nofollow" />
     <meta name="description" content={description ?? t.description} />
     <title>{pageTitle}</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="preload" href={lang === 'ar' ? plexUrl : interUrl} as="font" type="font/woff2" crossorigin />
     <link rel="alternate" hreflang="ar" href={href('ar', path)} />
     <link rel="alternate" hreflang="en" href={href('en', path)} />
@@ -80,7 +82,7 @@ const links = [
           <div class="info">
             <p>{t.footer.pending}</p>
             <p>{t.footer.review}</p>
-            <p>© 2026 Uroclinic. {t.footer.rights}</p>
+            <p>© 2026 Osman Uroclinic. {t.footer.rights}</p>
           </div>
         </div>
       </footer>

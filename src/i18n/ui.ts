@@ -14,7 +14,7 @@ export const ui = {
   ar: {
     brandSub: 'د. طارق عثمان',
     doctor: 'د. طارق عثمان',
-    titleSuffix: 'د. طارق عثمان | Uroclinic',
+    titleSuffix: 'د. طارق عثمان | Osman Uroclinic',
     description: 'استشارات المسالك البولية وصحة البروستاتا مع د. طارق عثمان. احجز موعدك في أقرب فرع.',
     skip: 'تخطَّ إلى المحتوى',
     menu: 'القائمة',
@@ -40,7 +40,7 @@ export const ui = {
   en: {
     brandSub: 'Dr. Tarek Osman',
     doctor: 'Dr. Tarek Osman',
-    titleSuffix: 'Dr. Tarek Osman | Uroclinic',
+    titleSuffix: 'Dr. Tarek Osman | Osman Uroclinic',
     description: 'Urology and prostate health consultations with Dr. Tarek Osman. Book a slot at the clinic location that suits you.',
     skip: 'Skip to main content',
     menu: 'Menu',

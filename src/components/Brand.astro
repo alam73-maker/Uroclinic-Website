@@ -3,20 +3,29 @@ interface Props { sub: string; href: string }
 const { sub, href } = Astro.props;
 ---
 
-<a class="brand" href={href} dir="ltr">
-  <svg class="brand-mark" viewBox="0 0 40 52" aria-hidden="true">
-    <circle cx="13" cy="10" r="9" fill="#5e8f91" />
-    <circle cx="27" cy="22" r="9" fill="currentColor" class="mark-mid" />
-    <circle cx="13" cy="34" r="9" fill="#9cc5c6" />
-    <circle cx="25" cy="44" r="7" fill="#5e8f91" />
-  </svg>
+<a class="brand" href={href} dir="ltr" aria-label={`Osman Uroclinic, ${sub}`}>
+  <picture class="brand-mark">
+    <source srcset="/logo-mark.webp" type="image/webp" />
+    <img src="/logo-mark.png" alt="" width="52" height="52" decoding="async" />
+  </picture>
   <span class="brand-words">
-    <span class="brand-name"><b>URO</b>CLINIC</span>
+    <span class="brand-name">OSMAN <b>URO</b>CLINIC</span>
     <span class="brand-sub" dir="auto">{sub}</span>
   </span>
 </a>
 
 <style>
-  .brand { color: var(--navy); }
-  :global(.site-footer) .brand { color: var(--white); }
+  .brand-mark { display: block; width: 52px; height: 52px; flex: none; }
+  .brand-mark img { width: 100%; height: 100%; object-fit: contain; }
+  .brand-name { white-space: nowrap; font-family: var(--font-en); font-size: 1.5rem; font-weight: 800; letter-spacing: 0.01em; color: #1f4584; }
+  .brand-name b { font-weight: 800; color: #81bfc8; }
+  :global(.site-footer) .brand-mark { background: var(--white); border-radius: 50%; padding: 5px; }
+  :global(.site-footer) .brand-name { color: var(--white); }
+  :global(.site-footer) .brand-name b { color: var(--teal-light); }
+  .brand-sub { text-align: left; }
+  @media (max-width: 420px) {
+    .brand { gap: 0.5rem; }
+    .brand-mark { width: 40px; height: 40px; }
+    .brand-name { font-size: 1.0625rem; }
+  }
 </style>
