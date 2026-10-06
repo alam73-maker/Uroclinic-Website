@@ -1,0 +1,28 @@
+{
+  "name": "uroclinic-website",
+  "type": "module",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "node scripts/build-map.mjs && astro build",
+    "preview": "astro preview",
+    "map": "node scripts/build-map.mjs",
+    "test:db": "node tests/db.test.mjs",
+    "vercel-build": "node scripts/predeploy.mjs && npm run build"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource/ibm-plex-sans-arabic": "^5.3.0",
+    "@supabase/supabase-js": "^2.117.2",
+    "astro": "^7.3.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@electric-sql/pglite": "^0.5.8",
+    "d3-geo": "^3.1.1",
+    "topojson-client": "^3.1.0",
+    "typescript": "^6.0.3",
+    "world-atlas": "^2.0.2"
+  }
+}

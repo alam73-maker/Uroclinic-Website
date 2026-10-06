@@ -1,0 +1,101 @@
+---
+import '@fontsource-variable/inter/wght.css';
+import '@fontsource/ibm-plex-sans-arabic/arabic-400.css';
+import '@fontsource/ibm-plex-sans-arabic/arabic-700.css';
+import '../styles/global.css';
+import Brand from '../components/Brand.astro';
+import { dir, href, altHref, ui, type Lang } from '../i18n/ui';
+import interUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import plexUrl from '@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-400-normal.woff2?url';
+
+interface Props { lang: Lang; path?: string; title?: string; description?: string; noindex?: boolean; bare?: boolean }
+const { lang, path = '', title, description, bare = false } = Astro.props;
+const t = ui[lang];
+const pageTitle = title ? `${title} | ${t.titleSuffix}` : t.titleSuffix;
+const current = href(lang, path);
+const links = [
+  { label: t.nav.home, to: href(lang, '') },
+  { label: t.nav.about, to: href(lang, 'about') },
+  { label: t.nav.stories, to: href(lang, 'patient-stories') },
+  { label: t.nav.research, to: href(lang, 'research') },
+];
+---
+
+<!doctype html>
+<html lang={lang} dir={dir(lang)}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#17324d" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content={description ?? t.description} />
+    <title>{pageTitle}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href={lang === 'ar' ? plexUrl : interUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="alternate" hreflang="ar" href={href('ar', path)} />
+    <link rel="alternate" hreflang="en" href={href('en', path)} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">{t.skip}</a>
+    {!bare && (
+      <>
+        <div class="topbar">
+          <div class="container">
+            <a class="hide-xs" href={href(lang, 'international-patients')}>{t.topbar.international}</a>
+            <a href={href(lang, 'clinic')}>{t.topbar.contact}</a>
+            <a class="lang" href={altHref(lang, path)} hreflang={lang === 'ar' ? 'en' : 'ar'} lang={lang === 'ar' ? 'en' : 'ar'}>{t.switchLabel}</a>
+          </div>
+        </div>
+        <header class="site-header">
+          <div class="container">
+            <Brand sub={t.brandSub} href={href(lang, '')} />
+            <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" data-menu>{t.menu}</button>
+            <nav id="site-nav" class="nav" aria-label={lang === 'ar' ? 'القائمة الرئيسية' : 'Main'} data-nav>
+              <ul>
+                {links.map((l) => <li><a href={l.to} aria-current={current === l.to ? 'page' : undefined}>{l.label}</a></li>)}
+              </ul>
+              <a class="btn btn--solid" href={href(lang, 'appointments')} aria-current={path === 'appointments' ? 'page' : undefined}>{t.book}</a>
+            </nav>
+          </div>
+        </header>
+      </>
+    )}
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    {!bare && (
+      <footer class="site-footer">
+        <div class="container">
+          <div class="top">
+            <Brand sub={t.brandSub} href={href(lang, '')} />
+            <nav aria-label={lang === 'ar' ? 'روابط قانونية' : 'Legal'}>
+              <a href={href(lang, 'terms')}>{t.footer.terms}</a>
+              <a href={href(lang, 'privacy')}>{t.footer.privacy}</a>
+              <a href={href(lang, 'cookies')}>{t.footer.cookies}</a>
+              <a href={href(lang, 'refunds')}>{t.footer.refunds}</a>
+              <a href={href(lang, 'clinic')}>{t.footer.clinic}</a>
+            </nav>
+          </div>
+          <div class="info">
+            <p>{t.footer.pending}</p>
+            <p>{t.footer.review}</p>
+            <p>© 2026 Uroclinic. {t.footer.rights}</p>
+          </div>
+        </div>
+      </footer>
+    )}
+    <script>
+      import '../lib/attribution';
+      const btn = document.querySelector<HTMLButtonElement>('[data-menu]');
+      const nav = document.querySelector<HTMLElement>('[data-nav]');
+      const close = () => { nav?.classList.remove('is-open'); btn?.setAttribute('aria-expanded', 'false'); };
+      btn?.addEventListener('click', () => {
+        const open = !nav?.classList.contains('is-open');
+        nav?.classList.toggle('is-open', open);
+        btn.setAttribute('aria-expanded', String(open));
+      });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && btn?.getAttribute('aria-expanded') === 'true') { close(); btn.focus(); } });
+    </script>
+  </body>
+</html>

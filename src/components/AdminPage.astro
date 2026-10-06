@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import Brand from './Brand.astro';
+import '../styles/admin.css';
+import { admin, href, altHref, ui, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const a = admin[lang];
+---
+
+<Base lang={lang} path="admin" title={a.title} bare>
+  <div class="adm" data-admin data-lang={lang}>
+    <header class="adm-top">
+      <Brand sub={ui[lang].brandSub} href={href(lang, '')} />
+      <div class="adm-top-actions">
+        <a class="adm-lang" href={altHref(lang, 'admin')}>{ui[lang].switchLabel}</a>
+        <button type="button" class="adm-link" data-signout hidden>{a.signOut}</button>
+      </div>
+    </header>
+
+    <p class="demo-note" data-demo hidden>{a.demoNote}</p>
+
+    <section class="adm-login" data-login hidden>
+      <h1>{a.title}</h1>
+      <form data-login-form>
+        <div class="field"><label for="adm-email">{a.email}</label><input id="adm-email" type="email" name="email" autocomplete="username" required dir="ltr" /></div>
+        <div class="field"><label for="adm-pw">{a.password}</label><input id="adm-pw" type="password" name="password" autocomplete="current-password" required dir="ltr" /></div>
+        <p class="form-error" data-login-error role="alert" hidden>{a.signInError}</p>
+        <button class="btn btn--solid" type="submit">{a.signIn}</button>
+      </form>
+      <button class="btn" type="button" data-demo-signin hidden>{a.demoSignIn}</button>
+    </section>
+
+    <section class="adm-app" data-app hidden>
+      <nav class="adm-tabs" role="tablist">
+        <button role="tab" type="button" data-tab="bookings" aria-selected="true">{a.tabs.bookings}<span class="badge" data-badge hidden></span></button>
+        <button role="tab" type="button" data-tab="availability" aria-selected="false">{a.tabs.availability}</button>
+        <button role="tab" type="button" data-tab="locations" aria-selected="false">{a.tabs.locations}</button>
+      </nav>
+      <div class="adm-panel" data-view="bookings"></div>
+      <div class="adm-panel" data-view="availability" hidden></div>
+      <div class="adm-panel" data-view="locations" hidden></div>
+    </section>
+    <p class="toast" data-toast role="status" aria-live="polite" hidden></p>
+  </div>
+</Base>
+
+<script>
+  import { initAdmin } from '../lib/booking/admin-ui';
+  initAdmin();
+</script>

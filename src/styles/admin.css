@@ -1,0 +1,100 @@
+.adm { max-width: 1240px; margin-inline: auto; padding: 0 var(--gutter) 64px; }
+.adm-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-block: 1.25rem; border-bottom: 1px solid var(--mist); margin-bottom: 1.5rem; }
+.adm-top-actions { display: flex; align-items: center; gap: 1.25rem; }
+.adm-lang, .adm-link { background: none; border: 0; padding: 0.5rem 0; color: var(--teal-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 0.2em; min-height: 44px; }
+.demo-note { margin-bottom: 1.25rem; padding: 0.75rem 1rem; background: #fff7e6; border-inline-start: 4px solid #d29a2b; color: var(--warn); font-size: 0.9375rem; }
+.adm-login { max-width: 420px; margin: 3rem auto; display: grid; gap: 1.25rem; }
+.adm-login h1 { font-size: 2rem; }
+.adm-login form { display: grid; gap: 1rem; }
+.field { display: grid; gap: 0.4rem; }
+.field label { font-weight: 600; }
+.field input { min-height: 50px; padding: 0.6rem 0.8rem; border: 2px solid var(--line); font-size: 1rem; }
+.form-error { padding: 0.75rem 1rem; background: #fbeeed; border-inline-start: 4px solid var(--danger); color: var(--danger); }
+
+.adm-tabs { display: flex; gap: 0.25rem; border-bottom: 2px solid var(--mist); margin-bottom: 1.5rem; overflow-x: auto; }
+.adm-tabs button { position: relative; padding: 0.9rem 1.25rem; background: none; border: 0; border-bottom: 3px solid transparent; margin-bottom: -2px; font-weight: 600; color: var(--ink-70); white-space: nowrap; min-height: 48px; }
+.adm-tabs button[aria-selected='true'] { color: var(--navy); border-bottom-color: var(--navy); }
+.badge { display: inline-grid; place-items: center; min-width: 22px; height: 22px; margin-inline-start: 0.5rem; padding-inline: 6px; border-radius: 11px; background: #d29a2b; color: var(--white); font-size: 0.75rem; font-family: var(--font-en); }
+
+.adm-controls { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: flex-end; margin-bottom: 1rem; }
+.adm-field { display: grid; gap: 0.3rem; font-size: 0.875rem; font-weight: 600; color: var(--ink-70); }
+.adm-field.grow { flex: 1 1 220px; }
+.adm-field input, .adm-field select, .adm-card textarea, details textarea { min-height: 44px; padding: 0.5rem 0.7rem; border: 2px solid var(--line); background: var(--white); font-size: 0.9375rem; color: var(--ink); font-weight: 500; border-radius: 0; width: 100%; }
+.adm-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+.adm-actions .btn { min-height: 44px; padding-inline: 1.1rem; }
+.adm-count { margin-inline-end: auto; font-weight: 600; color: var(--navy); }
+.adm-empty { padding: 2rem 0; color: var(--ink-70); }
+.adm-label { margin-top: 1rem; font-weight: 600; font-size: 0.875rem; color: var(--ink-70); }
+
+.adm-day { margin-top: 1.5rem; }
+.adm-day h3 { font-size: 1.0625rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--line); margin-bottom: 0.5rem; }
+.adm-row { display: grid; grid-template-columns: 96px minmax(0, 1fr) 210px 200px; gap: 1rem; align-items: start; padding: 1rem; border: 1px solid var(--line); border-inline-start: 4px solid var(--line); margin-top: 0.5rem; background: var(--white); }
+.adm-row.st-held { border-inline-start-color: #d29a2b; background: #fffcf5; }
+.adm-row.st-confirmed { border-inline-start-color: var(--teal); }
+.adm-row.st-attended { border-inline-start-color: var(--ok); }
+.adm-row.st-cancelled, .adm-row.st-no_show { opacity: 0.65; }
+.r-time { font-weight: 700; color: var(--navy); font-size: 1.0625rem; }
+.r-name { font-weight: 700; font-size: 1.0625rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: baseline; }
+.r-ref { font-size: 0.8125rem; font-weight: 600; color: var(--ink-70); font-family: var(--font-en); }
+.r-meta { font-size: 0.875rem; color: var(--ink-70); }
+.r-contact { display: grid; gap: 0.2rem; }
+.r-phone { font-weight: 600; font-family: var(--font-en); color: var(--navy); text-decoration: none; }
+.r-links { display: flex; gap: 0.9rem; font-size: 0.875rem; }
+.r-links a { color: var(--teal-ink); font-weight: 600; }
+details { margin-top: 0.5rem; font-size: 0.875rem; }
+details summary { cursor: pointer; color: var(--teal-ink); font-weight: 600; }
+details textarea { margin-top: 0.4rem; resize: vertical; }
+.status-sel { width: 100%; min-height: 44px; padding: 0.4rem 0.6rem; border: 2px solid var(--line); font-weight: 600; background: var(--white); }
+.status-sel.s-held { border-color: #d29a2b; color: var(--warn); }
+.status-sel.s-confirmed { border-color: var(--teal); color: var(--teal-ink); }
+.status-sel.s-attended { border-color: var(--ok); color: var(--ok); }
+
+.adm-card { display: grid; gap: 1rem; padding: 1.5rem; background: var(--paper); margin-block: 1rem 1.5rem; }
+.adm-card h3 { font-size: 1.25rem; }
+.adm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.9rem; }
+.adm-days { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.adm-days legend { font-size: 0.875rem; font-weight: 600; color: var(--ink-70); margin-bottom: 0.4rem; }
+.choice { position: relative; }
+.choice input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.choice span { display: inline-flex; align-items: center; min-height: 44px; padding: 0.4rem 0.9rem; border: 2px solid var(--line); background: var(--white); font-weight: 600; }
+.choice input:checked + span { background: var(--navy); border-color: var(--navy); color: var(--white); }
+.choice input:focus-visible + span { outline: 3px solid var(--teal); outline-offset: 2px; }
+.adm-preview { font-weight: 600; color: var(--navy); }
+.consent { display: flex; gap: 0.6rem; align-items: center; font-weight: 600; }
+.consent input { width: 20px; height: 20px; accent-color: var(--navy); }
+.adm-card .btn { justify-self: start; }
+
+.week-nav { display: flex; align-items: center; gap: 0.5rem; }
+.week-label { min-width: 9rem; text-align: center; font-weight: 600; color: var(--navy); }
+.icon-btn { width: 44px; height: 44px; display: grid; place-items: center; border: 2px solid var(--line); background: var(--white); color: var(--navy); font-size: 1.5rem; }
+.cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.5rem; }
+.cal-day { background: var(--paper); padding: 0.6rem; min-height: 160px; display: grid; align-content: start; gap: 0.35rem; }
+.cal-day.is-today { outline: 2px solid var(--teal); }
+.cal-head { font-size: 0.8125rem; color: var(--ink-70); margin-bottom: 0.25rem; }
+.cal-head strong { color: var(--navy); }
+.cal-empty { font-size: 0.8125rem; color: #9aa3a8; }
+.chip { display: grid; gap: 0.1rem; padding: 0.4rem 0.5rem; background: var(--white); border-inline-start: 3px solid var(--teal); font-size: 0.8125rem; }
+.chip > span:first-child { font-weight: 700; }
+.chip-st { font-size: 0.75rem; color: var(--ink-70); }
+.chip.c-held { border-color: #d29a2b; }
+.chip.c-booked { border-color: var(--navy); background: #eef2f5; }
+.chip.c-blocked { border-color: #9aa3a8; opacity: 0.7; text-decoration: line-through; }
+.chip-acts { display: flex; gap: 0.4rem; margin-top: 0.15rem; }
+.chip-acts button { background: none; border: 0; padding: 0.25rem 0; min-height: 28px; font-size: 0.75rem; font-weight: 600; color: var(--teal-ink); text-decoration: underline; }
+.time-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 0.5rem; }
+.time { min-height: 44px; border: 2px solid var(--line); background: var(--white); font-weight: 600; color: var(--navy); }
+.time.is-selected { background: var(--navy); border-color: var(--navy); color: var(--white); }
+
+.toast { position: fixed; inset-inline: 0; bottom: 24px; margin-inline: auto; width: max-content; max-width: calc(100% - 32px); padding: 0.75rem 1.25rem; background: var(--navy); color: var(--white); font-weight: 600; z-index: 60; box-shadow: 0 10px 30px rgba(16, 38, 59, 0.25); }
+.toast.bad { background: var(--danger); }
+
+@media (max-width: 980px) {
+  .adm-row { grid-template-columns: 80px minmax(0, 1fr); }
+  .r-contact, .r-status { grid-column: 2; }
+  .cal { grid-template-columns: repeat(7, minmax(120px, 1fr)); overflow-x: auto; }
+}
+@media (max-width: 560px) {
+  .adm-row { grid-template-columns: 1fr; gap: 0.5rem; }
+  .r-contact, .r-status { grid-column: auto; }
+  .adm-field select, .adm-field input { font-size: 16px; }
+}

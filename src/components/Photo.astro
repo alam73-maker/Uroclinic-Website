@@ -1,0 +1,17 @@
+---
+interface Props { label: string; tone?: 'blue' | 'mist' | 'teal' | 'navy'; play?: string; playHref?: string }
+const { label, tone = 'blue', play, playHref } = Astro.props;
+---
+
+<div class:list={['photo', tone !== 'blue' && `photo--${tone}`]}>
+  <svg class="sil" viewBox="0 0 200 170" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+    <circle cx="100" cy="52" r="40" />
+    <path d="M12 170c0-52 40-82 88-82s88 30 88 82z" />
+  </svg>
+  <span class="tag">{label}</span>
+  {play && (
+    <a class="play" href={playHref} aria-label={play}>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+    </a>
+  )}
+</div>

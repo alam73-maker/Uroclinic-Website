@@ -1,0 +1,117 @@
+---
+import Base from '../layouts/Base.astro';
+import '../styles/booking.css';
+import { booking, href, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const b = booking[lang];
+const ar = lang === 'ar';
+---
+
+<Base lang={lang} path="appointments" title={ar ? 'احجز موعدك' : 'Book your appointment'}>
+  <section class="page-intro book-intro">
+    <div class="container">
+      <h1>{ar ? 'احجز موعدك.' : 'Book your appointment.'}</h1>
+      <p>{ar ? 'اختر الفرع، ثم اليوم والوقت المتاحين. يُحجز الموعد لك فورًا، وتتواصل معك العيادة لتأكيده.' : 'Choose a location, then an available day and time. The time is held for you straight away, and the clinic will contact you to confirm.'}</p>
+    </div>
+  </section>
+
+  <section class="book" data-booking data-lang={lang}>
+    <div class="container book-grid">
+      <div class="book-main">
+        <p class="demo-note" data-demo hidden>{b.demo}</p>
+        <ol class="steps" aria-label={ar ? 'خطوات الحجز' : 'Booking steps'}>
+          {b.steps.map((s, i) => <li data-step-tab={i}><span class="num">{i + 1}</span><span class="lbl">{s}</span></li>)}
+        </ol>
+
+        <div class="panel" data-panel="0">
+          <h2 tabindex="-1">{b.chooseLocation}</h2>
+          <p class="hint">{b.chooseLocationHint}</p>
+          <div class="loc-list" data-locations><p class="loading">{b.loading}</p></div>
+        </div>
+
+        <div class="panel" data-panel="1" hidden>
+          <div class="panel-head">
+            <h2 tabindex="-1">{b.chooseDay}</h2>
+            <div class="week-nav">
+              <button type="button" class="icon-btn" data-week="-1" aria-label={b.prevWeek}><span aria-hidden="true">‹</span></button>
+              <span class="week-label" data-week-label aria-live="polite"></span>
+              <button type="button" class="icon-btn" data-week="1" aria-label={b.nextWeek}><span aria-hidden="true">›</span></button>
+            </div>
+          </div>
+          <div class="days" data-days role="group" aria-label={b.chooseDay}></div>
+          <h3 class="times-title">{b.chooseTime}</h3>
+          <div class="times" data-times><p class="hint">{b.pickDayFirst}</p></div>
+          <button type="button" class="link-btn" data-back="0">{b.back}</button>
+        </div>
+
+        <div class="panel" data-panel="2" hidden>
+          <h2 tabindex="-1">{b.yourDetails}</h2>
+          <p class="hint">{b.detailsHint}</p>
+          <form class="details" data-form novalidate>
+            <div class="field">
+              <label for="bk-name">{b.name}</label>
+              <input id="bk-name" name="name" autocomplete="name" required minlength="2" maxlength="80" enterkeyhint="next" />
+            </div>
+            <div class="field">
+              <label for="bk-phone">{b.phone}</label>
+              <input id="bk-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" dir="ltr" aria-describedby="bk-phone-hint" enterkeyhint="next" />
+              <p class="hint small" id="bk-phone-hint">{b.phoneHint}</p>
+            </div>
+            <fieldset class="field">
+              <legend>{b.visitType}</legend>
+              <div class="choices">
+                {Object.entries(b.visitTypes).map(([k, v], i) => (
+                  <label class="choice"><input type="radio" name="visit_type" value={k} checked={i === 0} /><span>{v}</span></label>
+                ))}
+              </div>
+            </fieldset>
+            <div class="field">
+              <label for="bk-heard">{b.howHeard} <span class="opt">{b.howHeardOptional}</span></label>
+              <select id="bk-heard" name="how_heard">
+                {Object.entries(b.howHeardOptions).map(([k, v]) => <option value={k}>{v}</option>)}
+              </select>
+            </div>
+            <label class="consent"><input type="checkbox" name="consent" required /><span set:html={b.consent} /></label>
+            <p class="form-error" data-error role="alert" hidden></p>
+            <div class="form-actions">
+              <button type="submit" class="btn btn--solid" data-submit>{b.submit}</button>
+              <button type="button" class="link-btn" data-back="1">{b.back}</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel done" data-panel="3" hidden>
+          <div class="done-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></div>
+          <h2 tabindex="-1">{b.doneTitle}</h2>
+          <p>{b.doneText}</p>
+          <div class="ref-box"><span>{b.reference}</span><strong data-ref dir="ltr"></strong></div>
+          <p class="hint small">{b.keepRef}</p>
+          <div class="done-actions">
+            <a class="btn" data-ics download="uroclinic-appointment.ics">{b.addCalendar}</a>
+            <a class="btn" data-wa hidden target="_blank" rel="noopener noreferrer">{b.whatsapp}</a>
+            <button type="button" class="link-btn" data-restart>{b.bookAnother}</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="summary" aria-label={b.summary}>
+        <h2>{b.summary}</h2>
+        <dl>
+          <div><dt>{b.location}</dt><dd data-sum="location">{b.notChosen}</dd></div>
+          <div><dt>{b.date}</dt><dd data-sum="date">{b.notChosen}</dd></div>
+          <div><dt>{b.time}</dt><dd data-sum="time">{b.notChosen}</dd></div>
+        </dl>
+        <p class="emergency">{b.emergency}</p>
+        <p class="small"><a href={href(lang, 'refunds')}>{ar ? 'الإلغاء والتعديل' : 'Changing or cancelling'}</a></p>
+      </aside>
+    </div>
+    <noscript><div class="container"><p class="form-error">{ar ? 'يتطلب الحجز تفعيل JavaScript.' : 'Booking requires JavaScript.'}</p></div></noscript>
+  </section>
+</Base>
+
+<script>
+  import { initBooking } from '../lib/booking/ui';
+  initBooking();
+</script>

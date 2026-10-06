@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { href, ui, type Lang } from '../i18n/ui';
+import { topics, type ContentPage } from '../content/pages';
+
+interface Props { lang: Lang; page: ContentPage }
+const { lang, page } = Astro.props;
+const t = ui[lang];
+const p = page[lang];
+---
+
+<Base lang={lang} path={page.slug} title={p.title}>
+  <section class="page-intro">
+    <div class="container">
+      <h1>{p.title}</h1>
+      {p.lead && <p>{p.lead}</p>}
+      {page.legal && <p class="draft">{t.reviewDraft}</p>}
+    </div>
+  </section>
+  {page.slug === 'treatments' ? (
+    <section class="topic-rows">
+      <div class="container">
+        {topics.map((tp) => (
+          <a class="topic-row" href={href(lang, `treatments/${tp.slug}`)}>
+            <h2>{tp[lang][0]}</h2>
+            <p>{tp[lang][1]}</p>
+            <span aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  ) : (
+    <div class="container"><div class="prose" set:html={p.body} /></div>
+  )}
+  {page.closing && (
+    <section class="closing">
+      <div class="container">
+        <h2>{t.closing.title}</h2>
+        <p>{t.closing.text}</p>
+        <a class="btn btn--light" href={href(lang, 'appointments')}>{t.closing.cta}</a>
+      </div>
+    </section>
+  )}
+</Base>

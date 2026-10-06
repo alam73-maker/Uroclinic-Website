@@ -1,0 +1,22 @@
+---
+interface Props { sub: string; href: string }
+const { sub, href } = Astro.props;
+---
+
+<a class="brand" href={href} dir="ltr">
+  <svg class="brand-mark" viewBox="0 0 40 52" aria-hidden="true">
+    <circle cx="13" cy="10" r="9" fill="#5e8f91" />
+    <circle cx="27" cy="22" r="9" fill="currentColor" class="mark-mid" />
+    <circle cx="13" cy="34" r="9" fill="#9cc5c6" />
+    <circle cx="25" cy="44" r="7" fill="#5e8f91" />
+  </svg>
+  <span class="brand-words">
+    <span class="brand-name"><b>URO</b>CLINIC</span>
+    <span class="brand-sub" dir="auto">{sub}</span>
+  </span>
+</a>
+
+<style>
+  .brand { color: var(--navy); }
+  :global(.site-footer) .brand { color: var(--white); }
+</style>

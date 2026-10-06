@@ -1,0 +1,15 @@
+---
+import ContentPage from '../components/ContentPage.astro';
+import { pages } from '../content/pages';
+
+export function getStaticPaths() {
+  return pages.flatMap((page) => [
+    { params: { slug: page.slug }, props: { page, lang: 'ar' as const } },
+    { params: { slug: `en/${page.slug}` }, props: { page, lang: 'en' as const } },
+  ]);
+}
+
+const { page, lang } = Astro.props;
+---
+
+<ContentPage lang={lang} page={page} />

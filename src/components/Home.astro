@@ -1,0 +1,183 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from './Photo.astro';
+import Icon from './Icon.astro';
+import { href, ui, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+const ar = lang === 'ar';
+const pp = (s: string) => `${s} · ${t.photoPending}`;
+
+const c = ar
+  ? {
+      heroAccent: 'استشارات المسالك البولية',
+      heroRest: 'مع د. طارق عثمان',
+      statement: 'صحة البروستاتا واستشارات المسالك البولية',
+      orbits: [
+        ['البروستاتا', 'الصحة والتقييم', 'treatments/prostate-health'],
+        ['رأي ثانٍ', 'مراجعة تقييمك الحالي', 'treatments/second-opinion'],
+        ['المسالك البولية', 'الأسئلة والمخاوف', 'treatments/kidney-urinary-care'],
+        ['زيارتك', 'احجز موعدك', 'appointments'],
+      ],
+      meet: 'تعرّف على د. طارق عثمان',
+      meetList: ['تعرّف على <b>الخلفية المهنية</b> للطبيب', 'اكتشف موضوعات <b>استشارات المسالك البولية</b>', 'جهّز أسئلتك <b>لزيارتك الأولى</b>', 'اقرأ الأبحاث المعتمدة عند توفرها'],
+      meetCta: 'عن د. طارق',
+      intl: 'المرضى الدوليون',
+      intlList: ['تواصل مع العيادة <b>قبل ترتيب السفر</b>', 'أكّد <b>موعدك والفرع</b>', 'اسأل عن الطريقة الآمنة لمشاركة تقاريرك', 'ناقش الترتيبات العملية لزيارتك'],
+      intlCta: 'خطّط لزيارتك',
+      bannerAccent: 'استعد لاستشارتك.',
+      bannerRest: 'وجهّز أسئلتك.',
+      spec: 'تخصصنا',
+      specList: ['معلومات استشارات <b>صحة البروستاتا</b>', '<b>رأي ثانٍ</b> في تقييم سابق', 'مشكلات <b>الكلى والمسالك البولية</b>', 'أسئلة تناقشها في استشارة فردية'],
+      specCta: 'استكشف الموضوعات',
+      videos: 'فيديوهات عن خبرتنا',
+      videosText: 'ستظهر هنا فيديوهات توعية المرضى والنقاشات المهنية بعد مراجعتها. تصفّح المكتبة وجهّز أسئلتك لاستشارتك.',
+      videosCta: 'شاهد الفيديوهات',
+      cards: [
+        ['تصفّح مكتبة الفيديوهات', 'مكتبة الفيديوهات', 'videos'],
+        ['احجز استشارتك الأولى', 'احجز موعدك', 'appointments'],
+        ['استعد لزيارتك', 'معلومات الزيارة', 'international-patients'],
+      ],
+      ph: { hero: 'صورة العيادة', doctor: 'د. طارق في غرفة العمليات', banner: 'د. طارق', clinical: 'صورة طبية', video: 'لقطة فيديو' },
+      map: 'خريطة العالم',
+      play: 'افتح مكتبة الفيديوهات',
+    }
+  : {
+      heroAccent: 'Urology consultations',
+      heroRest: 'with Dr. Tarek Osman',
+      statement: 'Prostate Health & Urology Consultations',
+      orbits: [
+        ['Prostate', 'Health & assessment', 'treatments/prostate-health'],
+        ['Second', 'Opinions & consultation', 'treatments/second-opinion'],
+        ['Urinary', 'Questions & concerns', 'treatments/kidney-urinary-care'],
+        ['Your visit', 'Book an appointment', 'appointments'],
+      ],
+      meet: 'Meet Dr. Tarek Osman',
+      meetList: ['Learn about the doctor’s <b>professional background</b>', 'Explore <b>urology consultation</b> topics', 'Prepare questions for your <b>first visit</b>', 'Read approved research when available'],
+      meetCta: 'About Dr. Tarek',
+      intl: 'International Patients',
+      intlList: ['Contact the clinic <b>before making travel plans</b>', 'Confirm your <b>appointment and location</b>', 'Ask how to share existing reports securely', 'Discuss practical arrangements for your visit'],
+      intlCta: 'Plan your visit',
+      bannerAccent: 'Prepare for your consultation.',
+      bannerRest: 'Make room for your questions.',
+      spec: 'Our Speciality',
+      specList: ['<b>Prostate health</b> consultation information', '<b>Second opinions</b> on an existing assessment', '<b>Kidney and urinary</b> concerns', 'Questions to discuss at an individual consultation'],
+      specCta: 'Explore care topics',
+      videos: 'Videos About Our Expertise',
+      videosText: 'Patient education and professional discussions will appear here after review. Explore the library and prepare questions for your consultation.',
+      videosCta: 'Watch our videos',
+      cards: [
+        ['Explore our video library', 'See the library', 'videos'],
+        ['Book your first consultation', 'Book your appointment', 'appointments'],
+        ['Prepare for your visit', 'Visit information', 'international-patients'],
+      ],
+      ph: { hero: 'Clinic photography', doctor: 'Dr. Tarek in theatre', banner: 'Dr. Tarek', clinical: 'Clinical photography', video: 'Video still' },
+      map: 'World map',
+      play: 'Open the video library',
+    };
+
+const R = 112;
+const C = 2 * Math.PI * R;
+const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, frac]) => {
+  const end = ((start + frac * 360) * Math.PI) / 180;
+  return { start, dash: `${(frac * C).toFixed(1)} ${C.toFixed(1)}`, x: (120 + R * Math.cos(end)).toFixed(1), y: (120 + R * Math.sin(end)).toFixed(1) };
+});
+---
+
+<Base lang={lang}>
+  <section class="hero">
+    <Photo label={pp(c.ph.hero)} tone="mist" />
+    <div class="hero-panel">
+      <p class="hero-title"><span>{c.heroAccent}</span>{c.heroRest}</p>
+      <a class="btn btn--solid" href={href(lang, 'appointments')}>{t.book}</a>
+    </div>
+  </section>
+
+  <section class="statement">
+    <div class="container"><h1>{c.statement}</h1></div>
+  </section>
+
+  <section class="orbits" aria-label={ar ? 'موضوعات الاستشارة' : 'Consultation topics'}>
+    <div class="container">
+      {c.orbits.map(([title, sub, to], i) => (
+        <a class="orbit" href={href(lang, to)}>
+          <svg viewBox="0 0 240 240" aria-hidden="true">
+            <circle cx="120" cy="120" r={R} class="ring-dash" />
+            <circle cx="120" cy="120" r={R} class="ring-arc" stroke-dasharray={rings[i].dash} transform={`rotate(${rings[i].start} 120 120)`} />
+            <circle cx={rings[i].x} cy={rings[i].y} r="9" class="ring-dot" />
+          </svg>
+          <span class="orbit-in"><strong>{title}</strong><span>{sub}</span></span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="split">
+    <div class="split-media">
+      <Photo label={pp(c.ph.doctor)} />
+      <span class="tab tab--out"><Icon name="doctor" /></span>
+    </div>
+    <div class="split-copy">
+      <h2>{c.meet}</h2>
+      <ul class="chev-list">{c.meetList.map((li) => <li set:html={li} />)}</ul>
+      <a class="btn" href={href(lang, 'about')}>{c.meetCta}</a>
+    </div>
+  </section>
+
+  <section class="split split--rev">
+    <div class="split-copy">
+      <h2>{c.intl}</h2>
+      <ul class="chev-list">{c.intlList.map((li) => <li set:html={li} />)}</ul>
+      <a class="btn" href={href(lang, 'international-patients')}>{c.intlCta}</a>
+    </div>
+    <div class="split-media map-panel">
+      <img src="/world-map.svg" alt={c.map} width="960" height="470" loading="lazy" decoding="async" />
+      <span class="map-ring" aria-hidden="true"></span>
+      <span class="tab tab--in-end"><Icon name="globe" /></span>
+    </div>
+  </section>
+
+  <section class="banner">
+    <Photo label={pp(c.ph.banner)} tone="navy" />
+    <div class="banner-panel">
+      <p><span>{c.bannerAccent}</span>{c.bannerRest}</p>
+      <small>{t.doctor}</small>
+    </div>
+  </section>
+
+  <section class="split split--inset">
+    <div class="split-media">
+      <span class="tab tab--start"><Icon name="stethoscope" /></span>
+      <Photo label={pp(c.ph.clinical)} tone="teal" />
+    </div>
+    <div class="split-copy">
+      <h2>{c.spec}</h2>
+      <ul class="chev-list">{c.specList.map((li) => <li set:html={li} />)}</ul>
+      <a class="btn" href={href(lang, 'treatments')}>{c.specCta}</a>
+    </div>
+  </section>
+
+  <section class="split split--rev">
+    <div class="split-copy">
+      <h2>{c.videos}</h2>
+      <p class="lead">{c.videosText}</p>
+      <a class="btn" href={href(lang, 'videos')}>{c.videosCta}</a>
+    </div>
+    <div class="split-media">
+      <Photo label={pp(c.ph.video)} tone="mist" play={c.play} playHref={href(lang, 'videos')} />
+    </div>
+  </section>
+
+  <section class="cards">
+    <div class="container">
+      {c.cards.map(([title, cta, to], i) => (
+        <div class:list={['card', { 'card--main': i === 1 }]}>
+          <h3>{title}</h3>
+          <a class:list={['btn', { 'btn--solid': i === 1 }]} href={href(lang, to)}>{cta}</a>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>
