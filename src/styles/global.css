@@ -225,3 +225,5 @@ html[dir='rtl'] .topic-row span { transform: scaleX(-1); }
   @view-transition { navigation: none; }
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }
+.photo--real picture, .photo--real img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.photo--real img { object-fit: cover; object-position: center; }
