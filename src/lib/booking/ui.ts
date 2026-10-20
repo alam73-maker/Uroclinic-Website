@@ -20,7 +20,8 @@ export async function initBooking() {
   const errorEl = q('[data-error]');
   const submit = q<HTMLButtonElement>('[data-submit]');
 
-  let api: PublicApi;
+  let apiRef: PublicApi | undefined;
+  const getApi = async () => (apiRef ??= await publicApi());
   let locations: Location[] = [];
   let slots: Slot[] = [];
   let loc: Location | null = null;
@@ -129,6 +130,7 @@ export async function initBooking() {
   async function loadData() {
     const from = new Date().toISOString();
     const to = cairoToDate(addDays(today(), WINDOW_DAYS), 0).toISOString();
+    const api = await getApi();
     [locations, slots] = await Promise.all([api.listLocations(), api.listOpenSlots(from, to)]);
     const now = Date.now() + 30 * 60e3;
     slots = slots.filter((s) => Date.parse(s.starts_at) > now);
@@ -164,7 +166,7 @@ export async function initBooking() {
     const a = getAttribution();
     try {
       const chosen = slot;
-      const res = await api.book({
+      const res = await (await getApi()).book({
         slot_id: chosen.id, name, phone, visit_type: (fd.get('visit_type') as VisitType) ?? 'first', lang, consent: true,
         how_heard: (fd.get('how_heard') as string) || null, ...a,
       });
@@ -212,14 +214,24 @@ export async function initBooking() {
     if (loc) pickLocation(loc); else go(0);
   });
 
-  try {
-    api = await publicApi();
-    if (api.demo) q('[data-demo]').hidden = false;
-    await loadData();
-    renderLocations();
-    summary();
-    if (locations.length === 1) pickLocation(locations[0]);
-  } catch {
-    fill(q('[data-locations]'), h('p', { class: 'form-error' }, t.errors.load));
+  async function start() {
+    fill(q('[data-locations]'), h('p', { class: 'loading' }, t.loading));
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        if ((await getApi()).demo) q('[data-demo]').hidden = false;
+        await loadData();
+        renderLocations();
+        summary();
+        if (locations.length === 1) pickLocation(locations[0]);
+        return;
+      } catch {
+        await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
+      }
+    }
+    fill(q('[data-locations]'),
+      h('p', { class: 'form-error', role: 'alert' }, t.errors.load),
+      h('button', { type: 'button', class: 'btn', onclick: () => void start() }, t.retry));
   }
+
+  void start();
 }
