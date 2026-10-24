@@ -140,7 +140,7 @@ html[lang='ar'] .hero-title { line-height: 1.45; font-weight: 600; }
 .split-copy h2 { font-size: clamp(2rem, 3.4vw, 3.125rem); }
 .split-copy .lead { font-size: clamp(1.0625rem, 1.3vw, 1.1875rem); color: var(--ink-70); line-height: 1.75; max-width: 46ch; }
 .split--inset .split-media > .photo { inset-inline-start: var(--tab); top: clamp(40px, 5vw, 72px); }
-.tab { position: absolute; z-index: 2; width: var(--tab); height: var(--tab); background: var(--teal); color: var(--white); display: grid; place-items: center; }
+.tab { position: absolute; z-index: 2; width: var(--tab); height: var(--tab); background: #a9cdcd; color: var(--navy); display: grid; place-items: center; }
 .tab svg { width: 54%; height: 54%; }
 .tab--out { inset-inline-end: calc(-1 * var(--tab)); top: 44%; }
 .tab--in-end { inset-inline-end: 0; top: 46%; }
