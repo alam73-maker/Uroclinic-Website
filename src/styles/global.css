@@ -346,8 +346,8 @@ html[dir='rtl'] .tm-link span { transform: scaleX(-1); display: inline-block; }
 }
 
 .page-intro--media { padding-block: clamp(32px, 4vw, 56px); }
-.page-intro--media + .pubs { padding-top: clamp(32px, 4vw, 48px); }
+.page-intro--media + :is(.pubs, .tm-wall) { padding-top: clamp(32px, 4vw, 48px); }
 .page-intro--media .container { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
 .page-figure { margin: 0; }
-.page-figure img { width: 100%; height: auto; aspect-ratio: 1448 / 740; object-fit: cover; }
+.page-figure img { width: 100%; height: auto; }
 @media (max-width: 900px) { .page-intro--media .container { grid-template-columns: 1fr; } }
