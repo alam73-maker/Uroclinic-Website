@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Photo from './Photo.astro';
 import Icon from './Icon.astro';
+import YouTube from './YouTube.astro';
+import { videos } from '../content/videos';
 import { href, ui, type Lang } from '../i18n/ui';
 
 interface Props { lang: Lang }
@@ -33,8 +35,9 @@ const c = ar
       specList: ['<b>أورام المسالك البولية</b>: البروستاتا والمثانة والكلى', 'جراحات المسالك البولية <b>بالروبوت والمنظار</b>', '<b>اضطرابات التبول</b> ومسالك السيدات', 'جراحات <b>إعادة البناء</b> و<b>الرأي الثاني</b>'],
       specCta: 'استكشف الموضوعات',
       videos: 'فيديوهات عن خبرتنا',
-      videosText: 'ستظهر هنا فيديوهات توعية المرضى والنقاشات المهنية بعد مراجعتها. تصفّح المكتبة وجهّز أسئلتك لاستشارتك.',
-      videosCta: 'شاهد الفيديوهات',
+      videosText: 'شروحات قصيرة من أ.د. طارق عثمان عن مشكلات المسالك البولية الشائعة وطرق علاجها.',
+      videosCta: 'كل الفيديوهات',
+      latest: 'أحدث فيديو',
       cards: [
         ['تصفّح مكتبة الفيديوهات', 'مكتبة الفيديوهات', 'videos'],
         ['احجز استشارتك الأولى', 'احجز موعدك', 'appointments'],
@@ -66,8 +69,9 @@ const c = ar
       specList: ['<b>Uro-oncology</b>: prostate, bladder and kidney cancer', '<b>Robotic and laparoscopic</b> urological surgery', '<b>Voiding dysfunction</b> and female urology', '<b>Reconstructive</b> urology and <b>second opinions</b>'],
       specCta: 'Explore care topics',
       videos: 'Videos About Our Expertise',
-      videosText: 'Patient education and professional discussions will appear here after review. Explore the library and prepare questions for your consultation.',
-      videosCta: 'Watch our videos',
+      videosText: 'Short explanations from Prof. Dr. Tarek Osman on common urology conditions and how they are treated.',
+      videosCta: 'All videos',
+      latest: 'Latest video',
       cards: [
         ['Explore our video library', 'See the library', 'videos'],
         ['Book your first consultation', 'Book your appointment', 'appointments'],
@@ -163,10 +167,13 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
     <div class="split-copy">
       <h2>{c.videos}</h2>
       <p class="lead">{c.videosText}</p>
+      {videos[0] && <p class="video-latest"><span>{c.latest}</span>{videos[0].title[lang]}</p>}
       <a class="btn" href={href(lang, 'videos')}>{c.videosCta}</a>
     </div>
     <div class="split-media">
-      <Photo label={pp(c.ph.video)} tone="mist" play={c.play} playHref={href(lang, 'videos')} src="/photos/video" width={1600} height={1200} alt={ar ? 'كاميرا تصوير جاهزة لتسجيل فيديو طبي' : 'Camera set up to record a medical video'} />
+      {videos[0] ? <YouTube video={videos[0]} lang={lang} fill /> : (
+        <Photo label={pp(c.ph.video)} tone="mist" play={c.play} playHref={href(lang, 'videos')} src="/photos/video" width={1600} height={1200} alt={ar ? 'كاميرا تصوير جاهزة لتسجيل فيديو طبي' : 'Camera set up to record a medical video'} />
+      )}
     </div>
   </section>
 

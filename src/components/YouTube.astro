@@ -1,0 +1,20 @@
+---
+import type { Lang } from '../i18n/ui';
+import type { Video } from '../content/videos';
+
+interface Props { video: Video; lang: Lang; fill?: boolean }
+const { video, lang, fill = false } = Astro.props;
+const title = video.title[lang];
+const label = lang === 'ar' ? `تشغيل الفيديو: ${title}` : `Play video: ${title}`;
+---
+
+<div class:list={['yt', { 'yt--fill': fill }]} data-yt={video.id} data-title={title}>
+  <a class="yt-facade" href={`https://www.youtube.com/watch?v=${video.id}`} aria-label={label} target="_blank" rel="noopener">
+    <img src={`https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`} alt="" width="1280" height="720" loading="lazy" decoding="async" />
+    <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg></span>
+  </a>
+</div>
+
+<script>
+  import '../scripts/youtube';
+</script>
