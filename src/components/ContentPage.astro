@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon from './Icon.astro';
 import { href, ui, type Lang } from '../i18n/ui';
 import { topics, type ContentPage } from '../content/pages';
 import { physicianJsonLd } from '../content/doctor';
@@ -13,31 +14,35 @@ interface Props { lang: Lang; page: ContentPage }
 const { lang, page } = Astro.props;
 const t = ui[lang];
 const p = page[lang];
-const figures: Record<string, { src: string; w: number; h: number; alt: Record<Lang, string> }> = {
-  research: { src: '/photos/certificates', w: 1448, h: 740, alt: { ar: 'شهادات أ.د. طارق عثمان من مؤتمرات المسالك البولية معلّقة على جدار العيادة', en: 'Prof. Dr. Tarek Osman’s certificates from urology meetings, framed on the clinic wall' } },
-  'patient-stories': { src: '/photos/consult-room', w: 1086, h: 724, alt: { ar: 'غرفة الكشف في عيادة أ.د. طارق عثمان', en: 'The consultation room at Prof. Dr. Tarek Osman’s clinic' } },
+const figures: Record<string, { src: string; w: number; h: number; icon: 'book' | 'quote'; pos?: string; alt: Record<Lang, string> }> = {
+  research: { src: '/photos/certificates', w: 1448, h: 740, icon: 'book', alt: { ar: 'شهادات أ.د. طارق عثمان من مؤتمرات المسالك البولية معلّقة على جدار العيادة', en: 'Prof. Dr. Tarek Osman’s certificates from urology meetings, framed on the clinic wall' } },
+  'patient-stories': { src: '/photos/consult-room', w: 1086, h: 724, icon: 'quote', pos: '45% 60%', alt: { ar: 'غرفة الكشف في عيادة أ.د. طارق عثمان', en: 'The consultation room at Prof. Dr. Tarek Osman’s clinic' } },
 };
 const fig = figures[page.slug];
 ---
 
 <Base lang={lang} path={page.slug} title={p.title} description={p.lead || undefined}>
   {page.slug === 'about' && <script type="application/ld+json" is:inline set:html={physicianJsonLd} slot="head" />}
-  {page.slug === 'about' ? <DoctorProfile lang={lang} /> : (
-  <section class:list={['page-intro', { 'page-intro--media': !!fig }]}>
+  {page.slug === 'about' ? <DoctorProfile lang={lang} /> : fig ? (
+  <section class="intro-split">
+    <div class="intro-split__copy">
+      <h1>{p.title}</h1>
+      {p.lead && <p>{p.lead}</p>}
+    </div>
+    <div class="intro-split__media">
+      <picture>
+        <source srcset={`${fig.src}.webp`} type="image/webp" />
+        <img src={`${fig.src}.jpg`} alt={fig.alt[lang]} width={fig.w} height={fig.h} decoding="async" fetchpriority="high" data-pos={page.slug} />
+      </picture>
+      <span class="tab intro-split__tab"><Icon name={fig.icon} /></span>
+    </div>
+  </section>
+  ) : (
+  <section class="page-intro">
     <div class="container">
-      <div>
-        <h1>{p.title}</h1>
-        {p.lead && <p>{p.lead}</p>}
-        {page.legal && <p class="draft">{t.reviewDraft}</p>}
-      </div>
-      {fig && (
-        <figure class="page-figure">
-          <picture>
-            <source srcset={`${fig.src}.webp`} type="image/webp" />
-            <img src={`${fig.src}.jpg`} alt={fig.alt[lang]} width={fig.w} height={fig.h} decoding="async" fetchpriority="high" />
-          </picture>
-        </figure>
-      )}
+      <h1>{p.title}</h1>
+      {p.lead && <p>{p.lead}</p>}
+      {page.legal && <p class="draft">{t.reviewDraft}</p>}
     </div>
   </section>
   )}

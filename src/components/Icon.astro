@@ -1,9 +1,21 @@
 ---
-interface Props { name: 'doctor' | 'globe' | 'stethoscope' }
+interface Props { name: 'doctor' | 'globe' | 'stethoscope' | 'quote' | 'book' }
 const { name } = Astro.props;
 ---
 
 <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {name === 'quote' && (
+    <>
+      <path d="M8 10h32a2 2 0 0 1 2 2v20a2 2 0 0 1-2 2H22l-9 7v-7H8a2 2 0 0 1-2-2V12a2 2 0 0 1 2-2z" />
+      <path d="M17 19h-2v5h4v-2M27 19h-2v5h4v-2" />
+    </>
+  )}
+  {name === 'book' && (
+    <>
+      <path d="M24 12c-4-3-10-4-16-3v28c6-1 12 0 16 3 4-3 10-4 16-3V9c-6-1-12 0-16 3z" />
+      <path d="M24 12v28M13 17h6M13 23h6M29 17h6M29 23h6" />
+    </>
+  )}
   {name === 'doctor' && (
     <>
       <path d="M16 12a8 8 0 0 1 16 0v4a8 8 0 0 1-16 0z" />
