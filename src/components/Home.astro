@@ -92,7 +92,12 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
 
 <Base lang={lang}>
   <section class="hero">
-    <Photo label={pp(c.ph.hero)} tone="mist" src="/photos/hero" width={2400} height={1350} eager alt={ar ? 'سماعة طبية على سطح أبيض' : 'Stethoscope on a white surface'} />
+    <div class="photo photo--real hero-video">
+      <video autoplay muted loop playsinline preload="auto" poster="/video/hero-poster.jpg" aria-hidden="true" disablepictureinpicture data-hero-video>
+        <source media="(max-width: 700px)" src="/video/hero-m.mp4" type="video/mp4" />
+        <source src="/video/hero.mp4" type="video/mp4" />
+      </video>
+    </div>
     <div class="hero-panel">
       <p class="hero-title"><span>{c.heroAccent}</span>{c.heroRest}</p>
       <a class="btn btn--solid" href={href(lang, 'appointments')}>{t.book}</a>
@@ -188,3 +193,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
     </div>
   </section>
 </Base>
+
+<script>
+  import '../scripts/hero-video';
+</script>

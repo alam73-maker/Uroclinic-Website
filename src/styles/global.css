@@ -306,3 +306,8 @@ html[dir='rtl'] .meetings li span, html[dir='rtl'] .pub-year li { text-align: le
 .video-card h2 { margin-top: 1rem; font-size: 1.1875rem; line-height: 1.4; }
 .video-latest { margin-top: -0.5rem; font-weight: 600; color: var(--navy); }
 .video-latest span { display: block; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal-ink); }
+
+.hero-video { position: absolute; inset: 0; background: var(--navy-deep); }
+.hero-video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 30%; }
+[dir="rtl"] .hero-video video { transform: scaleX(-1); }
+@media (max-width: 700px) { .hero-video video { object-position: 50% 20%; } }
