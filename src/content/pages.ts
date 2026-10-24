@@ -44,8 +44,8 @@ export const pages: ContentPage[] = [
   {
     slug: 'patient-stories',
     closing: true,
-    ar: { title: 'تجارب المرضى.', lead: 'الخصوصية ودقة المعلومات أولًا.', body: '<h2>لا توجد شهادات منشورة</h2><p>لا يحتوي هذا الموقع على تقييمات أو آراء مرضى أو صور قبل وبعد أو نسب نجاح.</p>' },
-    en: { title: 'Patient experiences.', lead: 'Privacy and accurate information come first.', body: '<h2>No testimonials are published</h2><p>This website contains no patient reviews, ratings, before-and-after images or claimed success rates.</p>' },
+    ar: { title: 'تجارب المرضى.', lead: 'رسائل شكر أرسلها المرضى وأسرهم إلى عيادة أ.د. طارق عثمان.', body: '' },
+    en: { title: 'Patient experiences.', lead: 'Thank-you messages sent by patients and their families to Prof. Dr. Tarek Osman’s clinic.', body: '' },
   },
   {
     slug: 'treatments',

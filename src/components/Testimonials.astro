@@ -1,0 +1,45 @@
+---
+import type { Lang } from '../i18n/ui';
+import { testimonials, themes, whoLabel } from '../content/testimonials';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ar = lang === 'ar';
+const featured = testimonials.filter((t) => t.quote);
+const note = ar
+  ? 'رسائل أرسلها المرضى وأسرهم إلى العيادة، ننشرها دون أسماء. تُرجمت بين العربية والإنجليزية. تجربة كل مريض فردية.'
+  : 'Messages sent to the clinic by patients and their families, published without names and translated between Arabic and English. Every patient’s experience is individual.';
+---
+
+<section class="tm-featured" aria-label={ar ? 'مقتطفات' : 'Highlights'}>
+  <div class="container">
+    <ul>
+      {featured.map((t) => (
+        <li>
+          <blockquote><p>{ar ? `«${t.quote![lang]}»` : `“${t.quote![lang]}”`}</p></blockquote>
+          <span>{whoLabel[t.who][lang]}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<div class="container tm-body">
+  <nav class="tm-themes" aria-label={ar ? 'المواضيع' : 'Themes'}>
+    {themes.map((th) => <a href={`#${th.id}`}>{th.title[lang]} <span>{testimonials.filter((t) => t.theme === th.id).length}</span></a>)}
+  </nav>
+  {themes.map((th) => (
+    <section id={th.id} class="tm-theme">
+      <h2>{th.title[lang]}</h2>
+      <div class="tm-grid">
+        {testimonials.filter((t) => t.theme === th.id).map((t) => (
+          <figure class="tm-card">
+            <blockquote><p>{t[lang]}</p></blockquote>
+            <figcaption>{whoLabel[t.who][lang]}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  ))}
+  <p class="tm-note">{note}</p>
+</div>

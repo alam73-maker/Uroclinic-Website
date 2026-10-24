@@ -1,0 +1,31 @@
+---
+import { href, type Lang } from '../i18n/ui';
+import { testimonials, whoLabel } from '../content/testimonials';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ar = lang === 'ar';
+const picks = testimonials.filter((t) => t.quote).slice(0, 3);
+const s = ar
+  ? { h: 'بكلمات المرضى وأسرهم', sub: `${testimonials.length} رسالة شكر وصلت إلى العيادة.`, cta: 'اقرأ كل التجارب' }
+  : { h: 'In the words of patients and families', sub: `${testimonials.length} thank-you messages sent to the clinic.`, cta: 'Read all experiences' };
+---
+
+<section class="tm-home">
+  <div class="container">
+    <header>
+      <h2>{s.h}</h2>
+      <p>{s.sub}</p>
+    </header>
+    <div class="tm-home__grid">
+      {picks.map((t) => (
+        <figure class="tm-card tm-card--home">
+          <p class="tm-pull">{ar ? `«${t.quote![lang]}»` : `“${t.quote![lang]}”`}</p>
+          <blockquote><p>{t[lang]}</p></blockquote>
+          <figcaption>{whoLabel[t.who][lang]}</figcaption>
+        </figure>
+      ))}
+    </div>
+    <a class="btn" href={href(lang, 'patient-stories')}>{s.cta}</a>
+  </div>
+</section>

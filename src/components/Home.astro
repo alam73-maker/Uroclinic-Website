@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Photo from './Photo.astro';
 import Icon from './Icon.astro';
 import YouTube from './YouTube.astro';
+import HomeTestimonials from './HomeTestimonials.astro';
 import { videos } from '../content/videos';
 import { href, ui, type Lang } from '../i18n/ui';
 
@@ -181,6 +182,8 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
       )}
     </div>
   </section>
+
+  <HomeTestimonials lang={lang} />
 
   <section class="cards">
     <div class="container">

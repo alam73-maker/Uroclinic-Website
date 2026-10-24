@@ -6,6 +6,7 @@ import { physicianJsonLd } from '../content/doctor';
 import DoctorProfile from './DoctorProfile.astro';
 import Publications from './Publications.astro';
 import YouTube from './YouTube.astro';
+import Testimonials from './Testimonials.astro';
 import { videos } from '../content/videos';
 
 interface Props { lang: Lang; page: ContentPage }
@@ -25,7 +26,7 @@ const p = page[lang];
     </div>
   </section>
   )}
-  {page.slug === 'about' ? null : page.slug === 'research' ? <Publications lang={lang} /> : page.slug === 'videos' ? (
+  {page.slug === 'about' ? null : page.slug === 'research' ? <Publications lang={lang} /> : page.slug === 'patient-stories' ? <Testimonials lang={lang} /> : page.slug === 'videos' ? (
     <div class="container video-grid">{videos.map((v) => <article class="video-card"><YouTube video={v} lang={lang} /><h2>{v.title[lang]}</h2></article>)}</div>
   ) : page.slug === 'treatments' ? (
     <section class="topic-rows">
