@@ -88,7 +88,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
 
 <Base lang={lang}>
   <section class="hero">
-    <Photo label={pp(c.ph.hero)} tone="mist" />
+    <Photo label={pp(c.ph.hero)} tone="mist" src="/photos/hero" width={2400} height={1350} eager alt={ar ? 'زوجان كبيران في السن يبتسمان على الشاطئ' : 'Smiling older couple embracing on the beach'} />
     <div class="hero-panel">
       <p class="hero-title"><span>{c.heroAccent}</span>{c.heroRest}</p>
       <a class="btn btn--solid" href={href(lang, 'appointments')}>{t.book}</a>
@@ -140,7 +140,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
   </section>
 
   <section class="banner">
-    <Photo label={pp(c.ph.banner)} tone="navy" src="/photos/banner" width={1920} height={900} alt={ar ? 'ممر مستشفى مضيء' : 'Bright hospital corridor'} />
+    <Photo label={pp(c.ph.banner)} tone="navy" src="/photos/banner" width={2400} height={1125} alt={ar ? 'طبيب يمسك يدي مريض باطمئنان' : 'Doctor reassuringly holding a patient’s hands'} />
     <div class="banner-panel">
       <p><span>{c.bannerAccent}</span>{c.bannerRest}</p>
       <small>{t.doctor}</small>
@@ -150,7 +150,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
   <section class="split split--inset">
     <div class="split-media">
       <span class="tab tab--start"><Icon name="stethoscope" /></span>
-      <Photo label={pp(c.ph.clinical)} tone="teal" src="/photos/speciality" alt={ar ? 'غرفة عمليات مجهزة لجراحات المسالك البولية' : 'Operating room equipped for urological surgery'} />
+      <Photo label={pp(c.ph.clinical)} tone="teal" src="/photos/speciality" width={1400} height={1400} alt={ar ? 'فريق جراحي أثناء عملية في غرفة العمليات' : 'Surgical team operating in theatre'} />
     </div>
     <div class="split-copy">
       <h2>{c.spec}</h2>
@@ -166,7 +166,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
       <a class="btn" href={href(lang, 'videos')}>{c.videosCta}</a>
     </div>
     <div class="split-media">
-      <Photo label={pp(c.ph.video)} tone="mist" play={c.play} playHref={href(lang, 'videos')} />
+      <Photo label={pp(c.ph.video)} tone="mist" play={c.play} playHref={href(lang, 'videos')} src="/photos/video" width={1600} height={1200} alt={ar ? 'استشارة طبية عبر مكالمة فيديو على حاسوب محمول' : 'Video consultation on a laptop'} />
     </div>
   </section>
 

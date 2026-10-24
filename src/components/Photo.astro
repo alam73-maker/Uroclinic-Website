@@ -1,13 +1,13 @@
 ---
-interface Props { label: string; tone?: 'blue' | 'mist' | 'teal' | 'navy'; play?: string; playHref?: string; src?: string; alt?: string; width?: number; height?: number }
-const { label, tone = 'blue', play, playHref, src, alt = '', width = 1200, height = 1200 } = Astro.props;
+interface Props { label: string; tone?: 'blue' | 'mist' | 'teal' | 'navy'; play?: string; playHref?: string; src?: string; alt?: string; width?: number; height?: number; eager?: boolean }
+const { label, tone = 'blue', play, playHref, src, alt = '', width = 1200, height = 1200, eager = false } = Astro.props;
 ---
 
 <div class:list={['photo', tone !== 'blue' && `photo--${tone}`, src && 'photo--real']}>
   {src ? (
     <picture>
       <source srcset={`${src}.webp`} type="image/webp" />
-      <img src={`${src}.jpg`} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
+      <img src={`${src}.jpg`} alt={alt} width={width} height={height} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : undefined} decoding="async" />
     </picture>
   ) : (
     <>
