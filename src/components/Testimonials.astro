@@ -1,45 +1,42 @@
 ---
+import '@fontsource/newsreader/latin-400.css';
+import '@fontsource/newsreader/latin-400-italic.css';
+import '@fontsource/noto-naskh-arabic/arabic-400.css';
 import type { Lang } from '../i18n/ui';
-import { testimonials, themes, whoLabel } from '../content/testimonials';
+import { testimonials, whoLabel, type Testimonial } from '../content/testimonials';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const ar = lang === 'ar';
-const featured = testimonials.filter((t) => t.quote);
+const q = (s: string) => (ar ? `«${s}»` : `“${s}”`);
+const lead = testimonials[1];
+const big = testimonials.filter((t) => t.quote && t !== lead);
+const rest = testimonials.filter((t) => !t.quote);
+const wall: Testimonial[] = [];
+rest.forEach((t, i) => {
+  if (i % 12 === 0 && big[i / 12]) wall.push(big[i / 12]);
+  wall.push(t);
+});
 const note = ar
-  ? 'رسائل أرسلها المرضى وأسرهم إلى العيادة، ننشرها دون أسماء. تُرجمت بين العربية والإنجليزية. تجربة كل مريض فردية.'
-  : 'Messages sent to the clinic by patients and their families, published without names and translated between Arabic and English. Every patient’s experience is individual.';
+  ? 'رسائل أرسلها المرضى وأسرهم إلى العيادة، ننشرها دون أسماء. تجربة كل مريض فردية.'
+  : 'Messages sent to the clinic by patients and their families, shared without names. Every patient’s experience is individual.';
 ---
 
-<section class="tm-featured" aria-label={ar ? 'مقتطفات' : 'Highlights'}>
+<section class="tm-lead">
   <div class="container">
-    <ul>
-      {featured.map((t) => (
-        <li>
-          <blockquote><p>{ar ? `«${t.quote![lang]}»` : `“${t.quote![lang]}”`}</p></blockquote>
-          <span>{whoLabel[t.who][lang]}</span>
-        </li>
-      ))}
-    </ul>
+    <blockquote><p>{q(lead.quote![lang])}</p></blockquote>
+    <p class="tm-lead__full">{lead[lang]}</p>
+    <p class="tm-by">— {whoLabel[lead.who][lang]}</p>
   </div>
 </section>
 
-<div class="container tm-body">
-  <nav class="tm-themes" aria-label={ar ? 'المواضيع' : 'Themes'}>
-    {themes.map((th) => <a href={`#${th.id}`}>{th.title[lang]} <span>{testimonials.filter((t) => t.theme === th.id).length}</span></a>)}
-  </nav>
-  {themes.map((th) => (
-    <section id={th.id} class="tm-theme">
-      <h2>{th.title[lang]}</h2>
-      <div class="tm-grid">
-        {testimonials.filter((t) => t.theme === th.id).map((t) => (
-          <figure class="tm-card">
-            <blockquote><p>{t[lang]}</p></blockquote>
-            <figcaption>{whoLabel[t.who][lang]}</figcaption>
-          </figure>
-        ))}
-      </div>
-    </section>
+<div class="container tm-wall">
+  {wall.map((t) => (
+    <figure class:list={['tm-q', { 'tm-q--big': t.quote }]}>
+      {t.quote && <p class="tm-q__pull">{q(t.quote[lang])}</p>}
+      <blockquote><p>{t[lang]}</p></blockquote>
+      <figcaption class="tm-by">— {whoLabel[t.who][lang]}</figcaption>
+    </figure>
   ))}
-  <p class="tm-note">{note}</p>
 </div>
+<div class="container"><p class="tm-note">{note}</p></div>
