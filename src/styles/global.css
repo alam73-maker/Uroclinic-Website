@@ -167,6 +167,7 @@ html[lang='ar'] .banner-panel p { line-height: 1.5; font-weight: 600; }
 .card--main h3 { color: var(--navy); }
 
 .page-intro { padding-block: clamp(56px, 7vw, 96px) clamp(40px, 5vw, 64px); border-bottom: 1px solid var(--mist); }
+.page-figure + .pubs { padding-top: clamp(48px, 6vw, 80px); }
 .page-intro h1 { font-size: clamp(2.25rem, 4.4vw, 3.5rem); max-width: 20ch; }
 .page-intro p { margin-top: 1.1rem; font-size: clamp(1.125rem, 1.6vw, 1.3125rem); color: var(--ink-70); max-width: 56ch; }
 .page-intro .draft { font-size: 0.9375rem; }
@@ -344,3 +345,5 @@ html[dir='rtl'] .tm-link span { transform: scaleX(-1); display: inline-block; }
   .tm-home__row { grid-template-columns: 1fr; gap: 2.5rem; }
   .tm-home__row .tm-q { padding: 0; border: 0; }
 }
+.page-figure { margin-block: clamp(32px, 4vw, 56px) 0; }
+.page-figure img { width: 100%; height: auto; aspect-ratio: 1448 / 740; object-fit: cover; }

@@ -26,6 +26,14 @@ const p = page[lang];
     </div>
   </section>
   )}
+  {page.slug === 'research' && (
+    <figure class="page-figure container">
+      <picture>
+        <source srcset="/photos/certificates.webp" type="image/webp" />
+        <img src="/photos/certificates.jpg" alt={lang === 'ar' ? 'شهادات أ.د. طارق عثمان من مؤتمرات المسالك البولية معلّقة على جدار العيادة' : 'Prof. Dr. Tarek Osman’s certificates from urology meetings, framed on the clinic wall'} width="1448" height="740" decoding="async" fetchpriority="high" />
+      </picture>
+    </figure>
+  )}
   {page.slug === 'about' ? null : page.slug === 'research' ? <Publications lang={lang} /> : page.slug === 'patient-stories' ? <Testimonials lang={lang} /> : page.slug === 'videos' ? (
     <div class="container video-grid">{videos.map((v) => <article class="video-card"><YouTube video={v} lang={lang} /><h2>{v.title[lang]}</h2></article>)}</div>
   ) : page.slug === 'treatments' ? (
