@@ -9,26 +9,17 @@ interface Props { lang: Lang }
 const { lang } = Astro.props;
 const ar = lang === 'ar';
 const q = (s: string) => (ar ? `«${s}»` : `“${s}”`);
-const lead = testimonials[1];
-const big = testimonials.filter((t) => t.quote && t !== lead);
+const big = testimonials.filter((t) => t.quote);
 const rest = testimonials.filter((t) => !t.quote);
 const wall: Testimonial[] = [];
 rest.forEach((t, i) => {
-  if (i % 12 === 0 && big[i / 12]) wall.push(big[i / 12]);
+  if (i % 9 === 0 && big[i / 9]) wall.push(big[i / 9]);
   wall.push(t);
 });
 const note = ar
   ? 'رسائل أرسلها المرضى وأسرهم إلى العيادة، ننشرها دون أسماء. تجربة كل مريض فردية.'
   : 'Messages sent to the clinic by patients and their families, shared without names. Every patient’s experience is individual.';
 ---
-
-<section class="tm-lead">
-  <div class="container">
-    <blockquote><p>{q(lead.quote![lang])}</p></blockquote>
-    <p class="tm-lead__full">{lead[lang]}</p>
-    <p class="tm-by">— {whoLabel[lead.who][lang]}</p>
-  </div>
-</section>
 
 <div class="container tm-wall">
   {wall.map((t) => (
