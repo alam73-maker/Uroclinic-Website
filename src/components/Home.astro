@@ -88,7 +88,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
 
 <Base lang={lang}>
   <section class="hero">
-    <Photo label={pp(c.ph.hero)} tone="mist" src="/photos/hero" width={2400} height={1350} eager alt={ar ? 'رجل في منتصف العمر يبتسم بثقة في الهواء الطلق' : 'Confident older man smiling outdoors'} />
+    <Photo label={pp(c.ph.hero)} tone="mist" src="/photos/hero" width={2400} height={1350} eager alt={ar ? 'سماعة طبية على سطح أبيض' : 'Stethoscope on a white surface'} />
     <div class="hero-panel">
       <p class="hero-title"><span>{c.heroAccent}</span>{c.heroRest}</p>
       <a class="btn btn--solid" href={href(lang, 'appointments')}>{t.book}</a>
@@ -116,7 +116,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
 
   <section class="split">
     <div class="split-media">
-      <Photo label={pp(c.ph.doctor)} />
+      <Photo label={pp(c.ph.doctor)} src="/photos/doctor" width={1400} height={1400} alt={ar ? 'أ.د. طارق عثمان، استشاري جراحة المسالك البولية' : 'Prof. Dr. Tarek Osman, consultant urologist'} />
       <span class="tab tab--out"><Icon name="doctor" /></span>
     </div>
     <div class="split-copy">
@@ -166,7 +166,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
       <a class="btn" href={href(lang, 'videos')}>{c.videosCta}</a>
     </div>
     <div class="split-media">
-      <Photo label={pp(c.ph.video)} tone="mist" play={c.play} playHref={href(lang, 'videos')} src="/photos/video" width={1600} height={1200} alt={ar ? 'استشارة طبية عبر مكالمة فيديو على حاسوب محمول' : 'Video consultation on a laptop'} />
+      <Photo label={pp(c.ph.video)} tone="mist" play={c.play} playHref={href(lang, 'videos')} src="/photos/video" width={1600} height={1200} alt={ar ? 'كاميرا تصوير جاهزة لتسجيل فيديو طبي' : 'Camera set up to record a medical video'} />
     </div>
   </section>
 
