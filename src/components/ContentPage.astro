@@ -2,6 +2,9 @@
 import Base from '../layouts/Base.astro';
 import { href, ui, type Lang } from '../i18n/ui';
 import { topics, type ContentPage } from '../content/pages';
+import { physicianJsonLd } from '../content/doctor';
+import DoctorProfile from './DoctorProfile.astro';
+import Publications from './Publications.astro';
 
 interface Props { lang: Lang; page: ContentPage }
 const { lang, page } = Astro.props;
@@ -9,7 +12,9 @@ const t = ui[lang];
 const p = page[lang];
 ---
 
-<Base lang={lang} path={page.slug} title={p.title}>
+<Base lang={lang} path={page.slug} title={p.title} description={p.lead || undefined}>
+  {page.slug === 'about' && <script type="application/ld+json" is:inline set:html={physicianJsonLd} slot="head" />}
+  {page.slug === 'about' ? <DoctorProfile lang={lang} /> : (
   <section class="page-intro">
     <div class="container">
       <h1>{p.title}</h1>
@@ -17,7 +22,8 @@ const p = page[lang];
       {page.legal && <p class="draft">{t.reviewDraft}</p>}
     </div>
   </section>
-  {page.slug === 'treatments' ? (
+  )}
+  {page.slug === 'about' ? null : page.slug === 'research' ? <Publications lang={lang} /> : page.slug === 'treatments' ? (
     <section class="topic-rows">
       <div class="container">
         {topics.map((tp) => (

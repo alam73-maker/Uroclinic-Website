@@ -1,0 +1,45 @@
+---
+import type { Lang } from '../i18n/ui';
+import { publications, meetings } from '../content/doctor';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ar = lang === 'ar';
+const years = [...new Set(publications.map((p) => p.year))].sort((a, b) => b - a);
+const fmt = new Intl.DateTimeFormat(ar ? 'ar-EG-u-nu-latn' : 'en-GB', { month: 'short', year: 'numeric' });
+const s = ar
+  ? { pubs: 'الأبحاث المنشورة', count: `${publications.length} بحثًا في مجلات علمية محكّمة`, note: 'تظهر عناوين الأبحاث بلغة نشرها الأصلية.', open: 'اقرأ البحث', meet: 'أنشطة قسم أورام المسالك البولية', meetText: 'مؤتمرات وورش عمل علمية نظّمها قسم الأورام بالجمعية المصرية لجراحة المسالك البولية برئاسة أ.د. طارق عثمان.' }
+  : { pubs: 'Publications', count: `${publications.length} peer-reviewed papers`, note: '', open: 'Read the paper', meet: 'Uro-Oncology Section activities', meetText: 'Scientific meetings and workshops organised by the Uro-Oncology Section of the Egyptian Urologic Association under Prof. Tarek Osman’s presidency.' };
+---
+
+<div class="container pubs">
+  <section aria-labelledby="pubs-h">
+    <header class="pubs-head">
+      <h2 id="pubs-h">{s.pubs}</h2>
+      <p>{s.count}{s.note && <> · {s.note}</>}</p>
+    </header>
+    {years.map((y) => (
+      <div class="pub-year">
+        <h3>{y}</h3>
+        <ol>
+          {publications.filter((p) => p.year === y).map((p) => (
+            <li lang="en" dir="ltr">
+              <p class="pub-title">{p.title}</p>
+              <p class="pub-meta"><i>{p.journal}</i>{p.url && <> · <a href={p.url} rel="noopener" target="_blank" lang={lang}>{s.open} ↗</a></>}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    ))}
+  </section>
+
+  <section class="meetings" aria-labelledby="meet-h">
+    <h2 id="meet-h">{s.meet}</h2>
+    <p class="meetings-text">{s.meetText}</p>
+    <ul>
+      {meetings.map((m) => (
+        <li><time datetime={m.date}>{fmt.format(new Date(`${m.date}-01T12:00:00Z`))}</time><span lang="en" dir="ltr">{m.title}</span></li>
+      ))}
+    </ul>
+  </section>
+</div>

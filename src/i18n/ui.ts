@@ -12,10 +12,11 @@ export const altHref = (lang: Lang, path = '') => href(lang === 'ar' ? 'en' : 'a
 
 export const ui = {
   ar: {
-    brandSub: 'د. طارق عثمان',
-    doctor: 'د. طارق عثمان',
-    titleSuffix: 'د. طارق عثمان | Osman Uroclinic',
-    description: 'استشارات المسالك البولية وصحة البروستاتا مع د. طارق عثمان. احجز موعدك في أقرب فرع.',
+    brandSub: 'أ.د. طارق عثمان',
+    doctor: 'أ.د. طارق عثمان',
+    doctorRole: 'أستاذ ورئيس قسم جراحة المسالك البولية، جامعة عين شمس',
+    titleSuffix: 'أ.د. طارق عثمان | Osman Uroclinic',
+    description: 'استشارات المسالك البولية وأورامها والجراحة بالروبوت مع أ.د. طارق عثمان، أستاذ ورئيس قسم المسالك البولية بجامعة عين شمس. احجز موعدك أونلاين.',
     skip: 'تخطَّ إلى المحتوى',
     menu: 'القائمة',
     close: 'إغلاق',
@@ -38,10 +39,11 @@ export const ui = {
     reviewDraft: 'مسودة للمراجعة · 6 أكتوبر 2026',
   },
   en: {
-    brandSub: 'Dr. Tarek Osman',
-    doctor: 'Dr. Tarek Osman',
-    titleSuffix: 'Dr. Tarek Osman | Osman Uroclinic',
-    description: 'Urology and prostate health consultations with Dr. Tarek Osman. Book a slot at the clinic location that suits you.',
+    brandSub: 'Prof. Dr. Tarek Osman',
+    doctor: 'Prof. Dr. Tarek Osman',
+    doctorRole: 'Professor and Head of Urology, Ain Shams University',
+    titleSuffix: 'Prof. Dr. Tarek Osman | Osman Uroclinic',
+    description: 'Urology, uro-oncology and robotic surgery consultations with Prof. Dr. Tarek Osman, Professor and Head of Urology at Ain Shams University. Book online.',
     skip: 'Skip to main content',
     menu: 'Menu',
     close: 'Close',
@@ -134,7 +136,7 @@ export const booking = {
     loading: 'جارٍ التحميل…',
     retry: 'حاول مرة أخرى',
     emergency: 'هذا الموقع ليس لحالات الطوارئ. في حالة الطوارئ اتصل بالإسعاف 123.',
-    calTitle: 'استشارة مع د. طارق عثمان',
+    calTitle: 'استشارة مع أ.د. طارق عثمان',
   },
   en: {
     steps: ['Location', 'Day & time', 'Your details', 'Done'],
@@ -204,7 +206,7 @@ export const booking = {
     loading: 'Loading…',
     retry: 'Try again',
     emergency: 'This website is not for emergencies. In an emergency call 123.',
-    calTitle: 'Consultation with Dr. Tarek Osman',
+    calTitle: 'Consultation with Prof. Dr. Tarek Osman',
   },
 } as const;
 

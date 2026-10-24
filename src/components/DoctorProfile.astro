@@ -1,0 +1,70 @@
+---
+import { href, type Lang } from '../i18n/ui';
+import { profile, sections, publications } from '../content/doctor';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ar = lang === 'ar';
+const s = ar
+  ? { book: 'احجز موعدك', pubs: 'الأبحاث المنشورة', jump: 'في هذه الصفحة', research: 'الأبحاث المنشورة', researchText: `${publications.length} بحثًا في مجلات علمية محكّمة، من 2003 حتى 2026، في أورام المسالك البولية والحصوات والبروستاتا ومسالك السيدات.`, researchCta: 'تصفّح الأبحاث' }
+  : { book: 'Book your appointment', pubs: 'Publications', jump: 'On this page', research: 'Published research', researchText: `${publications.length} peer-reviewed papers from 2003 to 2026 across uro-oncology, stone disease, prostate health and female urology.`, researchCta: 'Browse the publications' };
+const alt = ar ? 'أ.د. طارق عثمان، أستاذ ورئيس قسم جراحة المسالك البولية بجامعة عين شمس' : 'Prof. Dr. Tarek Osman, Professor and Head of Urology at Ain Shams University';
+---
+
+<section class="doc-intro">
+  <div class="container doc-intro__grid">
+    <div class="doc-intro__copy">
+      <h1>{profile.name[lang]}</h1>
+      <p class="doc-role">{profile.role[lang]}</p>
+      <p class="doc-bio">{profile.bio[lang]}</p>
+      <div class="doc-actions">
+        <a class="btn btn--solid" href={href(lang, 'appointments')}>{s.book}</a>
+        <a class="btn" href={href(lang, 'research')}>{s.pubs}</a>
+      </div>
+    </div>
+    <figure class="doc-photo">
+      <picture>
+        <source srcset="/photos/doctor.webp" type="image/webp" />
+        <img src="/photos/doctor.jpg" alt={alt} width="1400" height="1400" fetchpriority="high" decoding="async" />
+      </picture>
+    </figure>
+  </div>
+</section>
+
+<section class="doc-facts" aria-label={ar ? 'حقائق سريعة' : 'At a glance'}>
+  <div class="container">
+    <ul>
+      {profile.facts.map((f) => <li><strong>{f.value}</strong><span>{f.label[lang]}</span></li>)}
+    </ul>
+  </div>
+</section>
+
+<div class="container doc-body">
+  <nav class="doc-toc" aria-label={s.jump}>
+    <p>{s.jump}</p>
+    <ul>{sections.map((sec) => <li><a href={`#${sec.id}`}>{sec.heading[lang]}</a></li>)}</ul>
+  </nav>
+  <div class="doc-sections">
+    {sections.map((sec) => (
+      <section id={sec.id} class="doc-section">
+        <h2>{sec.heading[lang]}</h2>
+        <ul class:list={['doc-items', { 'doc-items--grid': sec.items.every((it) => !it.years && !(it.detail && it.detail[lang])) }]}>
+          {sec.items.map((it) => (
+            <li>
+              <div>
+                <p class="doc-item__title">{it.title[lang]}</p>
+                {it.detail && it.detail[lang] && <p class="doc-item__detail">{it.detail[lang]}</p>}
+              </div>
+              {it.years && <span class="doc-item__years" dir="ltr">{it.years}</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+    <section class="doc-section doc-research">
+      <h2>{s.research}</h2>
+      <p>{s.researchText}</p>
+      <a class="btn" href={href(lang, 'research')}>{s.researchCta}</a>
+    </section>
+  </div>
+</div>

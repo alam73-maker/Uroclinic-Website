@@ -13,24 +13,24 @@ const pp = (s: string) => `${s} · ${t.photoPending}`;
 const c = ar
   ? {
       heroAccent: 'استشارات المسالك البولية',
-      heroRest: 'مع د. طارق عثمان',
-      statement: 'صحة البروستاتا واستشارات المسالك البولية',
+      heroRest: 'مع أ.د. طارق عثمان',
+      statement: 'المسالك البولية وأورامها والجراحة بالروبوت',
       orbits: [
         ['البروستاتا', 'الصحة والتقييم', 'treatments/prostate-health'],
         ['رأي ثانٍ', 'مراجعة تقييمك الحالي', 'treatments/second-opinion'],
         ['المسالك البولية', 'الأسئلة والمخاوف', 'treatments/kidney-urinary-care'],
         ['زيارتك', 'احجز موعدك', 'appointments'],
       ],
-      meet: 'تعرّف على د. طارق عثمان',
-      meetList: ['تعرّف على <b>الخلفية المهنية</b> للطبيب', 'اكتشف موضوعات <b>استشارات المسالك البولية</b>', 'جهّز أسئلتك <b>لزيارتك الأولى</b>', 'اقرأ الأبحاث المعتمدة عند توفرها'],
-      meetCta: 'عن د. طارق',
+      meet: 'تعرّف على أ.د. طارق عثمان',
+      meetList: ['<b>أستاذ ورئيس</b> قسم جراحة المسالك البولية، جامعة عين شمس', 'رئيس <b>وحدة أورام المسالك البولية</b> بجامعة عين شمس', 'رئيس <b>قسم الأورام</b> بالجمعية المصرية لجراحة المسالك البولية', 'جرّاح <b>روبوت</b> معتمد · <b>24 بحثًا</b> منشورًا'],
+      meetCta: 'السيرة المهنية',
       intl: 'المرضى الدوليون',
       intlList: ['تواصل مع العيادة <b>قبل ترتيب السفر</b>', 'أكّد <b>موعدك والفرع</b>', 'اسأل عن الطريقة الآمنة لمشاركة تقاريرك', 'ناقش الترتيبات العملية لزيارتك'],
       intlCta: 'خطّط لزيارتك',
       bannerAccent: 'استعد لاستشارتك.',
       bannerRest: 'وجهّز أسئلتك.',
       spec: 'تخصصنا',
-      specList: ['معلومات استشارات <b>صحة البروستاتا</b>', '<b>رأي ثانٍ</b> في تقييم سابق', 'مشكلات <b>الكلى والمسالك البولية</b>', 'أسئلة تناقشها في استشارة فردية'],
+      specList: ['<b>أورام المسالك البولية</b>: البروستاتا والمثانة والكلى', 'جراحات المسالك البولية <b>بالروبوت والمنظار</b>', '<b>اضطرابات التبول</b> ومسالك السيدات', 'جراحات <b>إعادة البناء</b> و<b>الرأي الثاني</b>'],
       specCta: 'استكشف الموضوعات',
       videos: 'فيديوهات عن خبرتنا',
       videosText: 'ستظهر هنا فيديوهات توعية المرضى والنقاشات المهنية بعد مراجعتها. تصفّح المكتبة وجهّز أسئلتك لاستشارتك.',
@@ -46,24 +46,24 @@ const c = ar
     }
   : {
       heroAccent: 'Urology consultations',
-      heroRest: 'with Dr. Tarek Osman',
-      statement: 'Prostate Health & Urology Consultations',
+      heroRest: 'with Prof. Dr. Tarek Osman',
+      statement: 'Urology, Uro-Oncology & Robotic Surgery',
       orbits: [
         ['Prostate', 'Health & assessment', 'treatments/prostate-health'],
         ['Second', 'Opinions & consultation', 'treatments/second-opinion'],
         ['Urinary', 'Questions & concerns', 'treatments/kidney-urinary-care'],
         ['Your visit', 'Book an appointment', 'appointments'],
       ],
-      meet: 'Meet Dr. Tarek Osman',
-      meetList: ['Learn about the doctor’s <b>professional background</b>', 'Explore <b>urology consultation</b> topics', 'Prepare questions for your <b>first visit</b>', 'Read approved research when available'],
-      meetCta: 'About Dr. Tarek',
+      meet: 'Meet Prof. Dr. Tarek Osman',
+      meetList: ['<b>Professor and Head</b> of Urology, Ain Shams University', 'Chairman of the <b>GU Oncology Unit</b>, Ain Shams University', 'President of the <b>Uro-Oncology Section</b>, Egyptian Urologic Association', 'Certified <b>robotic surgeon</b> · <b>24 published</b> papers'],
+      meetCta: 'Full profile',
       intl: 'International Patients',
       intlList: ['Contact the clinic <b>before making travel plans</b>', 'Confirm your <b>appointment and location</b>', 'Ask how to share existing reports securely', 'Discuss practical arrangements for your visit'],
       intlCta: 'Plan your visit',
       bannerAccent: 'Prepare for your consultation.',
       bannerRest: 'Make room for your questions.',
       spec: 'Our Speciality',
-      specList: ['<b>Prostate health</b> consultation information', '<b>Second opinions</b> on an existing assessment', '<b>Kidney and urinary</b> concerns', 'Questions to discuss at an individual consultation'],
+      specList: ['<b>Uro-oncology</b>: prostate, bladder and kidney cancer', '<b>Robotic and laparoscopic</b> urological surgery', '<b>Voiding dysfunction</b> and female urology', '<b>Reconstructive</b> urology and <b>second opinions</b>'],
       specCta: 'Explore care topics',
       videos: 'Videos About Our Expertise',
       videosText: 'Patient education and professional discussions will appear here after review. Explore the library and prepare questions for your consultation.',
@@ -143,7 +143,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
     <Photo label={pp(c.ph.banner)} tone="navy" src="/photos/banner" width={2400} height={1125} alt={ar ? 'طبيب يمسك يدي مريض باطمئنان' : 'Doctor reassuringly holding a patient’s hands'} />
     <div class="banner-panel">
       <p><span>{c.bannerAccent}</span>{c.bannerRest}</p>
-      <small>{t.doctor}</small>
+      <small>{t.doctor} · {t.doctorRole}</small>
     </div>
   </section>
 
