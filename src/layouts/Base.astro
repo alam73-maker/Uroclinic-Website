@@ -80,8 +80,8 @@ const links = [
             </nav>
           </div>
           <div class="info">
-            <p>{t.footer.pending}</p>
-            <p>{t.footer.review}</p>
+            {t.footer.pending && <p>{t.footer.pending}</p>}
+            {t.footer.review && <p>{t.footer.review}</p>}
             <p>© 2026 Osman Uroclinic. {t.footer.rights}</p>
           </div>
         </div>
