@@ -213,6 +213,10 @@ export const booking = {
 export const admin = {
   ar: {
     title: 'لوحة العيادة',
+    loginLead: 'سجّل الدخول لإدارة الحجوزات والمواعيد المتاحة والفروع.',
+    appLead: 'الحجوزات والمواعيد المتاحة والفروع في مكان واحد.',
+    viewSite: 'عرض الموقع',
+    staffOnly: 'للموظفين فقط',
     signIn: 'تسجيل الدخول',
     signOut: 'تسجيل الخروج',
     email: 'البريد الإلكتروني',
@@ -270,6 +274,10 @@ export const admin = {
   },
   en: {
     title: 'Clinic dashboard',
+    loginLead: 'Sign in to manage bookings, available times and locations.',
+    appLead: 'Bookings, available times and locations in one place.',
+    viewSite: 'View website',
+    staffOnly: 'Staff only',
     signIn: 'Sign in',
     signOut: 'Sign out',
     email: 'Email',

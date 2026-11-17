@@ -1,46 +1,72 @@
 ---
 import Base from '../layouts/Base.astro';
 import Brand from './Brand.astro';
+import Icon from './Icon.astro';
 import '../styles/admin.css';
 import { admin, href, altHref, ui, type Lang } from '../i18n/ui';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const a = admin[lang];
+const t = ui[lang];
 ---
 
 <Base lang={lang} path="admin" title={a.title} bare>
   <div class="adm" data-admin data-lang={lang}>
-    <header class="adm-top">
-      <Brand sub={ui[lang].brandSub} href={href(lang, '')} />
-      <div class="adm-top-actions">
-        <a class="adm-lang" href={altHref(lang, 'admin')}>{ui[lang].switchLabel}</a>
-        <button type="button" class="adm-link" data-signout hidden>{a.signOut}</button>
+    <div class="topbar">
+      <div class="container adm-bar">
+        <span class="adm-bar-label">{a.staffOnly}</span>
+        <a class="lang" href={altHref(lang, 'admin')} hreflang={lang === 'ar' ? 'en' : 'ar'}>{t.switchLabel}</a>
+        <button type="button" class="adm-out" data-signout hidden>{a.signOut}</button>
+      </div>
+    </div>
+    <header class="site-header adm-header">
+      <div class="container">
+        <Brand sub={t.brandSub} href={href(lang, '')} />
+        <a class="adm-site" href={href(lang, '')}>{a.viewSite} <span aria-hidden="true">↗</span></a>
       </div>
     </header>
 
-    <p class="demo-note" data-demo hidden>{a.demoNote}</p>
+    <div class="container"><p class="demo-note" data-demo hidden>{a.demoNote}</p></div>
 
-    <section class="adm-login" data-login hidden>
-      <h1>{a.title}</h1>
-      <form data-login-form>
-        <div class="field"><label for="adm-email">{a.email}</label><input id="adm-email" type="email" name="email" autocomplete="username" required dir="ltr" /></div>
-        <div class="field"><label for="adm-pw">{a.password}</label><input id="adm-pw" type="password" name="password" autocomplete="current-password" required dir="ltr" /></div>
-        <p class="form-error" data-login-error role="alert" hidden>{a.signInError}</p>
-        <button class="btn btn--solid" type="submit">{a.signIn}</button>
-      </form>
-      <button class="btn" type="button" data-demo-signin hidden>{a.demoSignIn}</button>
+    <section class="intro-split adm-login" data-login hidden>
+      <div class="intro-split__copy">
+        <h1>{a.title}</h1>
+        <p>{a.loginLead}</p>
+        <form data-login-form>
+          <div class="field"><label for="adm-email">{a.email}</label><input id="adm-email" type="email" name="email" autocomplete="username" required dir="ltr" /></div>
+          <div class="field"><label for="adm-pw">{a.password}</label><input id="adm-pw" type="password" name="password" autocomplete="current-password" required dir="ltr" /></div>
+          <p class="form-error" data-login-error role="alert" hidden>{a.signInError}</p>
+          <button class="btn btn--solid" type="submit">{a.signIn}</button>
+        </form>
+        <button class="btn" type="button" data-demo-signin hidden>{a.demoSignIn}</button>
+      </div>
+      <div class="intro-split__media">
+        <picture>
+          <source srcset="/photos/consult-room.webp" type="image/webp" />
+          <img src="/photos/consult-room.jpg" alt="" width="1086" height="724" data-pos="patient-stories" />
+        </picture>
+        <span class="tab intro-split__tab"><Icon name="doctor" /></span>
+      </div>
     </section>
 
     <section class="adm-app" data-app hidden>
-      <nav class="adm-tabs" role="tablist">
-        <button role="tab" type="button" data-tab="bookings" aria-selected="true">{a.tabs.bookings}<span class="badge" data-badge hidden></span></button>
-        <button role="tab" type="button" data-tab="availability" aria-selected="false">{a.tabs.availability}</button>
-        <button role="tab" type="button" data-tab="locations" aria-selected="false">{a.tabs.locations}</button>
-      </nav>
-      <div class="adm-panel" data-view="bookings"></div>
-      <div class="adm-panel" data-view="availability" hidden></div>
-      <div class="adm-panel" data-view="locations" hidden></div>
+      <div class="adm-head">
+        <div class="container">
+          <h1>{a.title}</h1>
+          <p>{a.appLead}</p>
+          <nav class="adm-tabs" role="tablist">
+            <button role="tab" type="button" data-tab="bookings" aria-selected="true">{a.tabs.bookings}<span class="badge" data-badge hidden></span></button>
+            <button role="tab" type="button" data-tab="availability" aria-selected="false">{a.tabs.availability}</button>
+            <button role="tab" type="button" data-tab="locations" aria-selected="false">{a.tabs.locations}</button>
+          </nav>
+        </div>
+      </div>
+      <div class="container adm-body">
+        <div class="adm-panel" data-view="bookings"></div>
+        <div class="adm-panel" data-view="availability" hidden></div>
+        <div class="adm-panel" data-view="locations" hidden></div>
+      </div>
     </section>
     <p class="toast" data-toast role="status" aria-live="polite" hidden></p>
   </div>
