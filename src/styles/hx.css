@@ -402,16 +402,3 @@ html.is-scrolled body:has(.pf-hero) .menu-btn { color: var(--hx-deep); border-co
   .pf-research { padding: 28px 22px; border-radius: 22px; }
   .pf-research .hx-pill { width: 100%; justify-content: center; }
 }
-
-/* keep the doctor's head clear of the floating header */
-.hx-hero__v { top: 140px; height: calc(100% - 140px); object-position: 62% 0%; }
-.hx-hero::before { content: ''; position: absolute; inset-inline: 0; top: 0; height: 200px; z-index: 0; background: linear-gradient(180deg, var(--hx-deep) 70%, rgba(13,32,51,0)); pointer-events: none; }
-.hx-hero__shade { z-index: 0; }
-.hx-hero__in { z-index: 1; }
-@media (max-width: 760px) {
-  .hx-hero { display: block; min-height: 0; padding-top: 112px; }
-  .hx-hero::before { display: none; }
-  .hx-hero__v { position: relative; inset: auto; top: auto; display: block; height: 50svh; min-height: 340px; object-position: 50% 0%; }
-  .hx-hero__shade { inset: auto; top: 112px; left: 0; right: 0; height: max(50svh, 340px); background: linear-gradient(0deg, var(--hx-deep) 0%, rgba(13,32,51,.6) 18%, rgba(13,32,51,0) 42%); }
-  .hx-hero__in { margin-top: -56px; }
-}
