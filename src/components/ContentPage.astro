@@ -23,7 +23,7 @@ const fig = figures[page.slug];
 
 <Base lang={lang} path={page.slug} title={p.title} description={p.lead || undefined}>
   {page.slug === 'about' && <script type="application/ld+json" is:inline set:html={physicianJsonLd} slot="head" />}
-  {page.slug === 'about' ? <DoctorProfile lang={lang} /> : fig ? (
+  {page.slug === 'about' ? <DoctorProfile lang={lang} /> : page.slug === 'research' ? <Publications lang={lang} /> : fig ? (
   <section class="intro-split">
     <div class="intro-split__copy">
       <h1>{p.title}</h1>
@@ -46,7 +46,7 @@ const fig = figures[page.slug];
     </div>
   </section>
   )}
-  {page.slug === 'about' ? null : page.slug === 'research' ? <Publications lang={lang} /> : page.slug === 'patient-stories' ? <Testimonials lang={lang} /> : page.slug === 'videos' ? (
+  {page.slug === 'about' || page.slug === 'research' ? null : page.slug === 'patient-stories' ? <Testimonials lang={lang} /> : page.slug === 'videos' ? (
     <div class="container video-grid">{videos.map((v) => <article class="video-card"><YouTube video={v} lang={lang} /><h2>{v.title[lang]}</h2></article>)}</div>
   ) : page.slug === 'treatments' ? (
     <section class="topic-rows">
