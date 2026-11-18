@@ -41,6 +41,9 @@ export async function initBooking() {
       if (i === n) tb.setAttribute('aria-current', 'step');
       else tb.removeAttribute('aria-current');
     });
+    const of = document.querySelector<HTMLElement>('[data-step-of]');
+    const lbl = tabs[n]?.querySelector('.lbl')?.textContent;
+    if (of && lbl) of.textContent = lbl;
     if (focus) {
       const head = panels[n].querySelector<HTMLElement>('h2');
       head?.focus({ preventScroll: true });
@@ -54,6 +57,9 @@ export async function initBooking() {
     document.querySelector<HTMLElement>('[data-sum="location"]')!.textContent = loc ? locName(loc) : t.notChosen;
     document.querySelector<HTMLElement>('[data-sum="date"]')!.textContent = slot ? fmt(lang, slot.starts_at, { weekday: 'long', day: 'numeric', month: 'long' }) : day ? fmtKey(lang, day, { weekday: 'long', day: 'numeric', month: 'long' }) : t.notChosen;
     document.querySelector<HTMLElement>('[data-sum="time"]')!.textContent = slot ? fmtTime(lang, slot.starts_at) : t.notChosen;
+    document.querySelector<HTMLElement>('[data-sum="location"]')!.classList.toggle('is-set', !!loc);
+    document.querySelector<HTMLElement>('[data-sum="date"]')!.classList.toggle('is-set', !!(slot || day));
+    document.querySelector<HTMLElement>('[data-sum="time"]')!.classList.toggle('is-set', !!slot);
   }
 
   function renderLocations() {
