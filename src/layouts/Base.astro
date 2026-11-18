@@ -1,14 +1,16 @@
 ---
-import '@fontsource/newsreader/latin-400.css';
-import '@fontsource/newsreader/latin-400-italic.css';
-import '@fontsource/noto-naskh-arabic/arabic-400.css';
-import '@fontsource-variable/inter/wght.css';
+import '@fontsource/ibm-plex-sans/latin-400.css';
+import '@fontsource/ibm-plex-sans/latin-500.css';
+import '@fontsource/ibm-plex-sans/latin-600.css';
+import '@fontsource/ibm-plex-sans-arabic/arabic-500.css';
+import '@fontsource/ibm-plex-sans-arabic/arabic-600.css';
 import '@fontsource/ibm-plex-sans-arabic/arabic-400.css';
 import '@fontsource/ibm-plex-sans-arabic/arabic-700.css';
 import '../styles/global.css';
+import '../styles/redesign.css';
 import Brand from '../components/Brand.astro';
 import { dir, href, altHref, ui, type Lang } from '../i18n/ui';
-import interUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import interUrl from '@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2?url';
 import plexUrl from '@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-400-normal.woff2?url';
 
 interface Props { lang: Lang; path?: string; title?: string; description?: string; noindex?: boolean; bare?: boolean }
