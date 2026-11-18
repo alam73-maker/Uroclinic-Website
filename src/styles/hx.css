@@ -575,3 +575,8 @@ html { -webkit-tap-highlight-color: transparent; }
   .ps-facts { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
   .ps-facts div:nth-child(3) { padding-inline-start: 1rem !important; border-inline-start: 1px solid rgba(255,255,255,.18) !important; }
 }
+.pf-facts { border-top: 0 !important; padding-top: 0 !important; gap: 20px clamp(24px, 4vw, 56px); }
+.pf-facts div, .pf-facts div:first-child, .ps-facts div:nth-child(3) { padding-inline: 0 !important; border: 0 !important; }
+.pf-facts dd { margin-top: .4rem; }
+.ps-facts { grid-template-columns: repeat(3, max-content) !important; }
+@media (max-width: 760px) { .ps-facts { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 12px !important; } .ps-facts dd { font-size: .8125rem; } }
