@@ -1,16 +1,12 @@
 ---
-import '@fontsource/ibm-plex-sans/latin-400.css';
-import '@fontsource/ibm-plex-sans/latin-500.css';
-import '@fontsource/ibm-plex-sans/latin-600.css';
-import '@fontsource/ibm-plex-sans-arabic/arabic-500.css';
-import '@fontsource/ibm-plex-sans-arabic/arabic-600.css';
+import '@fontsource-variable/inter/wght.css';
 import '@fontsource/ibm-plex-sans-arabic/arabic-400.css';
 import '@fontsource/ibm-plex-sans-arabic/arabic-700.css';
 import '../styles/global.css';
-import '../styles/redesign.css';
+import '../styles/hx.css';
 import Brand from '../components/Brand.astro';
 import { dir, href, altHref, ui, type Lang } from '../i18n/ui';
-import interUrl from '@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2?url';
+import interUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import plexUrl from '@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-400-normal.woff2?url';
 
 interface Props { lang: Lang; path?: string; title?: string; description?: string; noindex?: boolean; bare?: boolean }
@@ -71,6 +67,12 @@ const links = [
     <main id="main" tabindex="-1">
       <slot />
     </main>
+    {!bare && path !== 'appointments' && (
+      <nav class="mbar" aria-label={lang === 'ar' ? 'إجراءات سريعة' : 'Quick actions'}>
+        <a class="mbar__book" href={href(lang, 'appointments')}>{t.book}</a>
+        <a class="mbar__contact" href={href(lang, 'clinic')}>{lang === 'ar' ? 'تواصل' : 'Contact'}</a>
+      </nav>
+    )}
     {!bare && (
       <footer class="site-footer">
         <div class="container">
@@ -94,6 +96,7 @@ const links = [
     )}
     <script>
       import '../lib/attribution';
+      import '../scripts/motion';
       const btn = document.querySelector<HTMLButtonElement>('[data-menu]');
       const nav = document.querySelector<HTMLElement>('[data-nav]');
       const close = () => { nav?.classList.remove('is-open'); btn?.setAttribute('aria-expanded', 'false'); };

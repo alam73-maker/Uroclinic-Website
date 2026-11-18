@@ -1,183 +1,183 @@
 ---
 import Base from '../layouts/Base.astro';
+import Photo from './Photo.astro';
+import Icon from './Icon.astro';
 import YouTube from './YouTube.astro';
+import HomeTestimonials from './HomeTestimonials.astro';
 import { videos } from '../content/videos';
-import { testimonials, whoLabel } from '../content/testimonials';
 import { href, ui, type Lang } from '../i18n/ui';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = ui[lang];
 const ar = lang === 'ar';
-const h = (to: string) => href(lang, to);
-const lead = testimonials[1];
-const more = [testimonials[0], testimonials[2]];
-const vid = videos[0];
+const pp = (s: string) => `${s} · ${t.photoPending}`;
 
 const c = ar
   ? {
-      h1: 'استشارات المسالك البولية مع أ.د. طارق عثمان',
-      sub: 'أستاذ ورئيس قسم جراحة المسالك البولية بكلية الطب، جامعة عين شمس.',
-      contact: 'تواصل مع العيادة',
-      facts: [
-        ['رئيس قسم المسالك البولية', 'جامعة عين شمس، منذ 2024'],
-        ['رئيس وحدة أورام المسالك البولية', 'جامعة عين شمس، منذ 2017'],
-        ['24 بحثًا منشورًا', 'في مجلات علمية محكّمة'],
-        ['استشاري في 5 مستشفيات', 'منها كليوباترا والسعودي الألماني'],
+      heroAccent: 'استشارات المسالك البولية',
+      heroRest: 'مع أ.د. طارق عثمان',
+      statement: 'المسالك البولية وأورامها والجراحة بالروبوت',
+      orbits: [
+        ['البروستاتا', 'الصحة والتقييم', 'treatments/prostate-health'],
+        ['رأي ثانٍ', 'مراجعة تقييمك الحالي', 'treatments/second-opinion'],
+        ['المسالك البولية', 'الأسئلة والمخاوف', 'treatments/kidney-urinary-care'],
+        ['زيارتك', 'احجز موعدك', 'appointments'],
       ],
-      aboutH: 'عن أ.د. طارق عثمان',
-      aboutP: 'يعمل أ.د. طارق عثمان في جراحة المسالك البولية منذ تخرّجه في طب عين شمس عام 1990، وتلقّى تدريبًا متخصصًا في كامبريدج وجامعة واشنطن وجامعة نيم. يرأس قسم الأورام بالجمعية المصرية لجراحة المسالك البولية، وهو جرّاح روبوت معتمد.',
-      aboutP2: 'يقول مرضاه إن أكثر ما يميّزه أنه يستمع أولًا، ثم يشرح الخيارات بلغة واضحة.',
-      aboutCta: 'السيرة المهنية كاملة',
-      treatH: 'ما يعالجه',
-      treat: [
-        ['صحة البروستاتا', 'تضخم البروستاتا الحميد والتهاباتها وأعراض التبول المرتبطة بها.', 'treatments/prostate-health'],
-        ['أورام المسالك البولية', 'أورام البروستاتا والمثانة والكلى، من التشخيص إلى الجراحة.', 'treatments/urological-cancer'],
-        ['الكلى والحصوات', 'حصوات الكلى والحالب، وانسداد مجرى البول، وسلس البول.', 'treatments/kidney-urinary-care'],
-        ['الرأي الثاني', 'مراجعة تشخيص أو خطة علاج حالية قبل أن تقرر.', 'treatments/second-opinion'],
+      meet: 'تعرّف على أ.د. طارق عثمان',
+      meetList: ['<b>أستاذ ورئيس</b> قسم جراحة المسالك البولية، جامعة عين شمس', 'رئيس <b>وحدة أورام المسالك البولية</b> بجامعة عين شمس', 'رئيس <b>قسم الأورام</b> بالجمعية المصرية لجراحة المسالك البولية', 'جرّاح <b>روبوت</b> معتمد · <b>24 بحثًا</b> منشورًا'],
+      meetCta: 'السيرة المهنية',
+      intl: 'المرضى الدوليون',
+      intlList: ['تواصل مع العيادة <b>قبل ترتيب السفر</b>', 'أكّد <b>موعدك والفرع</b>', 'اسأل عن الطريقة الآمنة لمشاركة تقاريرك', 'ناقش الترتيبات العملية لزيارتك'],
+      intlCta: 'خطّط لزيارتك',
+      bannerAccent: 'استعد لاستشارتك.',
+      bannerRest: 'وجهّز أسئلتك.',
+      spec: 'تخصصنا',
+      specList: ['<b>أورام المسالك البولية</b>: البروستاتا والمثانة والكلى', 'جراحات المسالك البولية <b>بالروبوت والمنظار</b>', '<b>اضطرابات التبول</b> ومسالك السيدات', 'جراحات <b>إعادة البناء</b> و<b>الرأي الثاني</b>'],
+      specCta: 'استكشف الموضوعات',
+      videos: 'فيديوهات عن خبرتنا',
+      videosText: 'شروحات قصيرة من أ.د. طارق عثمان عن مشكلات المسالك البولية الشائعة وطرق علاجها.',
+      videosCta: 'كل الفيديوهات',
+      latest: 'أحدث فيديو',
+      cards: [
+        ['تصفّح مكتبة الفيديوهات', 'مكتبة الفيديوهات', 'videos'],
+        ['احجز استشارتك الأولى', 'احجز موعدك', 'appointments'],
+        ['استعد لزيارتك', 'معلومات الزيارة', 'international-patients'],
       ],
-      more: 'اقرأ المزيد',
-      vidH: 'شاهد أ.د. طارق يشرح',
-      vidP: 'فيديوهات قصيرة عن الحالات الشائعة وطرق علاجها.',
-      vidCta: 'كل الفيديوهات',
-      wordsH: 'من رسائل المرضى',
-      wordsCta: `اقرأ الرسائل الـ${testimonials.length}`,
-      intlH: 'للمرضى القادمين من خارج مصر',
-      intlP: 'تواصل مع العيادة قبل ترتيب السفر لتأكيد الموعد والفرع، ولمعرفة طريقة إرسال تقاريرك مسبقًا.',
-      intlCta: 'المرضى الدوليون',
-      bookH: 'احجز موعدك',
-      bookP: 'اختر الفرع واليوم والوقت المناسب. تتواصل معك العيادة لتأكيد الحجز.',
+      ph: { hero: 'صورة العيادة', doctor: 'د. طارق في غرفة العمليات', banner: 'د. طارق', clinical: 'صورة طبية', video: 'لقطة فيديو' },
+      map: 'خريطة العالم',
+      play: 'افتح مكتبة الفيديوهات',
     }
   : {
-      h1: 'Urology consultations with Prof. Dr. Tarek Osman',
-      sub: 'Professor and Head of the Urology Department, Faculty of Medicine, Ain Shams University.',
-      contact: 'Contact the clinic',
-      facts: [
-        ['Head of Urology', 'Ain Shams University, since 2024'],
-        ['Chairman, GU Oncology Unit', 'Ain Shams University, since 2017'],
-        ['24 published papers', 'In peer-reviewed urology journals'],
-        ['Consultant at 5 hospitals', 'Including Cleopatra and Saudi German'],
+      heroAccent: 'Urology consultations',
+      heroRest: 'with Prof. Dr. Tarek Osman',
+      statement: 'Urology, Uro-Oncology & Robotic Surgery',
+      orbits: [
+        ['Prostate', 'Health & assessment', 'treatments/prostate-health'],
+        ['Second', 'Opinions & consultation', 'treatments/second-opinion'],
+        ['Urinary', 'Questions & concerns', 'treatments/kidney-urinary-care'],
+        ['Your visit', 'Book an appointment', 'appointments'],
       ],
-      aboutH: 'About Prof. Dr. Tarek Osman',
-      aboutP: 'Prof. Tarek Osman has practised urology since graduating from Ain Shams in 1990, with specialist training in Cambridge, Washington University and Nîmes. He is President of the Uro-Oncology Section of the Egyptian Urologic Association and a certified robotic surgeon.',
-      aboutP2: 'His patients most often mention one thing: he listens first, then explains the options in plain language.',
-      aboutCta: 'Read his full profile',
-      treatH: 'What he treats',
-      treat: [
-        ['Prostate health', 'Benign enlargement, prostatitis and the urinary symptoms that come with them.', 'treatments/prostate-health'],
-        ['Urological cancer', 'Prostate, bladder and kidney cancer, from diagnosis to surgery.', 'treatments/urological-cancer'],
-        ['Kidney and stones', 'Kidney and ureteric stones, urinary blockage and incontinence.', 'treatments/kidney-urinary-care'],
-        ['Second opinions', 'A review of an existing diagnosis or treatment plan before you decide.', 'treatments/second-opinion'],
+      meet: 'Meet Prof. Dr. Tarek Osman',
+      meetList: ['<b>Professor and Head</b> of Urology, Ain Shams University', 'Chairman of the <b>GU Oncology Unit</b>, Ain Shams University', 'President of the <b>Uro-Oncology Section</b>, Egyptian Urologic Association', 'Certified <b>robotic surgeon</b> · <b>24 published</b> papers'],
+      meetCta: 'Full profile',
+      intl: 'International Patients',
+      intlList: ['Contact the clinic <b>before making travel plans</b>', 'Confirm your <b>appointment and location</b>', 'Ask how to share existing reports securely', 'Discuss practical arrangements for your visit'],
+      intlCta: 'Plan your visit',
+      bannerAccent: 'Prepare for your consultation.',
+      bannerRest: 'Make room for your questions.',
+      spec: 'Our Speciality',
+      specList: ['<b>Uro-oncology</b>: prostate, bladder and kidney cancer', '<b>Robotic and laparoscopic</b> urological surgery', '<b>Voiding dysfunction</b> and female urology', '<b>Reconstructive</b> urology and <b>second opinions</b>'],
+      specCta: 'Explore care topics',
+      videos: 'Videos About Our Expertise',
+      videosText: 'Short explanations from Prof. Dr. Tarek Osman on common urology conditions and how they are treated.',
+      videosCta: 'All videos',
+      latest: 'Latest video',
+      cards: [
+        ['Explore our video library', 'See the library', 'videos'],
+        ['Book your first consultation', 'Book your appointment', 'appointments'],
+        ['Prepare for your visit', 'Visit information', 'international-patients'],
       ],
-      more: 'Read more',
-      vidH: 'Prof. Tarek explains',
-      vidP: 'Short videos on common conditions and how they are treated.',
-      vidCta: 'All videos',
-      wordsH: 'From patients’ messages',
-      wordsCta: `Read all ${testimonials.length} messages`,
-      intlH: 'Travelling from outside Egypt',
-      intlP: 'Contact the clinic before you make travel plans. We will confirm your appointment and branch, and tell you how to send your reports ahead of time.',
-      intlCta: 'International patients',
-      bookH: 'Book an appointment',
-      bookP: 'Choose a branch, a day and a time. The clinic will contact you to confirm.',
+      ph: { hero: 'Clinic photography', doctor: 'Dr. Tarek in theatre', banner: 'Dr. Tarek', clinical: 'Clinical photography', video: 'Video still' },
+      map: 'World map',
+      play: 'Open the video library',
     };
+
+const R = 112;
+const C = 2 * Math.PI * R;
+const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, frac]) => {
+  const end = ((start + frac * 360) * Math.PI) / 180;
+  return { start, dash: `${(frac * C).toFixed(1)} ${C.toFixed(1)}`, x: (120 + R * Math.cos(end)).toFixed(1), y: (120 + R * Math.sin(end)).toFixed(1) };
+});
 ---
 
 <Base lang={lang}>
-<div class="rd">
-  <section class="rd-hero">
-    <div class="rd-hero__video hero-video">
-      <video autoplay muted loop playsinline preload="auto" poster="/video/hero-poster.jpg" aria-hidden="true" disablepictureinpicture data-hero-video>
-        <source media="(max-width: 700px)" src="/video/hero-m.mp4" type="video/mp4" />
-        <source src="/video/hero.mp4" type="video/mp4" />
-      </video>
-    </div>
-    <div class="rd-wrap">
-      <div class="rd-hero__panel">
-        <h1>{c.h1}</h1>
-        <p>{c.sub}</p>
-        <div class="rd-actions">
-          <a class="rd-btn" href={h('appointments')}>{t.book}</a>
-          <a class="rd-link" href={h('clinic')}>{c.contact}</a>
+<div class="hx">
+  <section class="hx-hero">
+    <video class="hx-hero__v" autoplay muted loop playsinline preload="auto" poster="/video/hero-poster.jpg" aria-hidden="true" disablepictureinpicture data-hero-video>
+      <source media="(max-width: 700px)" src="/video/hero-m.mp4" type="video/mp4" />
+      <source src="/video/hero.mp4" type="video/mp4" />
+    </video>
+    <div class="hx-hero__shade"></div>
+    <div class="hx-wrap hx-hero__in">
+      <div class="hx-hero__copy">
+        <h1>{c.heroAccent} {c.heroRest}</h1>
+        <p>{c.statement}</p>
+        <div class="hx-actions">
+          <a class="hx-pill hx-pill--solid" href={href(lang, 'appointments')}>{t.book}</a>
+          <a class="hx-pill hx-pill--ghost" href={href(lang, 'about')}>{c.meetCta}</a>
         </div>
       </div>
+      <dl class="hx-stats">
+        {(ar ? [['رئيس القسم','جامعة عين شمس'],['24 بحثًا','منشورًا محكّمًا'],['5 مستشفيات','استشاري المسالك']] : [['Head of Urology','Ain Shams University'],['24 papers','Peer-reviewed'],['5 hospitals','Consultant urologist']]).map(([a,b]) => <div><dt>{a}</dt><dd>{b}</dd></div>)}
+      </dl>
     </div>
   </section>
 
-  <section class="rd-wrap rd-facts" aria-label={ar ? 'حقائق' : 'Credentials'}>
-    {c.facts.map(([a, b]) => <div><p class="rd-facts__a">{a}</p><p>{b}</p></div>)}
-  </section>
-
-  <section class="rd-wrap rd-about">
-    <figure class="rd-about__photo">
-      <picture><source srcset="/photos/doctor.webp" type="image/webp" /><img src="/photos/doctor.jpg" alt={ar ? 'أ.د. طارق عثمان' : 'Prof. Dr. Tarek Osman'} width="1400" height="1400" loading="lazy" decoding="async" /></picture>
-    </figure>
-    <div class="rd-about__copy">
-      <h2>{c.aboutH}</h2>
-      <p>{c.aboutP}</p>
-      <p class="rd-about__note">{c.aboutP2}</p>
-      <a class="rd-link" href={h('about')}>{c.aboutCta}</a>
-    </div>
-  </section>
-
-  <section class="rd-wrap rd-treat">
-    <h2>{c.treatH}</h2>
-    <div class="rd-treat__grid">
-      {c.treat.map(([title, text, to]) => (
-        <a class="rd-treat__item" href={h(to)}>
-          <h3>{title}</h3>
-          <p>{text}</p>
-          <span class="rd-link">{c.more}</span>
-        </a>
+  <section class="hx-topics">
+    <div class="hx-wrap hx-topics__in">
+      {c.orbits.map(([title, sub, to]) => (
+        <a class="hx-topic" href={href(lang, to)}><strong>{title}</strong><span>{sub}</span><i aria-hidden="true">→</i></a>
       ))}
     </div>
   </section>
 
-  {vid && (
-    <section class="rd-video">
-      <div class="rd-wrap rd-video__in">
-        <div class="rd-video__player"><YouTube video={vid} lang={lang} /></div>
-        <div class="rd-video__copy">
-          <h2>{c.vidH}</h2>
-          <p>{c.vidP}</p>
-          <p class="rd-video__title">{vid.title[lang]}</p>
-          <a class="rd-link" href={h('videos')}>{c.vidCta}</a>
-        </div>
-      </div>
-    </section>
-  )}
-
-  <section class="rd-wrap rd-words">
-    <h2>{c.wordsH}</h2>
-    <div class="rd-words__grid">
-      <figure class="rd-words__lead">
-        <blockquote><p>{lead[lang]}</p></blockquote>
-        <figcaption>{whoLabel[lead.who][lang]}</figcaption>
-      </figure>
-      <div class="rd-words__more">
-        {more.map((x) => <figure><blockquote><p>{x[lang]}</p></blockquote><figcaption>{whoLabel[x.who][lang]}</figcaption></figure>)}
-        <a class="rd-link" href={h('patient-stories')}>{c.wordsCta}</a>
-      </div>
+  <section class="hx-wrap hx-split">
+    <figure class="hx-media"><img src="/photos/doctor.jpg" alt="" /></figure>
+    <div class="hx-copy">
+      <h2>{c.meet}</h2>
+      <ul class="hx-list">{c.meetList.map((li) => <li set:html={li} />)}</ul>
+      <a class="hx-pill hx-pill--solid" href={href(lang, 'about')}>{c.meetCta}</a>
     </div>
   </section>
 
-  <section class="rd-wrap rd-intl">
-    <div class="rd-intl__map"><img src="/world-map.svg" alt="" width="960" height="470" loading="lazy" decoding="async" /></div>
-    <div class="rd-intl__copy">
-      <h2>{c.intlH}</h2>
-      <p>{c.intlP}</p>
-      <a class="rd-btn rd-btn--ghost" href={h('international-patients')}>{c.intlCta}</a>
+  <section class="hx-band">
+    <img src="/photos/banner.jpg" alt="" />
+    <div class="hx-band__shade"></div>
+    <div class="hx-wrap hx-band__in">
+      <p class="hx-band__big">{c.bannerAccent} {c.bannerRest}</p>
+      <p class="hx-band__small">{t.doctor} · {t.doctorRole}</p>
     </div>
   </section>
 
-  <section class="rd-wrap">
-    <div class="rd-book">
-      <div>
-        <h2>{c.bookH}</h2>
-        <p>{c.bookP}</p>
-      </div>
-      <a class="rd-btn" href={h('appointments')}>{t.book}</a>
+  <section class="hx-wrap hx-split hx-split--rev">
+    <div class="hx-copy">
+      <h2>{c.spec}</h2>
+      <ul class="hx-list">{c.specList.map((li) => <li set:html={li} />)}</ul>
+      <a class="hx-pill hx-pill--solid" href={href(lang, 'treatments')}>{c.specCta}</a>
     </div>
+    <figure class="hx-media"><img src="/photos/speciality.jpg" alt="" /></figure>
+  </section>
+
+  <section class="hx-dark">
+    <div class="hx-wrap hx-split hx-split--flush">
+      <div class="hx-copy">
+        <h2>{c.intl}</h2>
+        <ul class="hx-list hx-list--light">{c.intlList.map((li) => <li set:html={li} />)}</ul>
+        <a class="hx-pill hx-pill--light" href={href(lang, 'international-patients')}>{c.intlCta}</a>
+      </div>
+      <div class="hx-map"><img src="/world-map.svg" alt="" /></div>
+    </div>
+  </section>
+
+  <section class="hx-wrap hx-video">
+    <div class="hx-video__head">
+      <h2>{c.videos}</h2>
+      <p>{c.videosText}</p>
+    </div>
+    {videos[0] && <div class="hx-video__player"><YouTube video={videos[0]} lang={lang} /></div>}
+    <div class="hx-video__foot"><span>{videos[0]?.title[lang]}</span><a class="hx-link" href={href(lang, 'videos')}>{c.videosCta} →</a></div>
+  </section>
+
+  <HomeTestimonials lang={lang} />
+
+  <section class="hx-wrap hx-cards">
+    {c.cards.map(([title, cta, to], i) => (
+      <a class:list={['hx-card', { 'hx-card--main': i === 1 }]} href={href(lang, to)}>
+        <h3>{title}</h3>
+        <span class="hx-pill" >{cta}</span>
+      </a>
+    ))}
   </section>
 </div>
 </Base>

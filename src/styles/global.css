@@ -312,6 +312,9 @@ html[dir='rtl'] .meetings li span, html[dir='rtl'] .pub-year li { text-align: le
 [dir="rtl"] .hero-video video { transform: scaleX(-1); }
 @media (max-width: 700px) { .hero-video video { object-position: 50% 20%; } }
 
+:root { --serif-en: 'Newsreader', Georgia, serif; --serif-ar: 'Noto Naskh Arabic', 'IBM Plex Sans Arabic', serif; }
+html[lang='en'] .tm-serif, html[lang='en'] :is(.tm-lead blockquote p, .tm-q__pull, .tm-q blockquote p) { font-family: var(--serif-en); }
+html[lang='ar'] :is(.tm-lead blockquote p, .tm-q__pull, .tm-q blockquote p) { font-family: var(--serif-ar); }
 
 .tm-lead { padding-block: clamp(56px, 8vw, 120px); background: var(--paper); border-bottom: 1px solid var(--mist); }
 .tm-lead blockquote { margin: 0; }
@@ -357,4 +360,3 @@ html[dir='rtl'] .tm-link span { transform: scaleX(-1); display: inline-block; }
   .intro-split__media { order: -1; min-height: clamp(240px, 60vw, 380px); }
   .intro-split__copy { padding: 36px var(--gutter) 44px; }
 }
-

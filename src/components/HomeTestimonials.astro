@@ -1,0 +1,32 @@
+---
+import '@fontsource/newsreader/latin-400.css';
+import '@fontsource/newsreader/latin-400-italic.css';
+import '@fontsource/noto-naskh-arabic/arabic-400.css';
+import { href, type Lang } from '../i18n/ui';
+import { testimonials, whoLabel } from '../content/testimonials';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ar = lang === 'ar';
+const q = (s: string) => (ar ? `«${s}»` : `“${s}”`);
+const picks = testimonials.filter((t) => t.quote).slice(0, 3);
+const s = ar
+  ? { h: 'بكلمات المرضى وأسرهم', cta: `اقرأ الرسائل كلها (${testimonials.length})` }
+  : { h: 'In the words of patients and families', cta: `Read all ${testimonials.length} messages` };
+---
+
+<section class="tm-home">
+  <div class="container">
+    <h2>{s.h}</h2>
+    <div class="tm-home__row">
+      {picks.map((t) => (
+        <figure class="tm-q">
+          <p class="tm-q__pull">{q(t.quote![lang])}</p>
+          <blockquote><p>{t[lang]}</p></blockquote>
+          <figcaption class="tm-by">— {whoLabel[t.who][lang]}</figcaption>
+        </figure>
+      ))}
+    </div>
+    <a class="tm-link" href={href(lang, 'patient-stories')}>{s.cta} <span aria-hidden="true">→</span></a>
+  </div>
+</section>

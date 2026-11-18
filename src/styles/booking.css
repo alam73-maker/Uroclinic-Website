@@ -117,10 +117,3 @@ html[dir='rtl'] .field input[dir='ltr'] { text-align: right; }
   .field input, .field select { font-size: 16px; }
   .form-actions .btn { width: 100%; }
 }
-
-.loc, .day, .time, .summary, .ref-box, .icon-btn { border-radius: var(--r); }
-.time { border-width: 1px; }
-.loc { border-width: 1px !important; }
-.field input, .field select, .field textarea { border-radius: 10px; border-width: 1px !important; }
-.choice span { border-radius: var(--r); border-width: 1px !important; }
-.summary h2 { font-size: 1.5rem; }
