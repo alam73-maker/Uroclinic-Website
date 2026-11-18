@@ -655,3 +655,4 @@ html { -webkit-tap-highlight-color: transparent; }
   .tq-track .tq-card:hover { transform: translateY(-4px); }
   .hx-video__player { transition: transform .5s var(--ease); }
 }
+.tq-home ~ .hx-cards { padding-top: clamp(72px, 9vw, 120px); }
