@@ -612,3 +612,9 @@ html { -webkit-tap-highlight-color: transparent; }
   .hx-list li::before { inset-inline-start: 14px; top: 13px; }
   .topic-row { padding: 1.25rem; }
 }
+.hx-list { gap: 18px; }
+.hx-list li, .hx-list li:last-child, .hx-list--light li, .hx-list--light li:last-child { background: none !important; border-radius: 0; padding: 0 !important; padding-inline-start: 36px !important; }
+.hx-list li::before { inset-inline-start: 0 !important; top: 1px !important; }
+.topic-row, .topic-row:last-child { background: none !important; padding: 1.25rem 0 !important; margin-bottom: 0; border-radius: 0; }
+@media (hover: hover) { .topic-row:hover { background: none !important; } .topic-row:hover h2 { color: var(--hx-teal-ink); } }
+.doc-items li, .doc-items li:last-child, .doc-items--grid li:nth-last-child(2):nth-child(odd) { background: none !important; padding: .75rem 0 !important; margin-bottom: 0; border-radius: 0; }
