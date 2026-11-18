@@ -10,8 +10,8 @@ onScroll();
 window.addEventListener('scroll', onScroll, { passive: true });
 
 const SEL = [
-  '.hx-topic', '.hx-split > *', '.hx-band__in > *', '.hx-video__head > *', '.hx-video__player', '.hx-cards > *',
-  '.tq-home__head > *', '.tq-grid .tq-card',
+  '.hx-topic', '.hx-media', '.hx-band__in > *', '.hx-video__head > *', '.hx-video__player', '.hx-cards > *',
+  '.tq-home__head > *', '.tq-grid .tq-card', '.tq-track .tq-card', '.hx-list li', '.hx-actions', '.hx-copy > h2', '.hx-copy > .hx-pill', '.hx-map img',
   '.pf-sec', '.pf-rows li', '.pf-tiles li', '.pf-badges li', '.pf-timeline li', '.pf-research', '.pub-year', '.meetings li', '.topic-row', '.prose > *', '.video-card', '.closing .container > *',
 ].join(',');
 
