@@ -55,7 +55,7 @@ const variant: Record<string, string> = { positions: 'rows', hospitals: 'tiles',
           ))}</ol>
         ) : variant[sec.id] === 'tiles' ? (
           <ul class="pf-tiles">{sec.items.map((it) => (
-            <li><p class="pf-t">{it.title[lang]}</p><p class="pf-d">{it.detail?.[lang] || (sec.id === 'hospitals' ? s.consultant : '')}</p></li>
+            <li><p class="pf-t">{it.title[lang]}</p>{it.detail?.[lang] && <p class="pf-d">{it.detail[lang]}</p>}</li>
           ))}</ul>
         ) : (
           <ul class="pf-rows">{sec.items.map((it) => (

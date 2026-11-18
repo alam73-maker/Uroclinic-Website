@@ -22,12 +22,16 @@ const note = ar
 ---
 
 <div class="container tm-wall">
-  {wall.map((t) => (
-    <figure class:list={['tm-q', { 'tm-q--big': t.quote }]}>
+  {wall.map((t, i) => (
+    <figure class:list={['tm-q', { 'tm-q--big': t.quote, 'tm-more': i >= 8 }]}>
       {t.quote && <p class="tm-q__pull">{q(t.quote[lang])}</p>}
       <blockquote><p>{t[lang]}</p></blockquote>
       <figcaption class="tm-by">— {whoLabel[t.who][lang]}</figcaption>
     </figure>
   ))}
 </div>
+<div class="container tm-morebar"><button type="button" class="hx-pill hx-pill--ghost tm-morebtn" data-tm-more>{ar ? `اقرأ كل الرسائل (${wall.length})` : `Read all ${wall.length} messages`}</button></div>
 <div class="container"><p class="tm-note">{note}</p></div>
+<script>
+  import '../scripts/tm-more';
+</script>

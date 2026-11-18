@@ -487,3 +487,34 @@ html[dir='rtl'] .rs-meet__year li span { text-align: left; }
   .rs-hero__shade { background: linear-gradient(0deg, var(--hx-deep) 10%, rgba(13,32,51,.88) 50%, rgba(13,32,51,.7) 100%); }
   .rs-hero .pf-facts dt { font-size: clamp(1.5rem, 7vw, 2rem); }
 }
+
+/* phone polish */
+.tm-morebar { display: none; }
+html { -webkit-tap-highlight-color: transparent; }
+.hx-pill, .mbar a, .rs-filter button, .pf-nav a, .loc, .time, .day { touch-action: manipulation; }
+@media (max-width: 760px) {
+  .hx-pill:active, .mbar a:active, .rs-filter button:active, .btn:active { transform: scale(.97); }
+  .hx-pill, .mbar a, .btn { transition: transform .15s ease, background-color .25s, color .25s; }
+  .topbar .container { min-height: 38px; gap: 1.25rem; }
+  .topbar { font-size: .8125rem; }
+  .topbar .lang { padding-inline-start: 1.25rem; }
+  body:has(:is(.hx, .pf-hero, .rs-hero)) .site-header { top: 40px; }
+  .hx-topic { padding-inline-end: 2.4rem !important; }
+  .hx-topic i { display: grid; place-items: center; width: 26px; height: 26px; top: 1.45rem; inset-inline-end: 1rem; border-radius: 50%; background: var(--hx-alt); font-size: .8125rem; }
+  .hx-topic:active { background: var(--hx-alt); }
+  .hx-stats dt, .hx-stats strong { font-size: 1rem; }
+  .pf-sec--tiles .pf-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .pf-sec--tiles .pf-tiles li { padding: 1rem; border-radius: 16px; gap: .5rem; justify-content: flex-start; }
+  .pf-sec--tiles .pf-tiles .pf-t { font-size: .9375rem; line-height: 1.35; }
+  .pf-sec--tiles .pf-tiles .pf-d { font-size: .8125rem; }
+  .tm-wall:not(.is-open) .tm-more { display: none; }
+  .tm-morebar { display: block; padding-block: 8px 24px; }
+  .tm-morebtn { width: 100%; justify-content: center; color: var(--hx-deep); border-color: var(--hx-line); }
+  .steps .num { display: none; }
+  .steps { margin-bottom: 1.75rem; }
+  .summary dd { font-size: .9375rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .site-footer { padding-top: 40px; }
+  .site-footer nav { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; width: 100%; }
+  .site-footer nav a { padding-block: .65rem; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .site-footer .info { text-align: start; }
+}
