@@ -156,9 +156,9 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
     <div class="hx-video__head">
       <h2>{c.videos}</h2>
       <p>{c.videosText}</p>
+      <a class="hx-pill hx-pill--solid hx-video__cta" href={href(lang, 'videos')}>{c.videosCta}</a>
     </div>
-    {videos[0] && <div class="hx-video__player"><YouTube video={videos[0]} lang={lang} /></div>}
-    <div class="hx-video__foot"><span>{videos[0]?.title[lang]}</span><a class="hx-link" href={href(lang, 'videos')}>{c.videosCta} →</a></div>
+    {videos[0] && <div class="hx-video__player"><YouTube video={videos[0]} lang={lang} /><p class="hx-video__title">{videos[0].title[lang]}</p></div>}
   </section>
 
   <HomeTestimonials lang={lang} />
