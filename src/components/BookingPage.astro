@@ -10,19 +10,31 @@ const ar = lang === 'ar';
 ---
 
 <Base lang={lang} path="appointments" title={ar ? 'احجز موعدك' : 'Book your appointment'}>
-  <section class="page-intro book-intro">
-    <div class="container">
-      <h1>{ar ? 'احجز موعدك.' : 'Book your appointment.'}</h1>
-      <p>{ar ? 'اختر الفرع، ثم اليوم والوقت المتاحين. يُحجز الموعد لك فورًا، وتتواصل معك العيادة لتأكيده.' : 'Choose a location, then an available day and time. The time is held for you straight away, and the clinic will contact you to confirm.'}</p>
+  <section class="rs-hero bk-hero">
+    <picture class="rs-hero__bg">
+      <source media="(max-width: 700px)" srcset="/video/hero-m-poster.jpg" />
+      <img src="/video/hero-poster.jpg" alt="" fetchpriority="high" decoding="async" />
+    </picture>
+    <div class="rs-hero__shade bk-hero__shade"></div>
+    <div class="hx-wrap rs-hero__in">
+      <div class="rs-hero__copy">
+        <h1>{ar ? 'احجز موعدك' : 'Book your appointment'}</h1>
+        <p>{ar ? 'اختر الفرع، ثم اليوم والوقت المتاحين. يُحجز الموعد لك فورًا، وتتواصل معك العيادة لتأكيده.' : 'Choose a location, then an available day and time. The time is held for you straight away, and the clinic will contact you to confirm.'}</p>
+      </div>
+      <dl class="bk-sum" aria-label={b.summary}>
+        <div><dt>{b.location}</dt><dd data-sum="location">{b.notChosen}</dd></div>
+        <div><dt>{b.date}</dt><dd data-sum="date">{b.notChosen}</dd></div>
+        <div><dt>{b.time}</dt><dd data-sum="time">{b.notChosen}</dd></div>
+      </dl>
     </div>
   </section>
 
   <section class="book" data-booking data-lang={lang}>
-    <div class="container book-grid">
+    <div class="hx-wrap book-grid">
       <div class="book-main">
         <p class="demo-note" data-demo hidden>{b.demo}</p>
         <ol class="steps" aria-label={ar ? 'خطوات الحجز' : 'Booking steps'}>
-          {b.steps.map((s, i) => <li data-step-tab={i}><span class="num">{i + 1}</span><span class="lbl">{s}</span></li>)}
+          {b.steps.map((s, i) => <li data-step-tab={i} aria-current={i === 0 ? "step" : undefined}><span class="num" dir="ltr">{i + 1}</span><span class="lbl">{s}</span></li>)}
         </ol>
 
         <div class="panel" data-panel="0">
@@ -94,18 +106,11 @@ const ar = lang === 'ar';
             <button type="button" class="link-btn" data-restart>{b.bookAnother}</button>
           </div>
         </div>
+        <div class="bk-note">
+          <p>{b.emergency}</p>
+          <a href={href(lang, 'refunds')}>{ar ? 'الإلغاء والتعديل' : 'Changing or cancelling'}</a>
+        </div>
       </div>
-
-      <aside class="summary" aria-label={b.summary}>
-        <h2>{b.summary}</h2>
-        <dl>
-          <div><dt>{b.location}</dt><dd data-sum="location">{b.notChosen}</dd></div>
-          <div><dt>{b.date}</dt><dd data-sum="date">{b.notChosen}</dd></div>
-          <div><dt>{b.time}</dt><dd data-sum="time">{b.notChosen}</dd></div>
-        </dl>
-        <p class="emergency">{b.emergency}</p>
-        <p class="small"><a href={href(lang, 'refunds')}>{ar ? 'الإلغاء والتعديل' : 'Changing or cancelling'}</a></p>
-      </aside>
     </div>
     <noscript><div class="container"><p class="form-error">{ar ? 'يتطلب الحجز تفعيل JavaScript.' : 'Booking requires JavaScript.'}</p></div></noscript>
   </section>

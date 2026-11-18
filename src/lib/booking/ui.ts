@@ -51,9 +51,9 @@ export async function initBooking() {
   }
 
   function summary() {
-    q('[data-sum="location"]').textContent = loc ? locName(loc) : t.notChosen;
-    q('[data-sum="date"]').textContent = slot ? fmt(lang, slot.starts_at, { weekday: 'long', day: 'numeric', month: 'long' }) : day ? fmtKey(lang, day, { weekday: 'long', day: 'numeric', month: 'long' }) : t.notChosen;
-    q('[data-sum="time"]').textContent = slot ? fmtTime(lang, slot.starts_at) : t.notChosen;
+    document.querySelector<HTMLElement>('[data-sum="location"]')!.textContent = loc ? locName(loc) : t.notChosen;
+    document.querySelector<HTMLElement>('[data-sum="date"]')!.textContent = slot ? fmt(lang, slot.starts_at, { weekday: 'long', day: 'numeric', month: 'long' }) : day ? fmtKey(lang, day, { weekday: 'long', day: 'numeric', month: 'long' }) : t.notChosen;
+    document.querySelector<HTMLElement>('[data-sum="time"]')!.textContent = slot ? fmtTime(lang, slot.starts_at) : t.notChosen;
   }
 
   function renderLocations() {

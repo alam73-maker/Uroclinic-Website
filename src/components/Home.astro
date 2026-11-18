@@ -115,7 +115,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
   </section>
 
   <section class="hx-wrap hx-split">
-    <figure class="hx-media"><img src="/photos/doctor.jpg" alt="" /></figure>
+    <figure class="hx-media"><picture><source srcset="/photos/doctor.webp" type="image/webp" /><img src="/photos/doctor.jpg" alt="" width="1400" height="1400" loading="lazy" decoding="async" /></picture></figure>
     <div class="hx-copy">
       <h2>{c.meet}</h2>
       <ul class="hx-list">{c.meetList.map((li) => <li set:html={li} />)}</ul>
@@ -124,7 +124,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
   </section>
 
   <section class="hx-band">
-    <img src="/photos/banner.jpg" alt="" />
+    <picture><source srcset="/photos/banner.webp" type="image/webp" /><img src="/photos/banner.jpg" alt="" width="2400" height="1125" loading="lazy" decoding="async" /></picture>
     <div class="hx-band__shade"></div>
     <div class="hx-wrap hx-band__in">
       <p class="hx-band__big">{c.bannerAccent} {c.bannerRest}</p>
@@ -138,7 +138,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
       <ul class="hx-list">{c.specList.map((li) => <li set:html={li} />)}</ul>
       <a class="hx-pill hx-pill--solid" href={href(lang, 'treatments')}>{c.specCta}</a>
     </div>
-    <figure class="hx-media"><img src="/photos/speciality.jpg" alt="" /></figure>
+    <figure class="hx-media"><picture><source srcset="/photos/speciality.webp" type="image/webp" /><img src="/photos/speciality.jpg" alt="" width="1400" height="1400" loading="lazy" decoding="async" /></picture></figure>
   </section>
 
   <section class="hx-dark">
@@ -148,7 +148,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
         <ul class="hx-list hx-list--light">{c.intlList.map((li) => <li set:html={li} />)}</ul>
         <a class="hx-pill hx-pill--light" href={href(lang, 'international-patients')}>{c.intlCta}</a>
       </div>
-      <div class="hx-map"><img src="/world-map.svg" alt="" /></div>
+      <div class="hx-map"><img src="/world-map.svg" alt="" width="960" height="470" loading="lazy" decoding="async" /></div>
     </div>
   </section>
 
