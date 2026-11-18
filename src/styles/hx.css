@@ -675,3 +675,4 @@ html { -webkit-tap-highlight-color: transparent; }
   .hx-video__player { order: 2; }
 }
 .hx-video { padding-bottom: clamp(80px, 10vw, 128px); } @media (max-width: 760px) { .hx-video { padding-bottom: 64px; } }
+.hx-copy > h2.rv.rv-in { transform: none; }
