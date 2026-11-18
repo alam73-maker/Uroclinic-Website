@@ -1,37 +1,71 @@
 ---
-import '@fontsource/newsreader/latin-400.css';
-import '@fontsource/newsreader/latin-400-italic.css';
-import '@fontsource/noto-naskh-arabic/arabic-400.css';
-import type { Lang } from '../i18n/ui';
-import { testimonials, whoLabel, type Testimonial } from '../content/testimonials';
+import { href, type Lang } from '../i18n/ui';
+import { pages } from '../content/pages';
+import { testimonials, whoLabel, themes, type Testimonial } from '../content/testimonials';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const ar = lang === 'ar';
+const page = pages.find((p) => p.slug === 'patient-stories')![lang];
 const q = (s: string) => (ar ? `«${s}»` : `“${s}”`);
 const big = testimonials.filter((t) => t.quote);
 const rest = testimonials.filter((t) => !t.quote);
 const wall: Testimonial[] = [];
 rest.forEach((t, i) => {
-  if (i % 9 === 0 && big[i / 9]) wall.push(big[i / 9]);
+  if (i % 8 === 0 && big[i / 8]) wall.push(big[i / 8]);
   wall.push(t);
 });
-const note = ar
-  ? 'رسائل أرسلها المرضى وأسرهم إلى العيادة، ننشرها دون أسماء. تجربة كل مريض فردية.'
-  : 'Messages sent to the clinic by patients and their families, shared without names. Every patient’s experience is individual.';
+big.slice(Math.ceil(rest.length / 8)).forEach((t) => wall.push(t));
+const theme = Object.fromEntries(themes.map((t) => [t.id, t.title[lang]]));
+const fam = testimonials.filter((t) => t.who === 'family').length;
+const s = ar
+  ? { book: 'احجز موعدك', about: 'عن الدكتور', msgs: 'رسالة شكر', pts: 'من المرضى', fams: 'من أسر المرضى', filter: 'تصفية حسب الموضوع', all: 'الكل', more: `اعرض كل الرسائل (${wall.length})`, note: 'رسائل أرسلها المرضى وأسرهم إلى العيادة، ننشرها دون أسماء. تجربة كل مريض فردية.' }
+  : { book: 'Book your appointment', about: 'About the doctor', msgs: 'Thank-you messages', pts: 'From patients', fams: 'From families', filter: 'Filter by theme', all: 'All', more: `Show all ${wall.length} messages`, note: 'Messages sent to the clinic by patients and their families, shared without names. Every patient’s experience is individual.' };
 ---
 
-<div class="container tm-wall">
-  {wall.map((t, i) => (
-    <figure class:list={['tm-q', { 'tm-q--big': t.quote, 'tm-more': i >= 8 }]}>
-      {t.quote && <p class="tm-q__pull">{q(t.quote[lang])}</p>}
-      <blockquote><p>{t[lang]}</p></blockquote>
-      <figcaption class="tm-by">— {whoLabel[t.who][lang]}</figcaption>
-    </figure>
-  ))}
-</div>
-<div class="container tm-morebar"><button type="button" class="hx-pill hx-pill--ghost tm-morebtn" data-tm-more>{ar ? `اقرأ كل الرسائل (${wall.length})` : `Read all ${wall.length} messages`}</button></div>
-<div class="container"><p class="tm-note">{note}</p></div>
+<section class="rs-hero ps-hero">
+  <picture class="rs-hero__bg">
+    <source srcset="/photos/consult-room.webp" type="image/webp" />
+    <img src="/photos/consult-room.jpg" alt="" width="1086" height="724" fetchpriority="high" decoding="async" />
+  </picture>
+  <div class="rs-hero__shade"></div>
+  <div class="hx-wrap rs-hero__in">
+    <div class="rs-hero__copy">
+      <h1>{page.title.replace(/\.$/, '')}</h1>
+      <p>{page.lead}</p>
+      <div class="hx-actions">
+        <a class="hx-pill hx-pill--solid" href={href(lang, 'appointments')}>{s.book}</a>
+        <a class="hx-pill hx-pill--ghost" href={href(lang, 'about')}>{s.about}</a>
+      </div>
+    </div>
+    <dl class="pf-facts ps-facts">
+      <div><dt>{testimonials.length}</dt><dd>{s.msgs}</dd></div>
+      <div><dt>{testimonials.length - fam}</dt><dd>{s.pts}</dd></div>
+      <div><dt>{fam}</dt><dd>{s.fams}</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="tq-page">
+  <div class="hx-wrap">
+    <div class="rs-filter tq-filter" role="group" aria-label={s.filter} data-tq-filter>
+      <button type="button" data-theme="all" aria-pressed="true">{s.all}</button>
+      {themes.map((t) => <button type="button" data-theme={t.id} aria-pressed="false">{t.title[lang]}</button>)}
+    </div>
+    <div class="tq-grid" data-tq-grid>
+      {wall.map((t, i) => (
+        <figure class:list={['tq-card', { 'tq-card--q': t.quote, 'tq-more': i >= 12 }]} data-theme={t.theme}>
+          {t.quote && <p class="tq-pull">{q(t.quote[lang])}</p>}
+          <blockquote><p>{t[lang]}</p></blockquote>
+          <figcaption><span class="tq-av" aria-hidden="true">{t.who === 'family' ? (ar ? 'أ' : 'F') : (ar ? 'م' : 'P')}</span><span><b>{whoLabel[t.who][lang]}</b><small>{theme[t.theme]}</small></span></figcaption>
+        </figure>
+      ))}
+    </div>
+    <div class="tq-morebar"><button type="button" class="hx-pill tq-pill" data-tq-more>{s.more}</button></div>
+    <p class="tq-note">{s.note}</p>
+  </div>
+</section>
+
 <script>
-  import '../scripts/tm-more';
+  import '../scripts/tq';
 </script>

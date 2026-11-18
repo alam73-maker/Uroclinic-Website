@@ -11,7 +11,7 @@ window.addEventListener('scroll', onScroll, { passive: true });
 
 const SEL = [
   '.hx-topic', '.hx-split > *', '.hx-band__in > *', '.hx-video__head > *', '.hx-video__player', '.hx-cards > *',
-  '.tm-home h2', '.tm-home .tm-q', '.tm-wall .tm-q',
+  '.tq-home__head > *', '.tq-grid .tq-card',
   '.pf-sec', '.pf-rows li', '.pf-tiles li', '.pf-badges li', '.pf-timeline li', '.pf-research', '.pub-year', '.meetings li', '.topic-row', '.prose > *', '.video-card', '.closing .container > *',
 ].join(',');
 
