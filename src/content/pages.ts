@@ -24,12 +24,6 @@ export const pages: ContentPage[] = [
     en: { title: 'Prof. Dr. Tarek Osman', lead: 'Professor and Head of Urology at Ain Shams University and Chairman of its GU Oncology Unit. Qualifications, training, appointments and research.', body: '' },
   },
   {
-    slug: 'international-patients',
-    closing: true,
-    ar: { title: 'خطّط للزيارة، ثم للرحلة.', lead: 'احصل على تأكيد العيادة قبل أي ترتيبات سفر.', body: '<h2>أكّد التفاصيل العملية</h2><ul><li>الموعد المتاح وعنوان الفرع.</li><li>رسوم الاستشارة وطرق الدفع وقواعد الإلغاء.</li><li>أي احتياجات لغوية أو احتياجات وصول خاصة.</li><li>الطريقة المعتمدة لمشاركة أي تقارير سابقة.</li></ul><h2>السفر والإقامة</h2><p>هذا الموقع لا يرتب السفر أو التأشيرات أو الإقامة أو باقات العلاج. اسأل العيادة عن المساعدة المتاحة، إن وُجدت، قبل الالتزام بأي ترتيبات.</p>' },
-    en: { title: 'Plan the visit. Then plan the journey.', lead: 'Get confirmation from the clinic before making travel arrangements.', body: '<h2>Confirm the practical details</h2><ul><li>Appointment availability and the clinic address.</li><li>Consultation fees, payment options and cancellation rules.</li><li>Language or accessibility requirements.</li><li>The approved way to share any existing reports.</li></ul><h2>Travel and accommodation</h2><p>This website does not arrange travel, visas, accommodation or treatment packages. Ask the clinic what assistance, if any, is available before making commitments.</p>' },
-  },
-  {
     slug: 'research',
     closing: true,
     ar: { title: 'الأبحاث والنشاط العلمي.', lead: 'الأبحاث المنشورة لأ.د. طارق عثمان في مجلات المسالك البولية المحكّمة، وأنشطة قسم أورام المسالك البولية الذي يرأسه.', body: '' },

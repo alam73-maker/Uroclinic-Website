@@ -84,5 +84,27 @@
       "path": "/api/keepalive/",
       "schedule": "17 6 * * *"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/en/international-patients/",
+      "destination": "/en/appointments/",
+      "permanent": true
+    },
+    {
+      "source": "/en/international-patients",
+      "destination": "/en/appointments/",
+      "permanent": true
+    },
+    {
+      "source": "/international-patients/",
+      "destination": "/appointments/",
+      "permanent": true
+    },
+    {
+      "source": "/international-patients",
+      "destination": "/appointments/",
+      "permanent": true
+    }
   ]
 }

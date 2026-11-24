@@ -29,7 +29,7 @@ const c = ar
       meetCta: 'السيرة المهنية',
       intl: 'المرضى الدوليون',
       intlList: ['تواصل مع العيادة <b>قبل ترتيب السفر</b>', 'أكّد <b>موعدك والفرع</b>', 'اسأل عن الطريقة الآمنة لمشاركة تقاريرك', 'ناقش الترتيبات العملية لزيارتك'],
-      intlCta: 'خطّط لزيارتك',
+      intlCta: 'احجز استشارتك أونلاين',
       bannerAccent: 'استعد لاستشارتك.',
       bannerRest: 'وجهّز أسئلتك.',
       spec: 'تخصصنا',
@@ -42,7 +42,7 @@ const c = ar
       cards: [
         ['تصفّح مكتبة الفيديوهات', 'مكتبة الفيديوهات', 'videos'],
         ['احجز استشارتك الأولى', 'احجز موعدك', 'appointments'],
-        ['استعد لزيارتك', 'معلومات الزيارة', 'international-patients'],
+        ['استعد لزيارتك', 'معلومات الزيارة', 'clinic'],
       ],
       ph: { hero: 'صورة العيادة', doctor: 'د. طارق في غرفة العمليات', banner: 'د. طارق', clinical: 'صورة طبية', video: 'لقطة فيديو' },
       map: 'خريطة العالم',
@@ -63,7 +63,7 @@ const c = ar
       meetCta: 'Full profile',
       intl: 'International Patients',
       intlList: ['Contact the clinic <b>before making travel plans</b>', 'Confirm your <b>appointment and location</b>', 'Ask how to share existing reports securely', 'Discuss practical arrangements for your visit'],
-      intlCta: 'Plan your visit',
+      intlCta: 'Book your online consultation',
       bannerAccent: 'Prepare for your consultation.',
       bannerRest: 'Make room for your questions.',
       spec: 'Our Speciality',
@@ -76,7 +76,7 @@ const c = ar
       cards: [
         ['Explore our video library', 'See the library', 'videos'],
         ['Book your first consultation', 'Book your appointment', 'appointments'],
-        ['Prepare for your visit', 'Visit information', 'international-patients'],
+        ['Prepare for your visit', 'Visit information', 'clinic'],
       ],
       ph: { hero: 'Clinic photography', doctor: 'Dr. Tarek in theatre', banner: 'Dr. Tarek', clinical: 'Clinical photography', video: 'Video still' },
       map: 'World map',
@@ -146,7 +146,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
       <div class="hx-copy">
         <h2>{c.intl}</h2>
         <ul class="hx-list hx-list--light">{c.intlList.map((li) => <li set:html={li} />)}</ul>
-        <a class="hx-pill hx-pill--light" href={href(lang, 'international-patients')}>{c.intlCta}</a>
+        <a class="hx-pill hx-pill--light" href={href(lang, 'appointments')}>{c.intlCta}</a>
       </div>
       <div class="hx-map"><img src="/world-map.svg" alt="" width="960" height="470" loading="lazy" decoding="async" /></div>
     </div>
