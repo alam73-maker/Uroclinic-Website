@@ -162,7 +162,7 @@ export async function initAdmin() {
       h('div', { class: 'r-time' }, fmtTime(lang, x.starts_at)),
       h('div', { class: 'r-main' },
         h('p', { class: 'r-name' }, x.patient_name, h('span', { class: 'r-ref', dir: 'ltr' }, x.ref)),
-        h('p', { class: 'r-meta' }, locName(l), ' · ', b.visitTypes[x.visit_type as VisitType] ?? x.visit_type),
+        h('p', { class: 'r-meta' }, x.tier ? h('span', { class: `tier-tag t-${x.tier}` }, x.tier === 'vip' ? b.tierVip : b.tierNormal) : null, locName(l), ' · ', b.visitTypes[x.visit_type as VisitType] ?? x.visit_type),
         h('p', { class: 'r-meta' }, `${a.source}: `, sourceOf(x)),
         h('details', {}, h('summary', {}, a.notes + (x.staff_notes ? ' •' : '')), notes,
           h('button', { type: 'button', class: 'adm-link', onclick: async () => { try { await api.updateBooking(x.id, { staff_notes: notes.value.trim() || null }); x.staff_notes = notes.value.trim() || null; toast(a.saved); } catch (e) { fail(e); } } }, a.save)),
@@ -199,7 +199,7 @@ export async function initAdmin() {
       const mine = open.filter((s) => s.location_id === locSel.value && Date.parse(s.starts_at) > Date.now() + 30 * 60e3);
       fill(slotBox, mine.length ? mine.map((s) => h('button', { type: 'button', class: 'time', onclick: (e: Event) => {
         chosen = s; slotBox.querySelectorAll('.time').forEach((el) => el.classList.toggle('is-selected', el === e.currentTarget));
-      } }, fmtTime(lang, s.starts_at))) : h('p', { class: 'adm-empty' }, b.noSlotsDay));
+      } }, fmtTime(lang, s.starts_at), s.tier === 'vip' ? ' · VIP' : '')) : h('p', { class: 'adm-empty' }, b.noSlotsDay));
     }
     locSel.addEventListener('change', loadSlots);
     dateIn.addEventListener('change', loadSlots);
@@ -265,9 +265,10 @@ export async function initAdmin() {
   function slotChip(s: Slot) {
     const st = s.status ?? 'open';
     const editable = st === 'open' || st === 'blocked';
-    return h('div', { class: `chip c-${st}` },
-      h('span', {}, fmtTime(lang, s.starts_at)),
-      h('span', { class: 'chip-st' }, a.slotStatus[st]),
+    const cap = s.capacity ?? 1;
+    return h('div', { class: `chip c-${st}${s.tier === 'vip' ? ' c-vip' : ''}` },
+      h('span', {}, fmtTime(lang, s.starts_at), ' ', h('span', { class: `tier-tag t-${s.tier ?? 'normal'}` }, s.tier === 'vip' ? b.tierVip : b.tierNormal)),
+      h('span', { class: 'chip-st' }, st === 'blocked' ? a.slotStatus[st] : (s.booked ?? 0) > 0 ? a.bookedOf.replace('{n}', String(s.booked)).replace('{c}', String(cap)) : a.slotStatus[st]),
       editable ? h('span', { class: 'chip-acts' },
         h('button', { type: 'button', onclick: async () => { try { await api.setSlotStatus(s.id, st === 'open' ? 'blocked' : 'open'); await renderAvailability(); } catch (e) { fail(e); } } }, st === 'open' ? a.block : a.unblock),
         h('button', { type: 'button', 'aria-label': a.remove, onclick: async () => { try { await api.deleteSlot(s.id); await renderAvailability(); } catch (e) { fail(e); } } }, '×'),
@@ -286,7 +287,9 @@ export async function initAdmin() {
         field(a.to, h('input', { type: 'date', name: 'to', value: addDays(today(), 27), min: today(), required: true })),
         field(a.startTime, h('input', { type: 'time', name: 'start', value: '17:00', required: true, step: 300 })),
         field(a.endTime, h('input', { type: 'time', name: 'end', value: '21:00', required: true, step: 300 })),
-        field(a.length, h('select', { name: 'minutes' }, [10, 15, 20, 30, 45, 60].map((m) => h('option', { value: m, selected: m === 30 }, String(m))))),
+        field(a.length, h('select', { name: 'minutes' }, [10, 15, 20, 30, 45, 60].map((m) => h('option', { value: m, selected: m === 20 }, String(m))))),
+        field(a.capacity, h('input', { type: 'number', name: 'capacity', value: 2, min: 1, max: 10, required: true })),
+        field(a.vipMinutes, h('input', { type: 'number', name: 'vip', value: 60, min: 0, max: 480, step: 5, required: true })),
       ),
       h('fieldset', { class: 'adm-days' }, h('legend', {}, a.days),
         days.map((d) => h('label', { class: 'choice' }, h('input', { type: 'checkbox', name: 'wd', value: d }), h('span', {}, a.weekdays[d])))),
@@ -297,7 +300,7 @@ export async function initAdmin() {
       const f = new FormData(form);
       const [sh, sm] = String(f.get('start')).split(':').map(Number);
       const [eh, em] = String(f.get('end')).split(':').map(Number);
-      return { from: String(f.get('from')), to: String(f.get('to')), weekdays: f.getAll('wd').map(Number), start: String(f.get('start')), end: String(f.get('end')), minutes: Number(f.get('minutes')), startM: sh * 60 + sm, endM: eh * 60 + em };
+      return { from: String(f.get('from')), to: String(f.get('to')), weekdays: f.getAll('wd').map(Number), start: String(f.get('start')), end: String(f.get('end')), minutes: Number(f.get('minutes')), capacity: Number(f.get('capacity')), vipMinutes: Number(f.get('vip')), startM: sh * 60 + sm, endM: eh * 60 + em };
     };
     const count = () => {
       const g = read();
@@ -312,7 +315,7 @@ export async function initAdmin() {
       e.preventDefault();
       const g = read();
       if (!count()) { toast(a.error, true); return; }
-      try { const n = await api.generateSlots({ location_id: av.location, from: g.from, to: g.to, weekdays: g.weekdays, start: g.start, end: g.end, minutes: g.minutes }); toast(tr(a.created, n)); av.week = g.from; await renderAvailability(); }
+      try { const n = await api.generateSlots({ location_id: av.location, from: g.from, to: g.to, weekdays: g.weekdays, start: g.start, end: g.end, minutes: g.minutes, capacity: g.capacity, vipMinutes: g.vipMinutes }); toast(tr(a.created, n)); av.week = g.from; await renderAvailability(); }
       catch (err) { fail(err); }
     });
     return form;

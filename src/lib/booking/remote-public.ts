@@ -15,7 +15,7 @@ export const remotePublicApi: PublicApi = {
   demo: false,
   listLocations: () => get<Location[]>('locations?select=id,name_ar,name_en,address_ar,address_en,map_url,active,sort&active=is.true&order=sort.asc'),
   listOpenSlots: (fromIso, toIso) =>
-    get<Slot[]>(`slots?select=id,location_id,starts_at,ends_at&status=eq.open&starts_at=gte.${encodeURIComponent(fromIso)}&starts_at=lt.${encodeURIComponent(toIso)}&order=starts_at.asc&limit=2000`),
+    get<Slot[]>(`slots?select=*&status=eq.open&starts_at=gte.${encodeURIComponent(fromIso)}&starts_at=lt.${encodeURIComponent(toIso)}&order=starts_at.asc&limit=2000`),
   async book(i: BookingInput): Promise<BookingResult> {
     const body = {
       p_slot_id: i.slot_id, p_name: i.name, p_phone: i.phone, p_visit_type: i.visit_type, p_lang: i.lang, p_consent: i.consent,

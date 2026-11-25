@@ -46,19 +46,21 @@ export const remoteAdminApi: AdminApi = {
     else check(await sb.from('locations').insert(rest));
   },
   async listSlots(locationId, fromIso, toIso) {
-    return check(await sb.from('slots').select('id,location_id,starts_at,ends_at,status').eq('location_id', locationId).gte('starts_at', fromIso).lt('starts_at', toIso).order('starts_at').limit(3000)) as Slot[];
+    const rows = check(await sb.from('slots').select('*,bookings(status)').eq('location_id', locationId).gte('starts_at', fromIso).lt('starts_at', toIso).order('starts_at').limit(3000)) as (Slot & { bookings?: { status: string }[] })[];
+    return rows.map(({ bookings, ...s }) => ({ ...s, booked: (bookings ?? []).filter((b) => b.status !== 'cancelled').length }));
   },
   async generateSlots(g) {
-    const r = await sb.rpc('generate_slots', { p_location_id: g.location_id, p_from: g.from, p_to: g.to, p_weekdays: g.weekdays, p_start: g.start, p_end: g.end, p_minutes: g.minutes });
+    const r = await sb.rpc('generate_slots', { p_location_id: g.location_id, p_from: g.from, p_to: g.to, p_weekdays: g.weekdays, p_start: g.start, p_end: g.end, p_minutes: g.minutes, p_capacity: g.capacity, p_vip_minutes: g.vipMinutes });
     return check(r) as number;
   },
   async setSlotStatus(id, status) { check(await sb.from('slots').update({ status }).eq('id', id).in('status', ['open', 'blocked'])); },
   async deleteSlot(id) { check(await sb.from('slots').delete().eq('id', id).in('status', ['open', 'blocked'])); },
   async listBookings(fromIso, toIso) {
-    let q = sb.from('bookings').select('*').order('starts_at').limit(2000);
+    let q = sb.from('bookings').select('*,slot:slots(*)').order('starts_at').limit(2000);
     if (fromIso) q = q.gte('starts_at', fromIso);
     if (toIso) q = q.lt('starts_at', toIso);
-    return check(await q) as Booking[];
+    const rows = check(await q) as (Booking & { slot?: { tier?: Booking['tier'] } | null })[];
+    return rows.map(({ slot, ...b }) => ({ ...b, tier: slot?.tier }));
   },
   async updateBooking(id, patch) { check(await sb.from('bookings').update(patch).eq('id', id)); },
 };

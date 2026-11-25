@@ -2,7 +2,7 @@ import { booking } from '../../i18n/ui';
 import { getAttribution } from '../attribution';
 import { h, fill } from '../dom';
 import { publicApi, clinicWhatsApp } from './config';
-import { addDays, cairoMinutes, cairoToDate, dateKey, fmt, fmtKey, fmtTime, today } from './time';
+import { addDays, cairoToDate, dateKey, fmt, fmtKey, fmtTime, today } from './time';
 import { BookingError, type Location, type PublicApi, type Slot, type VisitType } from './types';
 
 const WINDOW_DAYS = 56;
@@ -56,7 +56,7 @@ export async function initBooking() {
   function summary() {
     document.querySelector<HTMLElement>('[data-sum="location"]')!.textContent = loc ? locName(loc) : t.notChosen;
     document.querySelector<HTMLElement>('[data-sum="date"]')!.textContent = slot ? fmt(lang, slot.starts_at, { weekday: 'long', day: 'numeric', month: 'long' }) : day ? fmtKey(lang, day, { weekday: 'long', day: 'numeric', month: 'long' }) : t.notChosen;
-    document.querySelector<HTMLElement>('[data-sum="time"]')!.textContent = slot ? fmtTime(lang, slot.starts_at) : t.notChosen;
+    document.querySelector<HTMLElement>('[data-sum="time"]')!.textContent = slot ? `${fmtTime(lang, slot.starts_at)}${slot.tier === 'vip' ? ' · VIP' : ''}` : t.notChosen;
     document.querySelector<HTMLElement>('[data-sum="location"]')!.classList.toggle('is-set', !!loc);
     document.querySelector<HTMLElement>('[data-sum="date"]')!.classList.toggle('is-set', !!(slot || day));
     document.querySelector<HTMLElement>('[data-sum="time"]')!.classList.toggle('is-set', !!slot);
@@ -123,14 +123,20 @@ export async function initBooking() {
     if (!day) { fill(box, h('p', { class: 'hint' }, loc && !slotsFor(loc.id).length ? t.noAvailability : t.pickDayFirst)); return; }
     const list = daySlots(day);
     if (!list.length) { fill(box, h('p', { class: 'hint' }, t.noSlotsDay)); return; }
-    const groups: [string, Slot[]][] = [[t.morning, []], [t.afternoon, []], [t.evening, []]];
-    list.forEach((s) => { const m = cairoMinutes(s.starts_at); groups[m < 12 * 60 ? 0 : m < 17 * 60 ? 1 : 2][1].push(s); });
-    fill(box, groups.filter(([, g]) => g.length).map(([label, g]) =>
-      h('div', { class: 'time-group' }, h('p', { class: 'time-label' }, label),
+    const groups: [string, string, string, Slot[]][] = [['vip', t.vipBadge, t.vipNote, []], ['normal', t.normalLabel, t.normalNote, []]];
+    list.forEach((s) => groups[s.tier === 'vip' ? 0 : 1][3].push(s));
+    fill(box, groups.filter(([, , , g]) => g.length).map(([tier, label, note, g]) =>
+      h('div', { class: `time-group tg-${tier}` },
+        h('p', { class: 'time-label' }, tier === 'vip' ? h('span', { class: 'tier-badge' }, label) : label),
+        h('p', { class: 'time-note' }, note),
         h('div', { class: 'time-grid' }, g.map((s) => h('button', {
           type: 'button', class: 'time' + (slot?.id === s.id ? ' is-selected' : ''), 'aria-pressed': String(slot?.id === s.id),
           onclick: () => { slot = s; renderTimes(); summary(); go(2); setTimeout(() => form.querySelector<HTMLInputElement>('input[name="name"]')?.focus({ preventScroll: true }), 50); },
         }, fmtTime(lang, s.starts_at)))))));
+  }
+
+  function tierText(s: Slot) {
+    return s.tier === 'vip' ? t.vipBadge : `${t.tierNormal} · ${t.normalNote}`;
   }
 
   async function loadData() {
@@ -177,6 +183,9 @@ export async function initBooking() {
         how_heard: (fd.get('how_heard') as string) || null, ...a,
       });
       q('[data-ref]').textContent = res.ref;
+      const tierEl = q('[data-tier-done]');
+      tierEl.textContent = `${t.tierLabel}: ${tierText(chosen)}`;
+      tierEl.classList.toggle('is-vip', chosen.tier === 'vip');
       const icsLink = q<HTMLAnchorElement>('[data-ics]');
       icsLink.href = ics(chosen.starts_at, chosen.ends_at, res.ref);
       const wa = q<HTMLAnchorElement>('[data-wa]');

@@ -1,5 +1,6 @@
 export type SlotStatus = 'open' | 'held' | 'booked' | 'blocked';
 export type BookingStatus = 'held' | 'confirmed' | 'cancelled' | 'attended' | 'no_show';
+export type SlotTier = 'vip' | 'normal';
 export type VisitType = 'first' | 'follow_up' | 'second_opinion';
 
 export interface Location {
@@ -19,6 +20,9 @@ export interface Slot {
   starts_at: string;
   ends_at: string;
   status?: SlotStatus;
+  tier?: SlotTier;
+  capacity?: number;
+  booked?: number;
 }
 
 export interface BookingInput {
@@ -57,6 +61,7 @@ export interface Booking {
   status: BookingStatus;
   staff_notes: string | null;
   created_at: string;
+  tier?: SlotTier;
 }
 
 export interface GenerateInput {
@@ -67,6 +72,8 @@ export interface GenerateInput {
   start: string;
   end: string;
   minutes: number;
+  capacity: number;
+  vipMinutes: number;
 }
 
 export class BookingError extends Error {

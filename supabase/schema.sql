@@ -26,10 +26,14 @@ create table if not exists public.slots (
   starts_at timestamptz not null,
   ends_at timestamptz not null,
   status public.slot_status not null default 'open',
+  capacity int not null default 2 check (capacity between 1 and 10),
+  tier text not null default 'normal' check (tier in ('vip', 'normal')),
   created_at timestamptz not null default now(),
   unique (location_id, starts_at),
   check (ends_at > starts_at)
 );
+alter table public.slots add column if not exists capacity int not null default 2 check (capacity between 1 and 10);
+alter table public.slots add column if not exists tier text not null default 'normal' check (tier in ('vip', 'normal'));
 create index if not exists slots_location_time on public.slots (location_id, starts_at);
 create index if not exists slots_open_time on public.slots (starts_at) where status = 'open';
 
@@ -55,7 +59,8 @@ create table if not exists public.bookings (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
-create unique index if not exists bookings_one_active_per_slot on public.bookings (slot_id) where status <> 'cancelled';
+drop index if exists public.bookings_one_active_per_slot;
+create index if not exists bookings_active_slot on public.bookings (slot_id) where status <> 'cancelled';
 create index if not exists bookings_time on public.bookings (starts_at);
 create index if not exists bookings_phone on public.bookings (phone);
 
@@ -117,6 +122,7 @@ declare
   v_phone text := regexp_replace(coalesce(p_phone, ''), '[^0-9+]', '', 'g');
   v_name text := btrim(regexp_replace(coalesce(p_name, ''), '[[:cntrl:]]', '', 'g'));
   v_ref text;
+  v_active int;
 begin
   if v_phone ~ '^00[1-9]' then v_phone := '+' || substr(v_phone, 3); end if;
   if v_phone ~ '^0[0-9]{10}$' then v_phone := '+20' || substr(v_phone, 2); end if;
@@ -131,11 +137,16 @@ begin
   end if;
 
   select * into v_slot from public.slots s where s.id = p_slot_id for update;
-  if not found or v_slot.status <> 'open' or v_slot.starts_at < now() + interval '30 minutes' then
+  if not found or v_slot.status = 'blocked' or v_slot.starts_at < now() + interval '30 minutes' then
     raise exception 'slot_unavailable';
   end if;
-
-  update public.slots set status = 'held' where id = v_slot.id;
+  select count(*) into v_active from public.bookings b where b.slot_id = v_slot.id and b.status <> 'cancelled';
+  if v_active >= v_slot.capacity then
+    raise exception 'slot_unavailable';
+  end if;
+  if exists (select 1 from public.bookings b where b.slot_id = v_slot.id and b.phone = v_phone and b.status <> 'cancelled') then
+    raise exception 'too_many_bookings';
+  end if;
 
   loop
     v_ref := 'UC-' || upper(substr(encode(gen_random_bytes(4), 'hex'), 1, 6));
@@ -147,6 +158,10 @@ begin
           case when p_lang = 'en' then 'en' else 'ar' end,
           left(p_how_heard, 40), left(p_utm_source, 100), left(p_utm_medium, 100), left(p_utm_campaign, 150), left(p_landing_path, 300), left(p_referrer, 300), now());
 
+  if v_active + 1 >= v_slot.capacity then
+    update public.slots set status = 'held' where id = v_slot.id;
+  end if;
+
   return query select v_ref, v_slot.starts_at, v_slot.location_id;
 end;
 $$;
@@ -156,15 +171,25 @@ grant execute on function public.book_slot(uuid, text, text, text, text, boolean
 
 create or replace function public.sync_slot_from_booking() returns trigger
 language plpgsql security definer set search_path = public, extensions as $$
+declare
+  v_cap int;
+  v_st public.slot_status;
+  v_active int;
+  v_held int;
 begin
   new.updated_at := now();
   if new.status is distinct from old.status then
-    if new.status = 'cancelled' then
-      update public.slots set status = 'open' where id = new.slot_id and status in ('held', 'booked');
-    elsif new.status in ('confirmed', 'attended', 'no_show') then
-      update public.slots set status = 'booked' where id = new.slot_id;
-    elsif new.status = 'held' then
-      update public.slots set status = 'held' where id = new.slot_id;
+    select s.capacity, s.status into v_cap, v_st from public.slots s where s.id = new.slot_id for update;
+    if found and v_st <> 'blocked' then
+      select count(*) filter (where b.status <> 'cancelled'), count(*) filter (where b.status = 'held')
+        into v_active, v_held
+        from public.bookings b where b.slot_id = new.slot_id and b.id <> new.id;
+      if new.status <> 'cancelled' then
+        v_active := v_active + 1;
+        if new.status = 'held' then v_held := v_held + 1; end if;
+      end if;
+      update public.slots set status = (case when v_active < v_cap then 'open' when v_held > 0 then 'held' else 'booked' end)::public.slot_status
+        where id = new.slot_id;
     end if;
   end if;
   return new;
@@ -174,6 +199,8 @@ $$;
 drop trigger if exists bookings_sync_slot on public.bookings;
 create trigger bookings_sync_slot before update on public.bookings for each row execute function public.sync_slot_from_booking();
 
+drop function if exists public.generate_slots(uuid, date, date, int[], time, time, int);
+
 create or replace function public.generate_slots(
   p_location_id uuid,
   p_from date,
@@ -181,7 +208,9 @@ create or replace function public.generate_slots(
   p_weekdays int[],
   p_start time,
   p_end time,
-  p_minutes int
+  p_minutes int,
+  p_capacity int default 2,
+  p_vip_minutes int default 60
 ) returns int
 language plpgsql security invoker set search_path = public as $$
 declare
@@ -191,9 +220,12 @@ declare
   end_m int := (extract(hour from p_end) * 60 + extract(minute from p_end))::int;
   n int := 0;
   inserted int;
+  is_vip boolean;
 begin
   if not public.is_staff() then raise exception 'not_staff'; end if;
   if p_minutes < 5 or p_minutes > 240 then raise exception 'invalid_length'; end if;
+  if p_capacity < 1 or p_capacity > 10 then raise exception 'invalid_length'; end if;
+  if p_vip_minutes < 0 or p_vip_minutes > 480 then raise exception 'invalid_length'; end if;
   if p_to < p_from or p_to - p_from > 180 then raise exception 'invalid_range'; end if;
   if end_m <= start_m then raise exception 'invalid_hours'; end if;
   d := p_from;
@@ -201,10 +233,13 @@ begin
     if extract(dow from d)::int = any (p_weekdays) then
       m := start_m;
       while m + p_minutes <= end_m loop
-        insert into public.slots (location_id, starts_at, ends_at)
+        is_vip := m < start_m + p_vip_minutes;
+        insert into public.slots (location_id, starts_at, ends_at, tier, capacity)
         values (p_location_id,
                 (d + make_interval(mins => m)) at time zone 'Africa/Cairo',
-                (d + make_interval(mins => m + p_minutes)) at time zone 'Africa/Cairo')
+                (d + make_interval(mins => m + p_minutes)) at time zone 'Africa/Cairo',
+                case when is_vip then 'vip' else 'normal' end,
+                case when is_vip then 1 else p_capacity end)
         on conflict (location_id, starts_at) do nothing;
         get diagnostics inserted = row_count;
         n := n + inserted;
@@ -217,5 +252,5 @@ begin
 end;
 $$;
 
-revoke all on function public.generate_slots(uuid, date, date, int[], time, time, int) from public;
-grant execute on function public.generate_slots(uuid, date, date, int[], time, time, int) to authenticated;
+revoke all on function public.generate_slots(uuid, date, date, int[], time, time, int, int, int) from public;
+grant execute on function public.generate_slots(uuid, date, date, int[], time, time, int, int, int) to authenticated;

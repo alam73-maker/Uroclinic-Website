@@ -166,3 +166,12 @@ html[dir='rtl'] .field input[dir='ltr'] { text-align: right; }
 .loc--intl .loc-addr { color: rgba(255,255,255,.75); }
 .loc--intl .loc-next { background: rgba(255,255,255,.12); color: #fff; }
 @media (hover: hover) { .loc--intl:hover { border-color: var(--hx-deep) !important; box-shadow: 0 14px 30px -16px rgba(13,32,51,.6); transform: translateY(-2px); } }
+.time-group { display: grid; gap: 0; }
+.time-group .time-label { margin-bottom: .35rem; }
+.time-note { margin: 0 0 .8rem; font-size: .875rem; color: #5b6b78; }
+.tier-badge { display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .8rem; border-radius: 999px; background: #e3efef; color: var(--hx-teal-ink); font-weight: 650; font-size: .8125rem; }
+.tier-badge::before { content: ''; width: 14px; height: 14px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232c6b6d' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E") center/contain no-repeat; }
+.tg-vip .time { border-color: #a9d3d4; }
+.tg-vip .time.is-selected { background: var(--hx-teal-ink); border-color: var(--hx-teal-ink); }
+.tier-done { margin-top: 1rem; font-weight: 600; color: var(--hx-deep); }
+.tier-done.is-vip { color: var(--hx-teal-ink); }
