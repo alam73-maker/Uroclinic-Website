@@ -82,6 +82,15 @@
           "value": "noindex, nofollow"
         }
       ]
+    },
+    {
+      "source": "/(photos/.*|logo-720.png)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
     }
   ],
   "crons": [
