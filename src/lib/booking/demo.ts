@@ -2,7 +2,7 @@ import type { AdminApi, Booking, BookingInput, GenerateInput, Location, Slot, Sl
 import { BookingError } from './types';
 import { addDays, cairoToDate, today, weekday } from './time';
 
-const KEY = 'uc_demo_v3';
+const KEY = 'uc_demo_v4';
 
 interface DemoSlot extends Slot { status: SlotStatus }
 interface State { locations: Location[]; slots: DemoSlot[]; bookings: Booking[]; signedIn: boolean }
@@ -31,10 +31,10 @@ function seed(): State {
   const from = today();
   const to = addDays(from, 59);
   const slots = [
-    ...makeSlots(a.id, from, to, [0], 14 * 60, 17 * 60, 20, []),
-    ...makeSlots(a.id, from, to, [3], 12 * 60, 15 * 60, 20, []),
-    ...makeSlots(b.id, from, to, [2], 19 * 60, 21 * 60, 20, []),
-    ...makeSlots(b.id, from, to, [4], 12 * 60, 13 * 60, 20, []),
+    ...makeSlots(a.id, from, to, [0], 14 * 60, 18 * 60, 20, []),
+    ...makeSlots(a.id, from, to, [3], 12 * 60, 16 * 60, 20, []),
+    ...makeSlots(b.id, from, to, [2], 19 * 60, 22 * 60, 20, []),
+    ...makeSlots(b.id, from, to, [4], 12 * 60, 14 * 60, 20, []),
   ];
   slots.forEach((s, i) => { if (i % 9 === 4) s.status = 'held'; });
   return { locations: [a, b], slots, bookings: [], signedIn: false };

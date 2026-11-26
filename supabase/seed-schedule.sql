@@ -8,10 +8,10 @@ where not exists (select 1 from public.locations where name_en ilike '%new cairo
 
 with sched (pattern, dow, start_m, end_m) as (
   values
-    ('%heliopolis%', 0, 14 * 60, 17 * 60),
-    ('%heliopolis%', 3, 12 * 60, 15 * 60),
-    ('%new cairo%', 2, 19 * 60, 21 * 60),
-    ('%new cairo%', 4, 12 * 60, 13 * 60)
+    ('%heliopolis%', 0, 14 * 60, 18 * 60),
+    ('%heliopolis%', 3, 12 * 60, 16 * 60),
+    ('%new cairo%', 2, 19 * 60, 22 * 60),
+    ('%new cairo%', 4, 12 * 60, 14 * 60)
 ),
 loc as (
   select s.*, (select l.id from public.locations l where l.name_en ilike s.pattern order by l.sort, l.created_at limit 1) as location_id
