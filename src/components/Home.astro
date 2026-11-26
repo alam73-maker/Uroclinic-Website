@@ -146,7 +146,7 @@ const rings = [[95, 0.42], [-40, 0.36], [160, 0.44], [15, 0.4]].map(([start, fra
       <div class="hx-copy">
         <h2>{c.intl}</h2>
         <ul class="hx-list hx-list--light">{c.intlList.map((li) => <li set:html={li} />)}</ul>
-        <a class="hx-pill hx-pill--light" href={href(lang, 'appointments')}>{c.intlCta}</a>
+        <a class="hx-pill hx-pill--light" href={`${href(lang, 'appointments')}?type=online`}>{c.intlCta}</a>
       </div>
       <div class="hx-map"><img src="/world-map.svg" alt="" width="960" height="470" loading="lazy" decoding="async" /></div>
     </div>

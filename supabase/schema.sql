@@ -9,6 +9,7 @@ create table if not exists public.locations (
   map_url text check (map_url is null or map_url ~ '^https://'),
   active boolean not null default true,
   sort int not null default 0,
+  online boolean not null default false,
   created_at timestamptz not null default now()
 );
 
@@ -32,6 +33,7 @@ create table if not exists public.slots (
   unique (location_id, starts_at),
   check (ends_at > starts_at)
 );
+alter table public.locations add column if not exists online boolean not null default false;
 alter table public.slots add column if not exists capacity int not null default 2 check (capacity between 1 and 10);
 alter table public.slots add column if not exists tier text not null default 'normal' check (tier in ('vip', 'normal'));
 create index if not exists slots_location_time on public.slots (location_id, starts_at);

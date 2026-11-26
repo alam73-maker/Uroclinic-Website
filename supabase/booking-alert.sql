@@ -6,6 +6,7 @@ declare
   v_key text;
   v_loc text;
   v_tier text;
+  v_online boolean;
   v_when text;
   v_visit text;
   v_name text;
@@ -17,7 +18,7 @@ begin
     return new;
   end if;
 
-  select l.name_en, s.tier into v_loc, v_tier
+  select l.name_en, s.tier, l.online into v_loc, v_tier, v_online
   from public.slots s join public.locations l on l.id = s.location_id
   where s.id = new.slot_id;
 
@@ -28,7 +29,7 @@ begin
 
   v_html := '<div style="font-family:Arial,sans-serif;font-size:15px;color:#0d2033;line-height:1.6">'
     || '<h2 style="margin:0 0 12px">New booking ' || new.ref || '</h2>'
-    || '<p style="margin:0 0 4px"><b>' || case when v_tier = 'vip' then 'VIP (seen exactly on time)' else 'Standard' end || '</b></p>'
+    || '<p style="margin:0 0 4px"><b>' || case when v_online then 'Online video consultation' when v_tier = 'vip' then 'VIP (seen exactly on time)' else 'Standard' end || '</b></p>'
     || '<p style="margin:0 0 16px">' || coalesce(v_loc, '') || '<br>' || v_when || '</p>'
     || '<p style="margin:0 0 4px"><b>Patient:</b> ' || v_name || '</p>'
     || '<p style="margin:0 0 4px"><b>Phone:</b> <a href="tel:' || new.phone || '">' || new.phone || '</a> &nbsp; <a href="https://wa.me/' || v_wa || '">WhatsApp</a></p>'
@@ -44,7 +45,7 @@ begin
     body := jsonb_build_object(
       'from', 'Osman Uroclinic <onboarding@resend.dev>',
       'to', jsonb_build_array('alam73@aucegypt.edu'),
-      'subject', 'New booking ' || new.ref || ': ' || coalesce(v_loc, '') || ', ' || v_when || case when v_tier = 'vip' then ' (VIP)' else '' end,
+      'subject', 'New booking ' || new.ref || ': ' || coalesce(v_loc, '') || ', ' || v_when || case when v_online then ' (online)' when v_tier = 'vip' then ' (VIP)' else '' end,
       'html', v_html
     )
   );

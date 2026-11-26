@@ -43,11 +43,6 @@ const ar = lang === 'ar';
           <h2 tabindex="-1">{b.chooseLocation}</h2>
           <p class="hint">{b.chooseLocationHint}</p>
           <div class="loc-list" data-locations><p class="loading">{b.loading}</p></div>
-          <a class="loc loc--intl" href={href(lang, 'clinic')}>
-            <span class="loc-name">{ar ? 'المرضى الدوليون' : 'International patients'}</span>
-            <span class="loc-addr">{ar ? 'تعيش خارج مصر؟ احجز استشارة أونلاين مع أ.د. طارق عثمان.' : 'Living outside Egypt? Book an online video consultation with Prof. Dr. Tarek Osman.'}</span>
-            <span class="loc-next">{ar ? 'استشارة أونلاين' : 'Online consultation'}</span>
-          </a>
         </div>
 
         <div class="panel" data-panel="1" hidden>

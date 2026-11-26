@@ -68,7 +68,7 @@ export async function initBooking() {
     fill(list, locations.map((l) => {
       const next = slotsFor(l.id)[0];
       const addr = locAddr(l);
-      return h('button', { type: 'button', class: 'loc' + (loc?.id === l.id ? ' is-selected' : ''), 'aria-pressed': String(loc?.id === l.id), onclick: () => pickLocation(l) },
+      return h('button', { type: 'button', class: 'loc' + (l.online ? ' loc--intl' : '') + (loc?.id === l.id ? ' is-selected' : ''), 'aria-pressed': String(loc?.id === l.id), onclick: () => pickLocation(l) },
         h('span', { class: 'loc-name' }, locName(l)),
         addr ? h('span', { class: 'loc-addr' }, addr) : null,
         h('span', { class: 'loc-next' + (next ? '' : ' none') }, next ? `${t.nextAvailable}: ${fmt(lang, next.starts_at, { weekday: 'long', day: 'numeric', month: 'short' })} · ${fmtTime(lang, next.starts_at)}` : t.noAvailability),
@@ -123,8 +123,10 @@ export async function initBooking() {
     if (!day) { fill(box, h('p', { class: 'hint' }, loc && !slotsFor(loc.id).length ? t.noAvailability : t.pickDayFirst)); return; }
     const list = daySlots(day);
     if (!list.length) { fill(box, h('p', { class: 'hint' }, t.noSlotsDay)); return; }
-    const groups: [string, string, string, Slot[]][] = [['vip', t.vipBadge, '', []], ['normal', t.normalLabel, t.normalNote, []]];
-    list.forEach((s) => groups[s.tier === 'vip' ? 0 : 1][3].push(s));
+    const groups: [string, string, string, Slot[]][] = loc?.online
+      ? [['online', t.onlineLabel, t.onlineNote, list]]
+      : [['vip', t.vipBadge, '', []], ['normal', t.normalLabel, t.normalNote, []]];
+    if (!loc?.online) list.forEach((s) => groups[s.tier === 'vip' ? 0 : 1][3].push(s));
     fill(box, groups.filter(([, , , g]) => g.length).map(([tier, label, note, g]) =>
       h('div', { class: `time-group tg-${tier}` },
         h('p', { class: 'time-label' }, tier === 'vip' ? h('span', { class: 'tier-badge' }, label) : label),
@@ -136,6 +138,7 @@ export async function initBooking() {
   }
 
   function tierText(s: Slot) {
+    if (loc?.online) return t.onlineLabel;
     return s.tier === 'vip' ? t.vipBadge : `${t.tierNormal} · ${t.normalNote}`;
   }
 
@@ -237,7 +240,9 @@ export async function initBooking() {
         await loadData();
         renderLocations();
         summary();
-        if (locations.length === 1) pickLocation(locations[0]);
+        const want = new URLSearchParams(location.search).get('type') === 'online' ? locations.find((l) => l.online) : null;
+        if (want) pickLocation(want);
+        else if (locations.length === 1) pickLocation(locations[0]);
         return;
       } catch {
         await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));

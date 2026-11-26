@@ -12,6 +12,7 @@ export interface Location {
   map_url: string | null;
   active: boolean;
   sort: number;
+  online?: boolean;
 }
 
 export interface Slot {

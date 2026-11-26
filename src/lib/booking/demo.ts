@@ -2,7 +2,7 @@ import type { AdminApi, Booking, BookingInput, GenerateInput, Location, Slot, Sl
 import { BookingError } from './types';
 import { addDays, cairoToDate, today, weekday } from './time';
 
-const KEY = 'uc_demo_v4';
+const KEY = 'uc_demo_v5';
 
 interface DemoSlot extends Slot { status: SlotStatus }
 interface State { locations: Location[]; slots: DemoSlot[]; bookings: Booking[]; signedIn: boolean }
@@ -28,6 +28,7 @@ function makeSlots(loc: string, from: string, to: string, days: number[], startM
 function seed(): State {
   const a: Location = { id: uid(), name_ar: 'عيادة مصر الجديدة', name_en: 'Heliopolis clinic', address_ar: null, address_en: null, map_url: null, active: true, sort: 1 };
   const b: Location = { id: uid(), name_ar: 'عيادة القاهرة الجديدة', name_en: 'New Cairo clinic', address_ar: null, address_en: null, map_url: null, active: true, sort: 2 };
+  const o: Location = { id: uid(), name_ar: 'استشارة أونلاين', name_en: 'Online consultation', address_ar: 'مكالمة فيديو للمرضى داخل مصر وخارجها', address_en: 'Video call, for patients in Egypt or abroad', map_url: null, active: true, sort: 3, online: true };
   const from = today();
   const to = addDays(from, 59);
   const slots = [
@@ -35,9 +36,11 @@ function seed(): State {
     ...makeSlots(a.id, from, to, [3], 12 * 60, 16 * 60, 20, []),
     ...makeSlots(b.id, from, to, [2], 19 * 60, 22 * 60, 20, []),
     ...makeSlots(b.id, from, to, [4], 12 * 60, 14 * 60, 20, []),
+    ...makeSlots(o.id, from, to, [0], 10 * 60, 11 * 60, 20, [], 1, 0),
+    ...makeSlots(o.id, from, to, [3], 22 * 60, 23 * 60, 20, [], 1, 0),
   ];
   slots.forEach((s, i) => { if (i % 9 === 4) s.status = 'held'; });
-  return { locations: [a, b], slots, bookings: [], signedIn: false };
+  return { locations: [a, b, o], slots, bookings: [], signedIn: false };
 }
 
 let mem: State | null = null;

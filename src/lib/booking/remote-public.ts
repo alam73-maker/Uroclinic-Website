@@ -13,7 +13,7 @@ async function get<T>(path: string): Promise<T> {
 
 export const remotePublicApi: PublicApi = {
   demo: false,
-  listLocations: () => get<Location[]>('locations?select=id,name_ar,name_en,address_ar,address_en,map_url,active,sort&active=is.true&order=sort.asc'),
+  listLocations: () => get<Location[]>('locations?select=*&active=is.true&order=sort.asc'),
   listOpenSlots: (fromIso, toIso) =>
     get<Slot[]>(`slots?select=*&status=eq.open&starts_at=gte.${encodeURIComponent(fromIso)}&starts_at=lt.${encodeURIComponent(toIso)}&order=starts_at.asc&limit=2000`),
   async book(i: BookingInput): Promise<BookingResult> {
