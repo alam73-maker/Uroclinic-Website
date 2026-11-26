@@ -43,7 +43,7 @@ const ar = lang === 'ar';
           <h2 tabindex="-1">{b.chooseLocation}</h2>
           <p class="hint">{b.chooseLocationHint}</p>
           <div class="loc-list" data-locations><p class="loading">{b.loading}</p></div>
-          <a class="loc loc--intl" data-intl-fallback href={href(lang, 'clinic')}>
+          <a class="loc loc--intl" data-intl-fallback href={`${href(lang, 'appointments')}?type=online`}>
             <span class="loc-name">{ar ? 'استشارة أونلاين' : 'Online consultation'}</span>
             <span class="loc-addr">{ar ? 'مكالمة فيديو للمرضى داخل مصر وخارجها' : 'Video call, for patients in Egypt or abroad'}</span>
             <span class="loc-next">{ar ? 'تواصل مع العيادة للحجز' : 'Contact the clinic to book'}</span>
