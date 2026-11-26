@@ -176,3 +176,4 @@ html[dir='rtl'] .field input[dir='ltr'] { text-align: right; }
 .tg-vip .time.is-selected { background: var(--hx-teal-ink); border-color: var(--hx-teal-ink); }
 .tier-done { margin-top: 1rem; font-weight: 600; color: var(--hx-deep); }
 .tier-done.is-vip { color: var(--hx-teal-ink); }
+.loc--intl[hidden] { display: none; }

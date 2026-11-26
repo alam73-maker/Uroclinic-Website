@@ -239,6 +239,8 @@ export async function initBooking() {
         if ((await getApi()).demo) q('[data-demo]').hidden = false;
         await loadData();
         renderLocations();
+        const fb = document.querySelector<HTMLElement>('[data-intl-fallback]');
+        if (fb) fb.hidden = locations.some((l) => l.online);
         summary();
         const want = new URLSearchParams(location.search).get('type') === 'online' ? locations.find((l) => l.online) : null;
         if (want) pickLocation(want);
