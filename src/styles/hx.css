@@ -675,3 +675,7 @@ html { -webkit-tap-highlight-color: transparent; }
 .hx-video { padding-bottom: clamp(80px, 10vw, 128px); } @media (max-width: 760px) { .hx-video { padding-bottom: 64px; } }
 .hx-copy > h2.rv.rv-in { transform: none; }
 .hx-media picture { display: block; height: 100%; }
+.site-footer .socials { list-style: none; display: flex; gap: 10px; margin: 1.75rem 0 0; padding: 0; }
+.site-footer .socials a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.08); color: #fff; transition: background-color .2s, color .2s; }
+.site-footer .socials svg { fill: currentColor; }
+@media (hover: hover) { .site-footer .socials a:hover { background: #fff; color: var(--hx-deep); } }

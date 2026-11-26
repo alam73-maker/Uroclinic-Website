@@ -5,6 +5,7 @@ import '@fontsource/ibm-plex-sans-arabic/arabic-700.css';
 import '../styles/global.css';
 import '../styles/hx.css';
 import Brand from '../components/Brand.astro';
+import { clinicJsonLd, socialLinks } from '../content/doctor';
 import { dir, href, altHref, ui, type Lang } from '../i18n/ui';
 import interUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import plexUrl from '@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-400-normal.woff2?url';
@@ -12,6 +13,7 @@ import plexUrl from '@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic
 interface Props { lang: Lang; path?: string; title?: string; description?: string; noindex?: boolean; bare?: boolean }
 const { lang, path = '', title, description, bare = false } = Astro.props;
 const t = ui[lang];
+const ICONS: Record<string, string> = {"Facebook": "<path d=\"M14 8.5V6.8c0-.8.5-1 .9-1H17V2.2L14.1 2C11 2 10.3 4.3 10.3 5.9v2.6H8v3.7h2.3V22H14v-9.8h2.8l.4-3.7H14z\"/>", "Instagram": "<path d=\"M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zM17.3 5.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zM21.9 7.9c-.1-1.6-.4-3-1.6-4.2S17.7 2.2 16.1 2.1C14.5 2 9.5 2 7.9 2.1 6.3 2.2 4.9 2.5 3.7 3.7S2.2 6.3 2.1 7.9C2 9.5 2 14.5 2.1 16.1c.1 1.6.4 3 1.6 4.2s2.6 1.5 4.2 1.6c1.6.1 6.6.1 8.2 0 1.6-.1 3-.4 4.2-1.6s1.5-2.6 1.6-4.2c.1-1.6.1-6.6 0-8.2zm-2.1 10a3.3 3.3 0 0 1-1.9 1.9c-1.3.5-4.4.4-5.9.4s-4.6.1-5.9-.4a3.3 3.3 0 0 1-1.9-1.9c-.5-1.3-.4-4.4-.4-5.9s-.1-4.6.4-5.9a3.3 3.3 0 0 1 1.9-1.9c1.3-.5 4.4-.4 5.9-.4s4.6-.1 5.9.4a3.3 3.3 0 0 1 1.9 1.9c.5 1.3.4 4.4.4 5.9s.1 4.6-.4 5.9z\"/>", "TikTok": "<path d=\"M16.6 2h-3.3v13.4a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.2a6.3 6.3 0 1 0 5.3 6.2V8.6a7.9 7.9 0 0 0 4.4 1.4V6.6A4.5 4.5 0 0 1 16.6 2z\"/>"};
 const pageTitle = title ? `${title} | ${t.titleSuffix}` : t.titleSuffix;
 const current = href(lang, path);
 const links = [
@@ -38,6 +40,7 @@ const links = [
     <link rel="alternate" hreflang="ar" href={href('ar', path)} />
     <link rel="alternate" hreflang="en" href={href('en', path)} />
     <slot name="head" />
+    {path === '' && <script type="application/ld+json" is:inline set:html={clinicJsonLd} />}
   </head>
   <body>
     <a class="skip" href="#main">{t.skip}</a>
@@ -85,6 +88,11 @@ const links = [
               <a href={href(lang, 'clinic')}>{t.footer.clinic}</a>
             </nav>
           </div>
+          <ul class="socials" aria-label={lang === 'ar' ? 'حسابات التواصل الاجتماعي' : 'Social media'}>
+            {socialLinks.map((l) => (
+              <li><a href={l.url} target="_blank" rel="noopener me" aria-label={l.name}><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" set:html={ICONS[l.name]} /></a></li>
+            ))}
+          </ul>
           <div class="info">
             {t.footer.pending && <p>{t.footer.pending}</p>}
             {t.footer.review && <p>{t.footer.review}</p>}

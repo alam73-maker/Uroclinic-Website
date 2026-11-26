@@ -1,3 +1,9 @@
+export const socialLinks = [
+  { name: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61595856895734' },
+  { name: 'Instagram', url: 'https://www.instagram.com/tarekosmanuroclinic/' },
+  { name: 'TikTok', url: 'https://www.tiktok.com/@osmanuroclinic' },
+];
+
 import type { Lang } from '../i18n/ui';
 
 type L = Record<Lang, string>;
@@ -192,4 +198,26 @@ export const physicianJsonLd = JSON.stringify({
   affiliation: { '@type': 'CollegeOrUniversity', name: 'Ain Shams University' },
   alumniOf: { '@type': 'CollegeOrUniversity', name: 'Ain Shams University' },
   memberOf: ['American Urological Association', 'European Association of Urology', 'International Continence Society', 'Egyptian Urologic Association'].map((name) => ({ '@type': 'Organization', name })),
+  sameAs: socialLinks.map((l) => l.url),
+});
+
+export const clinicJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'MedicalClinic',
+  name: 'Osman Uroclinic',
+  alternateName: 'عيادة أ.د. طارق عثمان',
+  url: 'https://www.osmanuroclinic.com/',
+  logo: 'https://www.osmanuroclinic.com/favicon-192.png',
+  image: 'https://www.osmanuroclinic.com/photos/doctor.jpg',
+  medicalSpecialty: 'Urologic',
+  telephone: '+20224197164',
+  address: { '@type': 'PostalAddress', streetAddress: '51 Othman Ibn Affan St, Ismailia Square', addressLocality: 'Heliopolis', addressRegion: 'Cairo', postalCode: '11341', addressCountry: 'EG' },
+  geo: { '@type': 'GeoCoordinates', latitude: 30.0967339, longitude: 31.3360523 },
+  hasMap: 'https://maps.google.com/?cid=4485193615831728264',
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Sunday', opens: '14:00', closes: '18:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Wednesday', opens: '12:00', closes: '16:00' },
+  ],
+  founder: { '@type': 'Physician', name: 'Prof. Dr. Tarek Osman', url: 'https://www.osmanuroclinic.com/en/about/' },
+  sameAs: socialLinks.map((l) => l.url),
 });
