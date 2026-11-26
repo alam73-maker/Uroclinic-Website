@@ -123,12 +123,12 @@ export async function initBooking() {
     if (!day) { fill(box, h('p', { class: 'hint' }, loc && !slotsFor(loc.id).length ? t.noAvailability : t.pickDayFirst)); return; }
     const list = daySlots(day);
     if (!list.length) { fill(box, h('p', { class: 'hint' }, t.noSlotsDay)); return; }
-    const groups: [string, string, string, Slot[]][] = [['vip', t.vipBadge, t.vipNote, []], ['normal', t.normalLabel, t.normalNote, []]];
+    const groups: [string, string, string, Slot[]][] = [['vip', t.vipBadge, '', []], ['normal', t.normalLabel, t.normalNote, []]];
     list.forEach((s) => groups[s.tier === 'vip' ? 0 : 1][3].push(s));
     fill(box, groups.filter(([, , , g]) => g.length).map(([tier, label, note, g]) =>
       h('div', { class: `time-group tg-${tier}` },
         h('p', { class: 'time-label' }, tier === 'vip' ? h('span', { class: 'tier-badge' }, label) : label),
-        h('p', { class: 'time-note' }, note),
+        note ? h('p', { class: 'time-note' }, note) : null,
         h('div', { class: 'time-grid' }, g.map((s) => h('button', {
           type: 'button', class: 'time' + (slot?.id === s.id ? ' is-selected' : ''), 'aria-pressed': String(slot?.id === s.id),
           onclick: () => { slot = s; renderTimes(); summary(); go(2); setTimeout(() => form.querySelector<HTMLInputElement>('input[name="name"]')?.focus({ preventScroll: true }), 50); },
